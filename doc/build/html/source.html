@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="next" title="Attach dimensions" href="dimensions.html" />
+    <link rel="prev" title="Getting started" href="tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimensions.html" title="Attach dimensions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="diagrabber-source">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source</span></tt><a class="headerlink" href="#diagrabber-source" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="diagrabber-source-plaintext">
+<h2><a class="reference internal" href="#module-diaGrabber.source.plainText" title="diaGrabber.source.plainText"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.plainText</span></tt></a><a class="headerlink" href="#diagrabber-source-plaintext" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-diaGrabber.source.plainText"></span><dl class="class">
+<dt id="diaGrabber.source.plainText.plainText">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.plainText.</tt><tt class="descname">plainText</tt><big>(</big><em>folder</em>, <em>file_name</em>, <em>dim_seperator</em>, <em>data_type='unknown'</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainText.html#plainText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainText.plainText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._source.source</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.source.plainText.plainText.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>resolution</em>, <em>includeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainText.plainText.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a></p>
+<p>needs:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainText.plainText.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>mergeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainText.plainText.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a></p>
+<p>needs: &#8220;</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="diagrabber-source-stream">
+<h2><a class="reference internal" href="#module-diaGrabber.source.stream" title="diaGrabber.source.stream"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.stream</span></tt></a><a class="headerlink" href="#diagrabber-source-stream" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-diaGrabber.source.stream"></span><dl class="class">
+<dt id="diaGrabber.source.stream.stream">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.stream.</tt><tt class="descname">stream</tt><big>(</big><em>command</em>, <em>start_via</em>, <em>stop_via</em>, <em>dim_seperator</em>, <em>data_type='unknown'</em>, <em>key_to_end_process=''</em>, <em>readoutEverNLine=1</em>, <em>infoEveryNLines=1000</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._source.source</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>resolution</em>, <em>includeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.stream.stream.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.getInfoEveryNLines">
+<tt class="descname">getInfoEveryNLines</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream.getInfoEveryNLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream.getInfoEveryNLines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.getReadoutEverNLine">
+<tt class="descname">getReadoutEverNLine</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream.getReadoutEverNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream.getReadoutEverNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>mergeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.stream.stream.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.setInfoEveryNLines">
+<tt class="descname">setInfoEveryNLines</tt><big>(</big><em>nLines</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream.setInfoEveryNLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream.setInfoEveryNLines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.setReadoutEverNLine">
+<tt class="descname">setReadoutEverNLine</tt><big>(</big><em>nLine</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream.setReadoutEverNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream.setReadoutEverNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="diagrabber-source-libreofficecalc">
+<h2><a class="reference internal" href="#module-diaGrabber.source.libreOfficeCalc" title="diaGrabber.source.libreOfficeCalc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.libreOfficeCalc</span></tt></a><a class="headerlink" href="#diagrabber-source-libreofficecalc" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-diaGrabber.source.libreOfficeCalc"></span><dl class="class">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.libreOfficeCalc.</tt><tt class="descname">libreOfficeCalc</tt><big>(</big><em>ODS_file_name</em>, <em>sheet_name_or_number</em>, <em>data_type='unknown'</em>, <em>print_error_when_cell_is_empty=False</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/libreOfficeCalc.html#libreOfficeCalc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._source.source</span></tt></a></p>
+<p>allow to read values from a libre/open-office-calc document
+prepare for reading values from an libreOffice-calc-document
+needs:
+* <em>ODS_file_name</em> = &#8220;name of the file&#8221; e.g. &#8220;myfile.ods&#8221;
+* <em>sheet_name_or_number</em> =&#8221;name&#8221; OR number of the sheet e.g. &#8220;sheet1&#8221; OR 4</p>
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>name</em>, <em>resolution</em>, <em>cell_range</em>, <em>includeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a></p>
+<p>needs:</p>
+<ul class="simple">
+<li><em>cell_range</em> = &#8220;START:STOP&#8221; e.g. &#8220;C2:C1000&#8221;</li>
+<li>it&#8217;s also possible to scan multiple collums... just type e.g. &#8220;A1:E10&#8221;</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>name</em>, <em>cell_range</em>, <em>mergeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a></p>
+<p>needs:</p>
+<ul class="simple">
+<li><em>cell_range</em> = &#8220;START:STOP&#8221; e.g. &#8220;C2:C1000&#8221;</li>
+<li>it&#8217;s also possible to scan multiple collums... just type e.g. &#8220;A1:E10&#8221;</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setReadoutEveryNLine">
+<tt class="descname">setReadoutEveryNLine</tt><big>(</big><em>readout_every_n_line</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/libreOfficeCalc.html#libreOfficeCalc.setReadoutEveryNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setReadoutEveryNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="diagrabber-source-plaintextstream">
+<h2><a class="reference internal" href="#module-diaGrabber.source.plainTextStream" title="diaGrabber.source.plainTextStream"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.plainTextStream</span></tt></a><a class="headerlink" href="#diagrabber-source-plaintextstream" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-diaGrabber.source.plainTextStream"></span><dl class="class">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.plainTextStream.</tt><tt class="descname">plainTextStream</tt><big>(</big><em>command</em>, <em>start_via</em>, <em>stop_via</em>, <em>dim_seperator</em>, <em>output_file</em>, <em>data_type='unknown'</em>, <em>key_to_end_process=''</em>, <em>readoutEverNLine=1</em>, <em>infoEveryNLines=1000</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainTextStream.html#plainTextStream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._source.source</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>resolution</em>, <em>includeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.getInfoEveryNLines">
+<tt class="descname">getInfoEveryNLines</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainTextStream.html#plainTextStream.getInfoEveryNLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.getInfoEveryNLines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.getReadoutEverNLine">
+<tt class="descname">getReadoutEverNLine</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainTextStream.html#plainTextStream.getReadoutEverNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.getReadoutEverNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>mergeMethod=''</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="dimensions.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.setInfoEveryNLines">
+<tt class="descname">setInfoEveryNLines</tt><big>(</big><em>nLines</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainTextStream.html#plainTextStream.setInfoEveryNLines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.setInfoEveryNLines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainTextStream.plainTextStream.setReadoutEverNLine">
+<tt class="descname">setReadoutEverNLine</tt><big>(</big><em>nLine</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainTextStream.html#plainTextStream.setReadoutEverNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainTextStream.plainTextStream.setReadoutEverNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="diagrabber-source-source">
+<h2><a class="reference internal" href="#module-diaGrabber.source._source" title="diaGrabber.source._source"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source._source</span></tt></a><a class="headerlink" href="#diagrabber-source-source" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-diaGrabber.source._source"></span><dl class="class">
+<dt id="diaGrabber.source._source.source">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._source.</tt><tt class="descname">source</tt><big>(</big><em>data_type</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This basis-class for all type of source provides som general functions. And
+evaluate the &#8216;data_type&#8217;</p>
+<dl class="method">
+<dt id="diaGrabber.source._source.source.setBasis">
+<tt class="descname">setBasis</tt><big>(</big><em>basis_list</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source.setBasis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._source.source.setMerge">
+<tt class="descname">setMerge</tt><big>(</big><em>merge_list</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source.setMerge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a><ul>
+<li><a class="reference internal" href="#diagrabber-source-plaintext"><tt class="docutils literal"><span class="pre">diaGrabber.source.plainText</span></tt></a></li>
+<li><a class="reference internal" href="#diagrabber-source-stream"><tt class="docutils literal"><span class="pre">diaGrabber.source.stream</span></tt></a></li>
+<li><a class="reference internal" href="#diagrabber-source-libreofficecalc"><tt class="docutils literal"><span class="pre">diaGrabber.source.libreOfficeCalc</span></tt></a></li>
+<li><a class="reference internal" href="#diagrabber-source-plaintextstream"><tt class="docutils literal"><span class="pre">diaGrabber.source.plainTextStream</span></tt></a></li>
+<li><a class="reference internal" href="#diagrabber-source-source"><tt class="docutils literal"><span class="pre">diaGrabber.source._source</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Getting started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dimensions.html"
+                        title="next chapter">Attach dimensions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/source.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimensions.html" title="Attach dimensions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

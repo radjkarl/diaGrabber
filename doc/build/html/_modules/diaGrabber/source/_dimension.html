@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source._dimension &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="diaGrabber" href="../../diaGrabber.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" accesskey="U">diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.source._dimension</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.methods.merge</span> <span class="kn">import</span> <span class="n">mean</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="dimension"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension">[docs]</a><span class="k">class</span> <span class="nc">dimension</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_is_counter</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># take value from source by default</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">exclude</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">merge</span> <span class="o">=</span> <span class="n">mean</span><span class="p">()</span><span class="c">#standard</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="bp">False</span><span class="c">#can be loaded up with some methods.transform....</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_take_all_values</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_include_chronic</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_plot_range</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_plotOnlyRecentPosition</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_recent_position</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">#will be updated by target-class</span>
+
+
+<div class="viewcode-block" id="dimension.setPlotOnlyRecentPosition"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.setPlotOnlyRecentPosition">[docs]</a>	<span class="k">def</span> <span class="nf">setPlotOnlyRecentPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_plotOnlyRecentPosition</span> <span class="o">=</span> <span class="bp">True</span>
+</div>
+<div class="viewcode-block" id="dimension.setCounter"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.setCounter">[docs]</a>	<span class="k">def</span> <span class="nf">setCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">delta</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_is_counter</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">#to prevent error when reading out values from sources</span>
+		<span class="c">#self._recent_number = int(0)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span> <span class="o">=</span> <span class="n">start</span><span class="c">#-delta</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_delta</span> <span class="o">=</span> <span class="n">delta</span>
+	</div>
+<div class="viewcode-block" id="dimension.setPlotRange"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.setPlotRange">[docs]</a>	<span class="k">def</span> <span class="nf">setPlotRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;type &#39;None&#39; if you don&#39;t want to define the input&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_plot_range</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">stop</span><span class="p">,</span><span class="n">step</span><span class="p">)</span>
+
+</div>
+	<span class="k">def</span> <span class="nf">_updateCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c">#self._recent_number += 1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_delta</span>
+
+
+<div class="viewcode-block" id="dimension.includeAll"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.includeAll">[docs]</a>	<span class="k">def</span> <span class="nf">includeAll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resolution</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;Include all values and sort in a range from min to max values</span>
+<span class="sd">		dissolved by the resolution</span>
+<span class="sd">		!!!: not all sources can define the min and max values &#39;&#39;&#39;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_take_all_values</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
+		<span class="c">###########get min max from source ##############</span>
+		<span class="c">#!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_initSortRange</span><span class="p">()</span>
+
+	</div>
+<div class="viewcode-block" id="dimension.includeFromTo"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.includeFromTo">[docs]</a>	<span class="k">def</span> <span class="nf">includeFromTo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">from_value</span><span class="p">,</span><span class="n">to_value</span><span class="p">,</span> <span class="n">resolution</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span> <span class="o">=</span> <span class="p">[</span><span class="n">from_value</span><span class="p">,</span><span class="n">to_value</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_take_all_values</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_initSortRange</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="dimension.includeChronic"><a class="viewcode-back" href="../../../dimensions.html#diaGrabber.source._dimension.dimension.includeChronic">[docs]</a>	<span class="k">def</span> <span class="nf">includeChronic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resolution</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;Only take the last [dimension.resolution] values</span>
+<span class="sd">		override when read more than that&#39;&#39;&#39;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_take_all_values</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_include_chronic</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span>
+		<span class="c">#set the first include_from_to ... this has to be updated</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="c">#self._updateRange = self._updateChronic()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_initSortRange</span><span class="p">()</span>
+</div>
+	<span class="k">def</span> <span class="nf">_updateChronic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">:</span>
+			<span class="c">#update range</span>
+			<span class="c">#self.include_from_to[0] += self.resolution</span>
+			<span class="c">#self.include_from_to[1] += self.resolution</span>
+			<span class="c">#self.include_from_to[0] = self.resolution</span>
+			<span class="c">#self.include_from_to[1] = self.resolution</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="c">#print self.include_from_to, self._chronic_step, self._sort_range</span>
+			
+		<span class="bp">self</span><span class="o">.</span><span class="n">_sort_range</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span>
+		<span class="c">#the smallest value in the chronic is the value infront of the recent one</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_range</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_chronic_step</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+		<span class="c"># except the revent value ist the last value in range - than its the first one</span>
+		<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span>
+		<span class="c">#print self._sort_range,self._chronic_step, self._recent_value</span>
+
+	<span class="k">def</span> <span class="nf">_initSortRange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_sort_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
+			
+
+
+
+	<span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_range</span><span class="p">,</span> <span class="n">source_value</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_counter</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_updateCounter</span><span class="p">()</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span> <span class="o">=</span> <span class="n">source_value</span>
+
+		<span class="c">#in_range = True</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_include_chronic</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_updateChronic</span><span class="p">()</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_take_all_values</span><span class="p">:</span>
+			<span class="c">#update self.include_from_to with max in min values of the dim</span>
+			<span class="k">if</span> <span class="n">source_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_value</span>
+			<span class="k">if</span> <span class="n">source_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">source_value</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="c">#check whether in range</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span> <span class="ow">or</span> \
+					<span class="bp">self</span><span class="o">.</span><span class="n">include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span><span class="p">:</span>
+				<span class="n">in_range</span> <span class="o">=</span> <span class="bp">False</span>
+
+		<span class="k">if</span> <span class="n">in_range</span><span class="p">:</span>
+			<span class="c">#calc values bounded to dim</span>
+			<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="p">:</span>
+				<span class="n">c</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclude</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">_get</span><span class="p">():</span>
+					<span class="n">in_range</span> <span class="o">=</span> <span class="bp">False</span>
+
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plotOnlyRecentPosition</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_plot_range</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_recent_position</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_recent_position</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">in_range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recent_value</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

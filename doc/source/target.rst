@@ -1,0 +1,26 @@
+.. _target:
+***************
+Defining the Target
+***************
+
+
+Matrix
+=============================
+
+.. autoclass:: diaGrabber.target.coarseMatrix
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   
+.. autoclass:: diaGrabber.target.fineMatrix
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+discrete Points
+=============================
+.. automodule:: diaGrabber.target.discretePoints
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

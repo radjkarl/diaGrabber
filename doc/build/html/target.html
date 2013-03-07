@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Defining the Target &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="prev" title="Methods to ..." href="methods.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="Methods to ..."
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="defining-the-target">
+<h1>Defining the Target<a class="headerlink" href="#defining-the-target" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="matrix">
+<h2>Matrix<a class="headerlink" href="#matrix" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.target.coarseMatrix">
+<em class="property">class </em><tt class="descclassname">diaGrabber.target.</tt><tt class="descname">coarseMatrix</tt><big>(</big><em>sourceClass</em><big>)</big><a class="headerlink" href="#diaGrabber.target.coarseMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.target.matrix._matrix</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.target.fineMatrix">
+<em class="property">class </em><tt class="descclassname">diaGrabber.target.</tt><tt class="descname">fineMatrix</tt><big>(</big><em>sourceClass</em><big>)</big><a class="headerlink" href="#diaGrabber.target.fineMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.target.matrix._matrix</span></tt></p>
+<blockquote>
+<div>This class isn&#8217;t as fast as <tt class="xref py py-class docutils literal"><span class="pre">coarseMatrix</span></tt> but can assign values
+in a more accurate way if the following condition is fullfilled:</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">number of datapoints in matrix&gt;&gt; matrix-resolution</p>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-diaGrabber.target.discretePoints">
+<span id="discrete-points"></span><h2>discrete Points<a class="headerlink" href="#module-diaGrabber.target.discretePoints" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Defining the Target</a><ul>
+<li><a class="reference internal" href="#matrix">Matrix</a></li>
+<li><a class="reference internal" href="#module-diaGrabber.target.discretePoints">discrete Points</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="methods.html"
+                        title="previous chapter">Methods to ...</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/target.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="Methods to ..."
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

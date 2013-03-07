@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Methods to ... &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="next" title="Defining the Target" href="target.html" />
+    <link rel="prev" title="Attach dimensions" href="dimensions.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="target.html" title="Defining the Target"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dimensions.html" title="Attach dimensions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-diaGrabber.methods.calc">
+<span id="methods-to"></span><h1>Methods to ...<a class="headerlink" href="#module-diaGrabber.methods.calc" title="Permalink to this headline">¶</a></h1>
+<p>Includes all classes for calculations for off-the-reel-taken-values of a source-class</p>
+<dl class="class">
+<dt id="diaGrabber.methods.calc.delta">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">delta</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.delta" title="Permalink to this definition">¶</a></dt>
+<dd><p>calc. the mean-difference of the last n values</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.calc.divideCalcClasses">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">divideCalcClasses</tt><big>(</big><em>upperCalcClass</em>, <em>lowerCalcClass</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#divideCalcClasses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.divideCalcClasses" title="Permalink to this definition">¶</a></dt>
+<dd><p>divide the last calulated values of two given calc-classes
+use it like this:
+dim1 = myFile.dimension(...)
+dim1.calc.append(calc.delta(10))</p>
+<p>dim2 = myFile.dimension(...)
+dim2.calc.append(calc.delta(10))
+#&lt;&lt;&lt;
+dim2.calc.append(dim1.calc[0], dim2.calc[0])
+#&gt;&gt;&gt;
+#In this case the derivate d(dim1)/d(dim2) middled for the last 10
+#valued will be calculated
+This procedure will only work if both dimensions are in merge or basis.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.calc.mean">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">mean</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>calc. the mean of the last n values</p>
+</dd></dl>
+
+<span class="target" id="module-diaGrabber.methods.merge"></span><dl class="class">
+<dt id="diaGrabber.methods.merge.max">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">max</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.merge.mean">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">mean</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.merge.min">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">min</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.merge.sum">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">sum</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.sum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-diaGrabber.methods.exclude"></span><p>Includes all classes for criteria to exclude
+off-the-reel-taken-values of a source-class
+private methods _get will return True if the value fullfills the criteria and
+falas if it fails.</p>
+<dl class="class">
+<dt id="diaGrabber.methods.exclude.calcBiggerValue">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.exclude.</tt><tt class="descname">calcBiggerValue</tt><big>(</big><em>calcClass</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/exclude.html#calcBiggerValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.exclude.calcBiggerValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>exclude value if result of a calc.xx-class
+is bigger than the given value</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.exclude.calcSmallerCalc">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.exclude.</tt><tt class="descname">calcSmallerCalc</tt><big>(</big><em>dim1</em>, <em>dim2</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/exclude.html#calcSmallerCalc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.exclude.calcSmallerCalc" title="Permalink to this definition">¶</a></dt>
+<dd><p>exclude value if result of dimension.calc[dim1]
+is smaller than dimension.calc[dim2]</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.exclude.calcSmallerValue">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.exclude.</tt><tt class="descname">calcSmallerValue</tt><big>(</big><em>calcClass</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/exclude.html#calcSmallerValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.exclude.calcSmallerValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>exclude value if result of a calc.xx-class
+is smaller than the given value</p>
+</dd></dl>
+
+<span class="target" id="module-diaGrabber.methods.transform"></span><dl class="class">
+<dt id="diaGrabber.methods.transform.fx">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.transform.</tt><tt class="descname">fx</tt><big>(</big><em>fx_str</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/transform.html#fx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.transform.fx" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="diaGrabber.methods.transform.fx.get">
+<tt class="descname">get</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/transform.html#fx.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.transform.fx.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.methods.transform.interpolationTable">
+<em class="property">class </em><tt class="descclassname">diaGrabber.methods.transform.</tt><tt class="descname">interpolationTable</tt><big>(</big><em>source_l</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/transform.html#interpolationTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.transform.interpolationTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="diaGrabber.methods.transform.interpolationTable.get">
+<tt class="descname">get</tt><big>(</big><em>time</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/transform.html#interpolationTable.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.transform.interpolationTable.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>conform to the openFoam-class of the same name
+print an linear-interpolated value to a given time[float]
+source_l = [ [time1,value1], ... , [timeN,valueN] ]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dimensions.html"
+                        title="previous chapter">Attach dimensions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="target.html"
+                        title="next chapter">Defining the Target</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/methods.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="target.html" title="Defining the Target"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dimensions.html" title="Attach dimensions"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.methods.exclude &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="diaGrabber" href="../../diaGrabber.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" accesskey="U">diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.methods.exclude</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="sd">&#39;&#39;&#39;Includes all classes for criteria to exclude</span>
+<span class="sd">off-the-reel-taken-values of a source-class</span>
+<span class="sd">private methods _get will return True if the value fullfills the criteria and</span>
+<span class="sd">falas if it fails.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="calcSmallerCalc"><a class="viewcode-back" href="../../../methods.html#diaGrabber.methods.exclude.calcSmallerCalc">[docs]</a><span class="k">class</span> <span class="nc">calcSmallerCalc</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;exclude value if result of dimension.calc[dim1]</span>
+<span class="sd">	is smaller than dimension.calc[dim2]&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dim1</span><span class="p">,</span><span class="n">dim2</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dim1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim2</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dim2</span><span class="p">)</span>
+		
+	<span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dimension</span><span class="p">):</span>
+		<span class="c">##dependent to the size of the cluster (v = old + (new-old)/size_cluser))</span>
+		<span class="c">#print dimension.calc[self.dim1].value ,  dimension.calc[self.dim2].value</span>
+		<span class="k">if</span> <span class="n">dimension</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dim1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span>  <span class="n">dimension</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dim2</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="calcSmallerValue"><a class="viewcode-back" href="../../../methods.html#diaGrabber.methods.exclude.calcSmallerValue">[docs]</a><span class="k">class</span> <span class="nc">calcSmallerValue</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;exclude value if result of a calc.xx-class</span>
+<span class="sd">	is smaller than the given value&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">calcClass</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">calcClass</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+		
+	<span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c">##dependent to the size of the cluster (v = old + (new-old)/size_cluser))</span>
+		<span class="c">#print dimension.calc[self.dim1].value ,  dimension.calc[self.dim2].value</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">False</span>
+			</div>
+<div class="viewcode-block" id="calcBiggerValue"><a class="viewcode-back" href="../../../methods.html#diaGrabber.methods.exclude.calcBiggerValue">[docs]</a><span class="k">class</span> <span class="nc">calcBiggerValue</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;exclude value if result of a calc.xx-class</span>
+<span class="sd">	is bigger than the given value&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">calcClass</span><span class="p">,</span><span class="n">value</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">calcClass</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+		
+	<span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c">##dependent to the size of the cluster (v = old + (new-old)/size_cluser))</span>
+		<span class="c">#print dimension.calc[self.dim1].value ,  dimension.calc[self.dim2].value</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span>  <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

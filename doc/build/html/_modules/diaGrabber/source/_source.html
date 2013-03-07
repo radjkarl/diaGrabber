@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source._source &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="diaGrabber" href="../../diaGrabber.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" accesskey="U">diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.source._source</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+
+<div class="viewcode-block" id="_source"><a class="viewcode-back" href="../../../source.html#diaGrabber.source._source._source">[docs]</a><span class="k">class</span> <span class="nc">_source</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_type</span><span class="p">):</span>
+		<span class="c">#self.data_type = data_type</span>
+		<span class="c">#super(_source, self).__init__()</span>
+		
+		<span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;float&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">floatStr</span>
+		<span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;hex&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hexStr</span>
+		<span class="k">elif</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s">&quot;int&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intStr</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unknownStr</span>
+
+<div class="viewcode-block" id="_source.floatStr"><a class="viewcode-back" href="../../../source.html#diaGrabber.source._source._source.floatStr">[docs]</a>	<span class="k">def</span> <span class="nf">floatStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="c">#string is a hexadecimal integer</span>
+		<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+		</div>
+<div class="viewcode-block" id="_source.hexStr"><a class="viewcode-back" href="../../../source.html#diaGrabber.source._source._source.hexStr">[docs]</a>	<span class="k">def</span> <span class="nf">hexStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="c">#string is a hexadecimal integer</span>
+		<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span>
+		</div>
+<div class="viewcode-block" id="_source.intStr"><a class="viewcode-back" href="../../../source.html#diaGrabber.source._source._source.intStr">[docs]</a>	<span class="k">def</span> <span class="nf">intStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="c">#string is a decimal integer</span>
+		<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="_source.unknownStr"><a class="viewcode-back" href="../../../source.html#diaGrabber.source._source._source.unknownStr">[docs]</a>	<span class="k">def</span> <span class="nf">unknownStr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="c">#datatype of string is unknown</span>
+		<span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+</div>
+	<span class="k">def</span> <span class="nf">_assignValues</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_dim</span><span class="p">):</span>
+		<span class="n">in_range</span> <span class="o">=</span> <span class="bp">True</span>
+		<span class="c">###get merge-values</span>
+		<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="p">(</span><span class="n">in_range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_values</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">in_range</span><span class="p">,</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span><span class="p">(</span><span class="n">file_dim</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]))</span>
+				<span class="c">#print self.evalStr(file_dim[self.merge_dim[m].index])</span>
+			<span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+				<span class="k">print</span> <span class="s">&quot;skipping ... </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">file_dim</span>
+				<span class="n">in_range</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="k">if</span> <span class="n">in_range</span><span class="p">:</span> <span class="c">## if merge_value is in range: get the basis values</span>
+			<span class="c">#calc for base</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nDim</span><span class="p">):</span>
+					<span class="p">(</span><span class="n">in_range</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_values</span><span class="p">[</span><span class="n">dim</span><span class="p">])</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_dim</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">in_range</span><span class="p">,</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">evalStr</span><span class="p">(</span><span class="n">file_dim</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_dim</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">]))</span>
+			<span class="k">except</span> <span class="p">(</span><span class="ne">IndexError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+				<span class="k">print</span> <span class="s">&quot;skipping ... </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">file_dim</span>
+				<span class="n">in_range</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="k">if</span> <span class="n">in_range</span><span class="p">:</span>
+			<span class="n">positionsIntensities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrixClass</span><span class="o">.</span><span class="n">_assign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_values</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="n">positionsIntensities</span><span class="p">:</span>
+				<span class="n">tPostion</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+				<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+					<span class="p">(</span><span class="n">replace_value</span><span class="p">,</span> <span class="n">do_replace</span><span class="p">)</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">merge</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">merge_values</span><span class="p">[</span><span class="n">m</span><span class="p">],</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">densityMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">],</span><span class="n">intensity</span><span class="p">)</span>
+					<span class="k">if</span> <span class="n">do_replace</span><span class="p">:</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace_value</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">densityMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">]</span> <span class="o">+=</span> <span class="n">intensity</span>
+
+	<span class="k">def</span> <span class="nf">_prepareStandard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrixClass</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">matrixClass</span> <span class="o">=</span> <span class="n">matrixClass</span>
+		<span class="c">####is es schlau erst alle sachen von target zo kopieren???</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">nDim</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">nDim</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">basis_dim</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">basis_dim</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">merge_dim</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">merge_dim</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">nMerge</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">mergeMatrix</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">sortMatrix</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">sortMatrix</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">densityMatrix</span> <span class="o">=</span> <span class="n">matrixClass</span><span class="o">.</span><span class="n">densityMatrix</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">basis_values</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nDim</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">basis_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">merge_values</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">merge_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			</div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
