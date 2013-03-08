@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting started &mdash; diaGrabber 0.1.1 documentation</title>
+    <title>Examples &mdash; diaGrabber 0.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,9 +25,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
-    <link rel="next" title="Defining the source" href="source.html" />
-    <link rel="prev" title="Welcome to diaGrabber’s documentation!" href="index.html" /> 
+    <link rel="next" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
+    <link rel="prev" title="Welcome to diaGrabber‘s documentation!" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,10 +41,10 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="source.html" title="Defining the source"
+          <a href="diaGrabberAPI.html" title="The diaGrabber-API:"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to diaGrabber’s documentation!"
+          <a href="index.html" title="Welcome to diaGrabber‘s documentation!"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
       </ul>
@@ -54,93 +55,203 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="getting-started">
-<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="installing-your-doc-directory">
-<span id="installing-docdir"></span><h2>Installing your doc directory<a class="headerlink" href="#installing-your-doc-directory" title="Permalink to this headline">¶</a></h2>
-<p>You may already have sphinx <a class="reference external" href="http://sphinx.pocoo.org/">sphinx</a>
-installed &#8211; you can check by doing:</p>
-<div class="highlight-python"><pre>python -c 'import sphinx'</pre>
-</div>
-<p>If that fails grab the latest version of and install it with:</p>
-<div class="highlight-python"><pre>&gt; sudo easy_install -U Sphinx</pre>
-</div>
-<p>Now you are ready to build a template for your docs, using
-sphinx-quickstart:</p>
-<div class="highlight-python"><pre>&gt; sphinx-quickstart</pre>
-</div>
-<p>accepting most of the defaults.  I choose &#8220;sampledoc&#8221; as the name of my
-project.  cd into your new directory and check the contents:</p>
-<div class="highlight-python"><pre>home:~/tmp/sampledoc&gt; ls
-Makefile      _static         conf.py
-_build                _templates      index.rst</pre>
-</div>
-<p>The index.rst is the master ReST for your project, but before adding
-anything, let&#8217;s see if we can build some html:</p>
-<div class="highlight-python"><pre>make html</pre>
-</div>
-<p>If you now point your browser to <tt class="file docutils literal"><span class="pre">_build/html/index.html</span></tt>, you
-should see a basic sphinx site.</p>
-<img alt="_images/basic_screenshot.png" src="_images/basic_screenshot.png" />
-<div class="section" id="fetching-the-data">
-<span id="id2"></span><h3>Fetching the data<a class="headerlink" href="#fetching-the-data" title="Permalink to this headline">¶</a></h3>
-<p>Now we will start to customize out docs.  Grab a couple of files from
-the <a class="reference external" href="http://matplotlib.svn.sourceforge.net/viewvc/matplotlib/trunk/sampledoc_tut/">web site</a>
-or svn.  You will need <tt class="file docutils literal"><span class="pre">getting_started.rst</span></tt> and
-<tt class="file docutils literal"><span class="pre">_static/basic_screenshot.png</span></tt>.  All of the files live in the
-&#8220;completed&#8221; version of this tutorial, but since this is a tutorial,
-we&#8217;ll just grab them one at a time, so you can learn what needs to be
-changed where.  Since we have more files to come, I&#8217;m going to grab
-the whole svn directory and just copy the files I need over for now.
-First, I&#8217;ll cd up back into the directory containing my project, check
-out the &#8220;finished&#8221; product from svn, and then copy in just the files I
-need into my <tt class="file docutils literal"><span class="pre">sampledoc</span></tt> directory:</p>
-<div class="highlight-python"><pre>home:~/tmp/sampledoc&gt; pwd
-/Users/jdhunter/tmp/sampledoc
-home:~/tmp/sampledoc&gt; cd ..
-home:~/tmp&gt; svn co https://matplotlib.svn.sourceforge.net/svnroot/\
-matplotlib/trunk/sampledoc_tut
-A    sampledoc_tut/cheatsheet.rst
-A    sampledoc_tut/_static
-A    sampledoc_tut/_static/basic_screenshot.png
-A    sampledoc_tut/conf.py
-A    sampledoc_tut/Makefile
-A    sampledoc_tut/_templates
-A    sampledoc_tut/_build
-A    sampledoc_tut/getting_started.rst
-A    sampledoc_tut/index.rst
-Checked out revision 7449.
-home:~/tmp&gt; cp sampledoc_tut/getting_started.rst sampledoc/
-home:~/tmp&gt; cp sampledoc_tut/_static/basic_screenshot.png \
-sampledoc/_static/</pre>
-</div>
-<p>The last step is to modify <tt class="file docutils literal"><span class="pre">index.rst</span></tt> to include the
-<tt class="file docutils literal"><span class="pre">getting_started.rst</span></tt> file (be careful with the indentation, the
-&#8220;g&#8221; in &#8220;getting_started&#8221; should line up with the &#8216;:&#8217; in <tt class="docutils literal"><span class="pre">:maxdepth</span></tt>:</p>
-<div class="highlight-python"><pre>Contents:
+  <div class="section" id="examples">
+<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>The following chapters include some of the example-procedures in /examples.</p>
+<div class="section" id="reading-and-processing-3d-data-from-a-plaintext">
+<h2>Reading and processing 3D-data from a Plaintext<a class="headerlink" href="#reading-and-processing-3d-data-from-a-plaintext" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
 
-.. toctree::
-   :maxdepth: 2
 
-   getting_started.rst</pre>
+
+<span class="c">#class test:</span>
+	
+	<span class="c">#def __init__(self):</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+<span class="c">## we want to read data from a very big file. to save storage we create this</span>
+<span class="c">## file for this example. therefore we do:</span>
+
+<span class="c"># define a name for our very big file</span>
+<span class="n">folder</span> <span class="o">=</span> <span class="s">&quot;ressources/&quot;</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;myBigFile.txt&quot;</span>
+
+<span class="c"># get some math-functions</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c">#create a file</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">,</span><span class="s">&quot;w&quot;</span><span class="p">)</span>
+
+<span class="c">#write one million lines of code</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+	<span class="c">#every line is build of 3 float-numbers seperated by a space</span>
+	<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mf">1000.0</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">)</span>
+
+
+<span class="n">seperator</span> <span class="o">=</span> <span class="s">&quot; &quot;</span> <span class="c"># a space seperates our float-numbers</span>
+<span class="n">data_type</span> <span class="o">=</span> <span class="s">&quot;float&quot;</span> <span class="c"># our numbers of a float-type (other types can be hex or int)</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">plainText</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">seperator</span><span class="p">,</span> <span class="n">data_type</span><span class="p">)</span>
+
+
+<span class="n">f</span><span class="o">.</span><span class="n">readout_every_n_line</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">Ux</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="s">&quot;Ux&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="p">)</span><span class="c">#, [-0.017, 0.01])</span>
+<span class="c">#Ux.includeFromTo(-0.4043, 0.4043)#alles</span>
+<span class="c">#Ux.calc.append(calc.delta(100))</span>
+<span class="n">Ux</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">Ux</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">divideCalcClasses</span><span class="p">(</span><span class="n">Ux</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">Ux</span><span class="o">.</span><span class="n">exclude</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exclude</span><span class="o">.</span><span class="n">calcSmallerValue</span><span class="p">(</span><span class="n">Ux</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">))</span>
+
+<span class="n">Ux</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span>  <span class="n">transform</span><span class="o">.</span><span class="n">fx</span><span class="p">(</span><span class="s">&quot;x*23.4/0.8&quot;</span><span class="p">,</span> <span class="s">&quot;x [mm]&quot;</span><span class="p">)</span>
+
+<span class="n">Uy</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="s">&quot;Uy&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span><span class="c">#,[-0.025, 0.002])</span>
+<span class="c">#resolution = 100</span>
+<span class="c">#Uy.includeFromTo(-0.46582, 0.70313)#alles</span>
+<span class="c">#Uy.includeFromTo(-0.025, 0.002, resolution)#ausschitt-0.04, -0.01</span>
+<span class="n">Uy</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fx</span><span class="p">(</span><span class="s">&quot;x*23.4/0.8&quot;</span><span class="p">,</span> <span class="s">&quot;y [mm]&quot;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">setBasis</span><span class="p">([</span><span class="n">Ux</span><span class="p">,</span> <span class="n">Uy</span><span class="p">])</span>
+
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">fineMatrix</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fill</span><span class="p">()</span>
+<span class="c">#t.transformDim()</span>
+
+<span class="c">#t.interpolate(&#39;cubic&#39;)</span>
+
+<span class="c">#t.eval2dGaussianDistribution([0.5])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">matPlotLib</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="c">#p.graph()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">heatMap</span><span class="p">()</span>
+<span class="c">#p = plot.multiPlot(t)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;test1&quot;</span><span class="p">,</span> <span class="s">&quot;output&quot;</span><span class="p">,</span><span class="s">&quot;bin&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;test1&quot;</span><span class="p">,</span> <span class="s">&quot;output&quot;</span><span class="p">,</span><span class="s">&quot;txt&quot;</span><span class="p">)</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span> <span class="c"># delete our file - we dont need it any more</span>
+</pre></div>
 </div>
-<p>and then rebuild the docs:</p>
-<div class="highlight-python"><pre>cd sampledoc
-make html</pre>
 </div>
-<p>When you reload the page by refreshing your browser pointing to
-<tt class="file docutils literal"><span class="pre">_build/html/index.html</span></tt>, you should see a link to the
-&#8220;Getting Started&#8221; docs, and in there this page with the screenshot.
-<cite>Voila!</cite></p>
-<p>Note we used the image directive to include to the screenshot above
-with:</p>
-<div class="highlight-python"><pre>.. image:: _static/basic_screenshot.png</pre>
+<div class="section" id="starting-and-reading-a-stream">
+<h2>Starting and reading a stream<a class="headerlink" href="#starting-and-reading-a-stream" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+
+<span class="c">#command = &quot;/home/bedrich/Programme/c_M2i_3013/0_KARL_rec_fifo_single_terminal/rec_single_terminal&quot;</span>
+<span class="n">command</span> <span class="o">=</span> <span class="s">&quot;python /home/bedrich/diaGrabber3/examples/ressources/test_stream.py&quot;</span>
+
+<span class="n">start_via</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">stop_via</span> <span class="o">=</span> <span class="s">&quot;done&quot;</span>
+<span class="n">run_in_shell</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">dim_seperator</span> <span class="o">=</span> <span class="s">&quot; &quot;</span>
+<span class="n">data_type</span> <span class="o">=</span> <span class="s">&quot;float&quot;</span>
+
+<span class="n">key_to_end_process</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\x1a</span><span class="s">&quot;</span><span class="c">#esc</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">start_via</span><span class="p">,</span> <span class="n">stop_via</span><span class="p">,</span>
+	<span class="n">dim_seperator</span><span class="p">,</span> <span class="n">data_type</span><span class="p">,</span> <span class="n">key_to_end_process</span><span class="p">,</span> <span class="n">run_in_shell</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="s">&quot;chronic&quot;</span><span class="p">)</span>
+
+
+<span class="n">ch0</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="s">&quot; ch0&quot;</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">merge</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="n">ch1</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="s">&quot; ch1&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+
+
+
+<span class="n">f</span><span class="o">.</span><span class="n">setReadoutEverNLine</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="c">#(1000)##e5)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">setInfoEveryNLines</span><span class="p">(</span><span class="mf">1e5</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coarseMatrix</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">fps</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">enableAutoRange</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">])</span>
+
+
+<span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;fein_s&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">,</span><span class="s">&quot;bin&quot;</span><span class="p">)</span>
+<span class="c">#t.save(&quot;fein_s&quot;, &quot;test&quot;,&quot;txt&quot;)</span>
+</pre></div>
 </div>
-<p>Next we&#8217;ll customize the look and feel of our site to give it a logo,
-some custom css, and update the navigation panels to look more like
-the <a class="reference external" href="http://sphinx.pocoo.org/">sphinx</a> site itself &#8211; see
-<em class="xref std std-ref">custom_look</em>.</p>
 </div>
+<div class="section" id="reading-from-a-libreoffice-file">
+<h2>Reading from a LibreOffice-File<a class="headerlink" href="#reading-from-a-libreoffice-file" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+<span class="c">#folder = &quot;/home/bedrich/Arbeitsfläche/Strahlvermessung/&quot;</span>
+<span class="c">#folder = &quot;/home/bedrich/Dokumente/HiWi/Strahlvermessung/&quot;</span>
+
+<span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;ressources/ods_example.ods&quot;</span><span class="c">#&quot;</span>
+<span class="c">#seperator = &quot; &quot;</span>
+<span class="n">data_type</span> <span class="o">=</span> <span class="s">&quot;float&quot;</span>
+
+
+<span class="c">###############</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">libreOfficeCalc</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s">&quot;Tabelle1&quot;</span><span class="p">,</span> <span class="n">data_type</span><span class="p">)</span>
+
+<span class="c">#f.setReadoutEvery_n_line = 10</span>
+
+
+<span class="c">#one = p.basisDimension(&quot;I [mA]&quot;,50, &quot;A2:A100&quot;, [0,100])</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="s">&quot;I [mA]&quot;</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span> <span class="s">&quot;A2:A100&quot;</span><span class="p">)</span>
+
+<span class="c">#resolution = 50</span>
+<span class="c">#one.includeFromTo(0, 100, resolution)</span>
+
+
+<span class="n">two</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="s">&quot;B2:B100&quot;</span><span class="p">)</span>
+<span class="c">#two.merge = merge.mean()</span>
+
+
+<span class="c">#basis_dim = [one]</span>
+<span class="c">#merge_dim = [two]</span>
+<span class="c">#derivate_dim = one#nicht impl.</span>
+
+
+<span class="c">#s.Ux.resolution = 100</span>
+<span class="c">#s.Uy.resolution = 100</span>
+<span class="n">p</span><span class="o">.</span><span class="n">setReadoutEveryNLine</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coarseMatrix</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fill</span><span class="p">()</span>
+<span class="c">#t.transformDim()</span>
+
+<span class="c">#t.interpolate(&#39;cubic&#39;)</span>
+
+<span class="c">#t.eval2dGaussianDistribution([0.5])</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">matPlotLib</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">graph</span><span class="p">()</span>
+<span class="c">#p.heatMap()</span>
+<span class="c">#p = plot.multiPlot(t)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c">#t.save(&quot;fein&quot;, &quot;test&quot;,&quot;bin&quot;)</span>
+<span class="c">#t.save(&quot;fein&quot;, &quot;test&quot;,&quot;txt&quot;)</span>
+
+<span class="c">#if __name__ == &#39;__main__&#39;:</span>
+<span class="c">#	import sys</span>
+<span class="c">#	sys.path.insert(0,&quot;../&quot;)</span>
+<span class="c">#	test()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-from-multible-files">
+<h2>Reading from multible files<a class="headerlink" href="#reading-from-multible-files" title="Permalink to this headline">¶</a></h2>
+<p>comes later</p>
 </div>
 </div>
 
@@ -155,21 +266,21 @@ the <a class="reference external" href="http://sphinx.pocoo.org/">sphinx</a> sit
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Getting started</a><ul>
-<li><a class="reference internal" href="#installing-your-doc-directory">Installing your doc directory</a><ul>
-<li><a class="reference internal" href="#fetching-the-data">Fetching the data</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#reading-and-processing-3d-data-from-a-plaintext">Reading and processing 3D-data from a Plaintext</a></li>
+<li><a class="reference internal" href="#starting-and-reading-a-stream">Starting and reading a stream</a></li>
+<li><a class="reference internal" href="#reading-from-a-libreoffice-file">Reading from a LibreOffice-File</a></li>
+<li><a class="reference internal" href="#reading-from-multible-files">Reading from multible files</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to diaGrabber&#8217;s documentation!</a></p>
+                        title="previous chapter">Welcome to <tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">diaGrabber</span></tt>&#8216;s documentation!</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="source.html"
-                        title="next chapter">Defining the source</a></p>
+  <p class="topless"><a href="diaGrabberAPI.html"
+                        title="next chapter">The diaGrabber-API:</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/tutorial.txt"
@@ -202,10 +313,10 @@ the <a class="reference external" href="http://sphinx.pocoo.org/">sphinx</a> sit
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="source.html" title="Defining the source"
+          <a href="diaGrabberAPI.html" title="The diaGrabber-API:"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to diaGrabber’s documentation!"
+          <a href="index.html" title="Welcome to diaGrabber‘s documentation!"
              >previous</a> |</li>
         <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
       </ul>

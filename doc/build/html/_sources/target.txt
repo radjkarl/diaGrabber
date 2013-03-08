@@ -1,6 +1,6 @@
 .. _target:
 ***************
-Defining the Target
+:mod:`diaGrabber.target`
 ***************
 
 

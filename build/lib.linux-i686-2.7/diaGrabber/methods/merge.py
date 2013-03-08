@@ -1,7 +1,18 @@
 # -*- coding: utf-8 *-*
+'''
+This module includes all methods to merge values from
+type :class:`diaGrabber.source._dimension.mergeDimension`.
+"Merge" means in this case to handle an incoming  new value at a place in
+the target where other values exists allready.
+Depending on the chosen target-class :mod:`diaGrabber.target` its also
+possible that incomming values have an intensity < 1 because the orig.
+values were splitted.
+'''
+
 from numpy import isnan as _isnan
 
 class mean:
+	'''Caluculate and take the mean of all incomming values.'''
 	def _get(self,new_value,old_value,anz_values,intensity):
 		if _isnan(old_value):
 			return new_value, True
@@ -13,6 +24,8 @@ class mean:
 			return value,True
 	
 class max:
+	'''Take only the maximum of all incomming values.'''
+
 	def _get(self, new_value,old_value,anz_values,intensity):
 		if _isnan(old_value):
 			return new_value, True
@@ -24,6 +37,9 @@ class max:
 				return old_value, False
 
 class min:
+	'''Take only the minimum of all incomming values.'''
+
+
 	def _get(self, new_value,old_value,anz_values,intensity):
 		if _isnan(old_value):
 			return new_value, True
@@ -35,6 +51,8 @@ class min:
 				return old_value, False
 	
 class sum:
+	'''Caluculate and take the sum of all incomming values.'''
+
 	def _get(self, new_value,old_value,anz_values,intensity):
 		if _isnan(old_value):
 			return new_value, True

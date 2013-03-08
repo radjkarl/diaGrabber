@@ -25,9 +25,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
     <link rel="next" title="Methods to ..." href="methods.html" />
-    <link rel="prev" title="Defining the source" href="source.html" /> 
+    <link rel="prev" title="diaGrabber.source" href="source.html" /> 
   </head>
   <body>
     <div class="related">
@@ -43,9 +45,10 @@
           <a href="methods.html" title="Methods to ..."
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="source.html" title="Defining the source"
+          <a href="source.html" title="diaGrabber.source"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API:</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -61,8 +64,18 @@
 <em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">basisDimension</tt><big>(</big><em>name</em>, <em>index</em>, <em>resolution</em>, <em>includeMethod</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension" title="Permalink to this definition">¶</a></dt>
 <dd><p>basisDimensionText</p>
 <dl class="method">
+<dt id="diaGrabber.source._dimension.basisDimension.evalIncludeMethod">
+<tt class="descname">evalIncludeMethod</tt><big>(</big><em>includeMethod</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.evalIncludeMethod" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li>&#8216;all&#8217;: include all values of the dimension</li>
+<li>[START,STOP]: include all values from START to STOP</li>
+<li>&#8216;chronic&#8217;: include the last n=resolution values</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
 <dt id="diaGrabber.source._dimension.basisDimension.includeAll">
-<tt class="descname">includeAll</tt><big>(</big><em>resolution</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeAll" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">includeAll</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeAll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Include all values and sort in a range from min to max values
 dissolved by the resolution
 !!!: not all sources can define the min and max values</p>
@@ -70,14 +83,14 @@ dissolved by the resolution
 
 <dl class="method">
 <dt id="diaGrabber.source._dimension.basisDimension.includeChronic">
-<tt class="descname">includeChronic</tt><big>(</big><em>resolution</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeChronic" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">includeChronic</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeChronic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Only take the last [dimension.resolution] values
 override when read more than that</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="diaGrabber.source._dimension.basisDimension.includeFromTo">
-<tt class="descname">includeFromTo</tt><big>(</big><em>from_value</em>, <em>to_value</em>, <em>resolution</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeFromTo" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">includeFromTo</tt><big>(</big><em>from_to_list</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.includeFromTo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -105,7 +118,8 @@ override when read more than that</p>
 <dl class="method">
 <dt id="diaGrabber.source._dimension.mergeDimension.setMergeMethod">
 <tt class="descname">setMergeMethod</tt><big>(</big><em>mergeMethod</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension.setMergeMethod" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>defines an alternative merge-method from <a class="reference internal" href="methods.html#module-diaGrabber.methods.merge" title="diaGrabber.methods.merge"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.methods.merge</span></tt></a></p>
+</dd></dl>
 
 </dd></dl>
 
@@ -135,7 +149,7 @@ methods in dim rein</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="source.html"
-                        title="previous chapter">Defining the source</a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">diaGrabber.source</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="methods.html"
                         title="next chapter">Methods to ...</a></p>
@@ -174,9 +188,10 @@ methods in dim rein</p>
           <a href="methods.html" title="Methods to ..."
              >next</a> |</li>
         <li class="right" >
-          <a href="source.html" title="Defining the source"
+          <a href="source.html" title="diaGrabber.source"
              >previous</a> |</li>
-        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

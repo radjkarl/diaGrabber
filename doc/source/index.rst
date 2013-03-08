@@ -45,11 +45,7 @@ Contents:
    :maxdepth: 2
 
    tutorial.rst
-
-   source.rst
-   dimensions.rst
-   methods.rst
-   target.rst
+   diaGrabberAPI.rst
 
 
 

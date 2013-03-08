@@ -8,7 +8,6 @@ import subprocess
 import linecache
 
 
-import _dimension
 import _source
 
 class plainTextStream(_source.source):
@@ -44,12 +43,8 @@ class plainTextStream(_source.source):
 		'''
 		:class:`diaGrabber.source._dimension.basisDimension` \n
 		'''	
-		new_dimension  = _dimension.basisDimension(name, index, resolution, includeMethod)
+		new_dimension  = _source.basisDimension(name, index, resolution, includeMethod)
 		self.basis_dim.append(new_dimension)
-
-		self._extendCellRangeToDimension(cell_range, new_dimension)
-		self.file_dim.append("")#better genrate now than later
-		self.coord_list.append([0,0])
 		return new_dimension
 
 
@@ -57,7 +52,7 @@ class plainTextStream(_source.source):
 		'''
 		:class:`diaGrabber.source._dimension.mergeDimension` \n
 		'''	
-		new_dimension  = _dimension.mergeDimension(name, index, mergeMethod)
+		new_dimension  = _source.mergeDimension(name, index, mergeMethod)
 		self.merge_dim.append(new_dimension)
 		return new_dimension
 
@@ -187,7 +182,9 @@ class plainTextStream(_source.source):
 				#linecache.clearcache()
 				file_dim = line[:-2].split(self.dim_seperator)
 				
-				self._assignValues(file_dim)
+				in_range = self._getBasisMergeValues(file_dim)
+				if in_range:
+					self.matrixClass._assign(self.basis_values, self.merge_values)
 				
 				self.pos_output += self._readoutEverNLine
 				self.read_n_lines += 1

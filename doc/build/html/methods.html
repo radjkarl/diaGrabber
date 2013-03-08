@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Methods to ... &mdash; diaGrabber 0.1.1 documentation</title>
+    <title>diaGrabber.methods &mdash; diaGrabber 0.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,9 +25,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
-    <link rel="next" title="Defining the Target" href="target.html" />
-    <link rel="prev" title="Attach dimensions" href="dimensions.html" /> 
+    <link rel="up" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
+    <link rel="next" title="diaGrabber.target" href="target.html" />
+    <link rel="prev" title="diaGrabber.source" href="source.html" /> 
   </head>
   <body>
     <div class="related">
@@ -40,12 +42,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="target.html" title="Defining the Target"
+          <a href="target.html" title="diaGrabber.target"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="dimensions.html" title="Attach dimensions"
+          <a href="source.html" title="diaGrabber.source"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API:</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,59 +57,98 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-diaGrabber.methods.calc">
-<span id="methods-to"></span><h1>Methods to ...<a class="headerlink" href="#module-diaGrabber.methods.calc" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="diagrabber-methods">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods</span></tt><a class="headerlink" href="#diagrabber-methods" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-diaGrabber.methods.calc">
+<span id="diagrabber-methods-calc"></span><h2><a class="reference internal" href="#module-diaGrabber.methods.calc" title="diaGrabber.methods.calc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.calc</span></tt></a><a class="headerlink" href="#module-diaGrabber.methods.calc" title="Permalink to this headline">¶</a></h2>
 <p>Includes all classes for calculations for off-the-reel-taken-values of a source-class</p>
 <dl class="class">
 <dt id="diaGrabber.methods.calc.delta">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">delta</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#delta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.delta" title="Permalink to this definition">¶</a></dt>
-<dd><p>calc. the mean-difference of the last n values</p>
+<dd><p>calc. the mean-difference of the last n values
+:param n: number of the last values to calc the mean from
+:type n: int</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="diaGrabber.methods.calc.divideCalcClasses">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">divideCalcClasses</tt><big>(</big><em>upperCalcClass</em>, <em>lowerCalcClass</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#divideCalcClasses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.divideCalcClasses" title="Permalink to this definition">¶</a></dt>
-<dd><p>divide the last calulated values of two given calc-classes
-use it like this:
-dim1 = myFile.dimension(...)
-dim1.calc.append(calc.delta(10))</p>
-<p>dim2 = myFile.dimension(...)
-dim2.calc.append(calc.delta(10))
-#&lt;&lt;&lt;
-dim2.calc.append(dim1.calc[0], dim2.calc[0])
-#&gt;&gt;&gt;
-#In this case the derivate d(dim1)/d(dim2) middled for the last 10
-#valued will be calculated
+<dd><p>divide the last calulated values of two given calc-classes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>upperCalcClass</strong> (class of type <a class="reference internal" href="#module-diaGrabber.methods.calc" title="diaGrabber.methods.calc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.calc</span></tt></a>) &#8211; foo</li>
+<li><strong>lowerCalcClass</strong> (class of type <a class="reference internal" href="#module-diaGrabber.methods.calc" title="diaGrabber.methods.calc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.calc</span></tt></a>) &#8211; foo</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this case the derivate d(dim1)/d(dim2) middled for the last 10
+valued will be calculated
 This procedure will only work if both dimensions are in merge or basis.</p>
+<p>fooooo
+use it like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dim1</span> <span class="o">=</span> <span class="n">myFile</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c"># or mergeDimension</span>
+<span class="n">dim1</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">dim2</span> <span class="o">=</span> <span class="n">myFile</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">dim2</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="c">#&lt;&lt;&lt;</span>
+<span class="n">dim2</span><span class="o">.</span><span class="n">calc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dim1</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dim2</span><span class="o">.</span><span class="n">calc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c">#&gt;&gt;&gt;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="class">
 <dt id="diaGrabber.methods.calc.mean">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.calc.</tt><tt class="descname">mean</tt><big>(</big><em>n</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/calc.html#mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.calc.mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>calc. the mean of the last n values</p>
+<dd><p>calc. the mean of the last n values
+:param n: number of the last values to calc the mean from
+:type n: int</p>
 </dd></dl>
 
-<span class="target" id="module-diaGrabber.methods.merge"></span><dl class="class">
+</div>
+<div class="section" id="module-diaGrabber.methods.merge">
+<span id="diagrabber-methods-merge"></span><h2><a class="reference internal" href="#module-diaGrabber.methods.merge" title="diaGrabber.methods.merge"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.merge</span></tt></a><a class="headerlink" href="#module-diaGrabber.methods.merge" title="Permalink to this headline">¶</a></h2>
+<p>This module includes all methods to merge values from
+type <tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt>.
+&#8220;Merge&#8221; means in this case to handle an incoming  new value at a place in
+the target where other values exists allready.
+Depending on the chosen target-class <tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.target</span></tt> its also
+possible that incomming values have an intensity &lt; 1 because the orig.
+values were splitted.</p>
+<dl class="class">
 <dt id="diaGrabber.methods.merge.max">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">max</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.max" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Take only the maximum of all incomming values.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="diaGrabber.methods.merge.mean">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">mean</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.mean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Caluculate and take the mean of all incomming values.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="diaGrabber.methods.merge.min">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">min</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.min" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Take only the minimum of all incomming values.</p>
+</dd></dl>
 
 <dl class="class">
 <dt id="diaGrabber.methods.merge.sum">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.merge.</tt><tt class="descname">sum</tt><a class="reference internal" href="_modules/diaGrabber/methods/merge.html#sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.merge.sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Caluculate and take the sum of all incomming values.</p>
+</dd></dl>
 
-<span class="target" id="module-diaGrabber.methods.exclude"></span><p>Includes all classes for criteria to exclude
+</div>
+<div class="section" id="module-diaGrabber.methods.exclude">
+<span id="diagrabber-methods-exclude"></span><h2><a class="reference internal" href="#module-diaGrabber.methods.exclude" title="diaGrabber.methods.exclude"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.exclude</span></tt></a><a class="headerlink" href="#module-diaGrabber.methods.exclude" title="Permalink to this headline">¶</a></h2>
+<p>Includes all classes for criteria to exclude
 off-the-reel-taken-values of a source-class
 private methods _get will return True if the value fullfills the criteria and
 falas if it fails.</p>
@@ -131,7 +173,10 @@ is smaller than dimension.calc[dim2]</p>
 is smaller than the given value</p>
 </dd></dl>
 
-<span class="target" id="module-diaGrabber.methods.transform"></span><dl class="class">
+</div>
+<div class="section" id="module-diaGrabber.methods.transform">
+<span id="diagrabber-methods-transform"></span><h2><a class="reference internal" href="#module-diaGrabber.methods.transform" title="diaGrabber.methods.transform"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.transform</span></tt></a><a class="headerlink" href="#module-diaGrabber.methods.transform" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
 <dt id="diaGrabber.methods.transform.fx">
 <em class="property">class </em><tt class="descclassname">diaGrabber.methods.transform.</tt><tt class="descname">fx</tt><big>(</big><em>fx_str</em>, <em>name</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/methods/transform.html#fx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.methods.transform.fx" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
@@ -155,6 +200,7 @@ source_l = [ [time1,value1], ... , [timeN,valueN] ]</p>
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -165,12 +211,23 @@ source_l = [ [time1,value1], ... , [timeN,valueN] ]</p>
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">diaGrabber.methods</span></tt></a><ul>
+<li><a class="reference internal" href="#module-diaGrabber.methods.calc"><tt class="docutils literal"><span class="pre">diaGrabber.methods.calc</span></tt></a></li>
+<li><a class="reference internal" href="#module-diaGrabber.methods.merge"><tt class="docutils literal"><span class="pre">diaGrabber.methods.merge</span></tt></a></li>
+<li><a class="reference internal" href="#module-diaGrabber.methods.exclude"><tt class="docutils literal"><span class="pre">diaGrabber.methods.exclude</span></tt></a></li>
+<li><a class="reference internal" href="#module-diaGrabber.methods.transform"><tt class="docutils literal"><span class="pre">diaGrabber.methods.transform</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="dimensions.html"
-                        title="previous chapter">Attach dimensions</a></p>
+  <p class="topless"><a href="source.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">diaGrabber.source</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="target.html"
-                        title="next chapter">Defining the Target</a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">diaGrabber.target</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/methods.txt"
@@ -203,12 +260,13 @@ source_l = [ [time1,value1], ... , [timeN,valueN] ]</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="target.html" title="Defining the Target"
+          <a href="target.html" title="diaGrabber.target"
              >next</a> |</li>
         <li class="right" >
-          <a href="dimensions.html" title="Attach dimensions"
+          <a href="source.html" title="diaGrabber.source"
              >previous</a> |</li>
-        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

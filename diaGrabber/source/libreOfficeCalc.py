@@ -8,16 +8,16 @@ import ooolib
 	# see old: http://sourceforge.net/projects/ooolib/
 	# see new: https://code.google.com/p/odslib-python/
 #from _dimension import _dimension
-import _dimension
 
 import _source
 
 class libreOfficeCalc(_source.source):
 	'''allow to read values from a libre/open-office-calc document
-	prepare for reading values from an libreOffice-calc-document
-	needs:
-	* *ODS_file_name* = "name of the file" e.g. "myfile.ods"
-	* *sheet_name_or_number* ="name" OR number of the sheet e.g. "sheet1" OR 4
+	
+	:param ODS_file_name: "name of the file" e.g. "myfile.ods"
+	:param sheet_name_or_number: "name" OR number of the sheet e.g. "sheet1" OR 4
+	:param data_type: default "unknown", all possible values are defined in :func:`diaGrabber.source._source.source._evalDataType`
+	:param print_error_when_cell_is_empty: default False, True Stopping readout and raise an error whenn one of all cells in the given  cell_range is empty
 	'''
 
 	def __init__(self, ODS_file_name, sheet_name_or_number,
@@ -44,14 +44,21 @@ class libreOfficeCalc(_source.source):
 		self._readout_every_n_line = int(readout_every_n_line)
 
 
-	def basisDimension(self, name, resolution, cell_range, includeMethod=""):
+	def basisDimension(self, name, resolution, cell_range, includeMethod=''):
 		'''
-		:class:`diaGrabber.source._dimension.basisDimension` \n
-		needs: \n
-		* *cell_range* = "START:STOP" e.g. "C2:C1000"
-		* it's also possible to scan multiple collums... just type e.g. "A1:E10"
+		Add a new basis-dimension to the source.
+		See :class:`diaGrabber.source._dimension.basisDimension` for further explanation and options.
+		
+		:param name: [... of the dimension] e.g. "time"
+		:type name: string
+		:param resolution: [number of tracked values of the dimension] e.g. 100
+		:type resolution: int
+		:param cell_range: ["START:STOP"] range of the cells in the ods-file e.g. "C2:C1000" or "A1:E10"
+		:type cell_range: string
+		:param includeMethod: method to border the value-range, see :func:`diaGrabber.source._source.basisDimension.evalIncludeMethod` for all options
+		:type includeMethod: string
 		'''	
-		new_dimension  = _dimension.basisDimension(name, self._getIndex(), resolution, includeMethod)
+		new_dimension  = _source.basisDimension(name, self._getIndex(), resolution, includeMethod)
 		self.basis_dim.append(new_dimension)
 
 		self._extendCellRangeToDimension(cell_range, new_dimension)
@@ -60,14 +67,21 @@ class libreOfficeCalc(_source.source):
 		return new_dimension
 
 
-	def mergeDimension(self, name, cell_range, mergeMethod=""):
+	def mergeDimension(self, name, cell_range, mergeMethod=None):
 		'''
-		:class:`diaGrabber.source._dimension.mergeDimension` \n
-		needs: \n
-		* *cell_range* = "START:STOP" e.g. "C2:C1000"
-		* it's also possible to scan multiple collums... just type e.g. "A1:E10"
+		Add a new merge-dimension to the source.
+		See :class:`diaGrabber.source._source.mergeDimension` for further explanation and options.
+		
+		:param name: ... of the dimension e.g. *"time"*
+		:type name: string
+		:param resolution: number of tracked values of the dimension e.g. *100*
+		:type resolution: int
+		:param cell_range: "START:STOP" range of the cells in the ods-file e.g. *"C2:C1000"* or *"A1:E10"*
+		:type cell_range: string
+		:param mergeMethod: defines way of handle merge-values in the same place in the target are.
+		:type mergeMethod: class from :class:`diaGrabber.methods.merge`
 		'''	
-		new_dimension  = _dimension.mergeDimension(name, self._getIndex(), mergeMethod)
+		new_dimension  = _source.mergeDimension(name, self._getIndex(), mergeMethod)
 		self.merge_dim.append(new_dimension)
 
 		self._extendCellRangeToDimension(cell_range, new_dimension)
@@ -136,11 +150,10 @@ class libreOfficeCalc(_source.source):
 		return self._index_counter
 
 
-	def _getMinMax(self,dims):
-		sys.exit(NotImplemented)
 		
 	def _prepareReadOut(self, matrixClass):
 		self._prepareStandard(matrixClass)
+		self._resetReadOut()
 		
 		if type(self.sheet_name_or_number) == int:
 			self.doc.set_sheet_index(self.sheet_name_or_number - 1)
@@ -160,22 +173,43 @@ class libreOfficeCalc(_source.source):
 		print("reading values from sheet '%s'" % self.doc.get_sheet_name())
 
 
-	def _readOut(self, readout_one_line, end_readOut):
-		while True:
-			for i in range(self._readout_every_n_line):
-				done_readout = self._updateCoordinates()
-			if done_readout:
-				return True
-			self._grabODSValues()
-		
-			self._assignValues(self.file_dim)
-			
-			if readout_one_line:
-				return False
-			if end_readOut:
-				return True
 
-		return True # means i'm done with readout
+
+
+
+
+	def _getFileDim(self):
+		
+		for i in range(self._readout_every_n_line):
+				done_readout = self._updateCoordinates()
+		
+		if done_readout:
+			raise StopIteration
+		else:
+			return self._grabODSValues()
+
+
+	def _printStatus(self):
+		pass
+		#if self.n == self.showBar_counter:
+			#self.bar_step += self.bar_step_delta
+			#_utils.statusBar(self.bar_step,self.sum_bar, 20)
+			#self.n = 0
+		#self.n+= 1
+
+
+
+
+
+
+	def _resetReadOut(self):
+		for dim in self.basis_dim:
+			dim.X_step = dim.X_start
+			dim.Y_step = dim.Y_start
+		for dim in self.merge_dim:
+			dim.X_step = dim.X_start
+			dim.Y_step = dim.Y_start
+
 
 
 	def _updateCoordinates(self):
@@ -203,6 +237,8 @@ class libreOfficeCalc(_source.source):
 		'''
 		#value_list = []
 		for n,c in enumerate(self.coord_list):
+			#print  self.doc.get_cell_value(c[0],c[1]), n,c
+
 			try:
 				self.file_dim[n] = self.doc.get_cell_value(c[0],c[1])[1]
 			except TypeError:
@@ -215,3 +251,4 @@ class libreOfficeCalc(_source.source):
 					self.file_dim[n] = ""
 			except UnicodeEncodeError:
 				self.file_dim[n] = ""
+		return self.file_dim

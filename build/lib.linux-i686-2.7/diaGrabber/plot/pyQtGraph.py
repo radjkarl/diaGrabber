@@ -46,7 +46,7 @@ class multiPlot(_plot):
 				yAxis.setLabel(units = self.basis_dim[1].name)
 				xAxis = pg.AxisItem("bottom")##y
 				xAxis.setLabel(units = self.basis_dim[0].name)
-				#yAxis.setRange(self.basis_dim[1].include_from_to[1],self.basis_dim[1].include_from_to[0])
+				#yAxis.setRange(self.basis_dim[1]._include_from_to[1],self.basis_dim[1]._include_from_to[0])
 		
 		
 				imv1 = pg.ImageView(view=pg.PlotItem(title="hallo", axisItems = {"left": yAxis, "bottom": xAxis}))
@@ -55,7 +55,7 @@ class multiPlot(_plot):
 			else:#simple 2d-plot - no imag
 				imv1 = pg.PlotWidget(title=self.merge_dim[m].name)
 				#imv1.addLegend(size=None, offset=(30, 30))
-				imv1.setXRange(self.basis_dim[0].include_from_to[0],self.basis_dim[0].include_from_to[1], padding=0.02)
+				imv1.setXRange(self.basis_dim[0]._include_from_to[0],self.basis_dim[0]._include_from_to[1], padding=0.02)
 				imv1.setYRange(min(self.data),max(self.data), padding=0.02)
 	
 				#imv1.setRange(rect=True, xRange=tuple(self.basis_dim[0].include_from_to), yRange=(min(data),max(data)), padding=0.02, update=True, disableAutoRange=True)
@@ -259,16 +259,16 @@ class interactive(object):
 					self.curves[i].setData(basis_extract, merge_extract )
 				#print basis_extract
 				if "x" in self.enableAutoRange:
-					self.p6.setXRange(self.basis_dim[0].include_from_to[0],self.basis_dim[0].include_from_to[1])
+					self.p6.setXRange(self.basis_dim[0]._include_from_to[0],self.basis_dim[0]._include_from_to[1])
 				if "y" in self.enableAutoRange:
 					##get min, max values for all merge-dims
-					#miny = self.merge_dim[0].include_from_to[0]
-					#maxy = self.merge_dim[0].include_from_to[1]
+					#miny = self.merge_dim[0]._include_from_to[0]
+					#maxy = self.merge_dim[0]._include_from_to[1]
 					#for i in range(1,self.nMerge):
-						#if self.merge_dim[i].include_from_to[0] < miny:
-							#miny = self.merge_dim[i].include_from_to[0]
-						#if self.merge_dim[i].include_from_to[1] > maxy:
-							#maxy = self.merge_dim[i].include_from_to[1]
+						#if self.merge_dim[i]._include_from_to[0] < miny:
+							#miny = self.merge_dim[i]._include_from_to[0]
+						#if self.merge_dim[i]._include_from_to[1] > maxy:
+							#maxy = self.merge_dim[i]._include_from_to[1]
 					#print miny,maxy
 					#self.p6.setYRange(miny,maxy)
 					self.p6.enableAutoRange('y', True)

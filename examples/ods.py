@@ -6,7 +6,7 @@ from diaGrabber.methods import merge, calc, exclude, transform
 #folder = "/home/bedrich/Arbeitsfläche/Strahlvermessung/"
 #folder = "/home/bedrich/Dokumente/HiWi/Strahlvermessung/"
 
-file_name = "ods_example.ods"#"
+file_name = "ressources/ods_example.ods"#"
 #seperator = " "
 data_type = "float"
 
@@ -17,7 +17,9 @@ p = source.libreOfficeCalc(file_name, "Tabelle1", data_type)
 #f.setReadoutEvery_n_line = 10
 
 
-one = p.basisDimension("I [mA]",50, "A2:A100", [0,100])
+#one = p.basisDimension("I [mA]",50, "A2:A100", [0,100])
+one = p.basisDimension("I [mA]",50, "A2:A100")
+
 #resolution = 50
 #one.includeFromTo(0, 100, resolution)
 

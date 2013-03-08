@@ -1,19 +1,18 @@
 # -*- coding: utf-8 *-*
 #from copy import deepcopy
 #import select
-#import time
+import time
 import sys, os
 import fcntl
 import subprocess
 
-
-import _dimension
 import _source
 
 class stream(_source.source):
 	def __init__(self, command, start_via, stop_via, dim_seperator,
 		data_type = "unknown",
 		key_to_end_process = "",
+		run_in_shell = False,
 		readoutEverNLine = 1,
 		infoEveryNLines = 1000):
 
@@ -21,6 +20,7 @@ class stream(_source.source):
 		#self.dimension = _dimension._dimension
 
 		self._command = command
+		self.run_in_shell = run_in_shell
 		self.file_name = command
 		self.key_to_end_process = key_to_end_process
 		self.dim_seperator = dim_seperator
@@ -39,16 +39,12 @@ class stream(_source.source):
 				#self.index = 0
 			#super(stream.dimension, self).__init__(name, self.index)
 
-	def basisDimension(self, name,index,  resolution, includeMethod=""):
+	def basisDimension(self, name, index,  resolution, includeMethod=""):
 		'''
 		:class:`diaGrabber.source._dimension.basisDimension` \n
 		'''	
-		new_dimension  = _dimension.basisDimension(name, index, resolution, includeMethod)
+		new_dimension  = _source.basisDimension(name, index, resolution, includeMethod)
 		self.basis_dim.append(new_dimension)
-
-		self._extendCellRangeToDimension(cell_range, new_dimension)
-		self.file_dim.append("")#better genrate now than later
-		self.coord_list.append([0,0])
 		return new_dimension
 
 
@@ -56,7 +52,7 @@ class stream(_source.source):
 		'''
 		:class:`diaGrabber.source._dimension.mergeDimension` \n
 		'''	
-		new_dimension  = _dimension.mergeDimension(name, index, mergeMethod)
+		new_dimension  = _source.mergeDimension(name, index, mergeMethod)
 		self.merge_dim.append(new_dimension)
 		return new_dimension
 
@@ -101,6 +97,7 @@ class stream(_source.source):
 			self._command,
 			bufsize=-1,
 			stdin=sys.stdin,
+			shell = self.run_in_shell,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE)
 		if self.start_via != "":
@@ -137,57 +134,118 @@ class stream(_source.source):
 			#self.engine.wait()
 		except (IOError, AttributeError):
 			pass
-		finally:
-			return True
+		#finally:
+			#return True
 
-	def _readOut(self, readout_interrupt, end_readOut):
-		
-		# ensure, that the process will terminate
-		if end_readOut:
-			done_readout = self._endReadOut()
-		else:
-			done_readout = False
+	#def _readOut(self, readout_interrupt, end_readOut):
+		#
+		## ensure, that the process will terminate
+		#if end_readOut:
+			#done_readout = self._endReadOut()
+		#else:
+			#done_readout = False
 
-		done_one_line = False
-		while not done_readout and not done_one_line:
-			try:
-				if self.done_reading_old_output:
-					#get new output
-					self.output = self._non_block_read(self.engine.stdout)
-					#reset position
-					if self.len_output > 0:
-						self.len_output -=1
-					self.pos_output -= self.len_output
-	
-					self.len_output = len(self.output)
-					self.done_reading_old_output = False
-				
-				if self.len_output <= 1: #got no output
-					self.done_reading_old_output = True
-				
-				else: #process output
-					while self.pos_output < self.len_output:
-						line = self.output[self.pos_output]
-						if line == self.stop_via:
-							done_readout = self._endReadOut()
-							break
-						file_dim = line.split(self.dim_seperator)
-						self.read_n_lines += 1
-						self.step_n_lines += 1
-						self._assignValues(file_dim)
-						self.pos_output += self._readoutEverNLine
-						if self.step_n_lines == self._infoEveryNLines:
-							print "readout %s lines" %self.read_n_lines
-							self.step_n_lines = 0
+		#done_one_line = False
+		#while not done_readout and not done_one_line:
+			#try:
+				#if self.done_reading_old_output:
+					##get new output
+					#self.output = self._non_block_read(self.engine.stdout)
+					##reset position
+					#if self.len_output > 0:
+						#self.len_output -=1
+					#self.pos_output -= self.len_output
+	#
+					#self.len_output = len(self.output)
+					#self.done_reading_old_output = False
+				#
+				#if self.len_output <= 1: #got no output
+					#self.done_reading_old_output = True
+				#
+				#else: #process output
+					#while self.pos_output < self.len_output:
+						#line = self.output[self.pos_output]
+						#if line == self.stop_via:
+							#done_readout = self._endReadOut()
+							#break
+						#file_dim = line.split(self.dim_seperator)
+						#self.read_n_lines += 1
+						#self.step_n_lines += 1
+						#
+						##self._assignValues(file_dim)
+						#in_range = self._getBasisMergeValues(file_dim)
+						#if in_range:
+							#self.matrixClass._assign(self.basis_values, self.merge_values)
+						#
+						#
+						#self.pos_output += self._readoutEverNLine
+						#if self.step_n_lines == self._infoEveryNLines:
+							#print "readout %s lines" %self.read_n_lines
+							#self.step_n_lines = 0
+		#
+						#if readout_interrupt:
+							#done_one_line = True
+							#break
+						#if self.pos_output+1 >= self.len_output:
+							#break
+					#if self.pos_output+1 >= self.len_output:
+						#self.done_reading_old_output = True
+						#
+			#except KeyboardInterrupt:
+				#done_readout = self._endReadOut()
+		#return done_readout
+
+
+	def _getNewOutput(self):
+		#get new output
+		self.output = self._non_block_read(self.engine.stdout)
+		#reset position
+		if self.len_output > 0:
+			self.len_output -=1
+		self.pos_output -= self.len_output
+		#print self.pos_output,77
+
+		self.len_output = len(self.output)
+		#self.done_reading_old_output = False
+
+	def _getFileDim(self):
+		#if self.done_reading_old_output:
+		#	self._getNewOutput()
 		
-						if readout_interrupt:
-							done_one_line = True
-							break
-						if self.pos_output+1 >= self.len_output:
-							break
-					if self.pos_output+1 >= self.len_output:
-						self.done_reading_old_output = True
-						
-			except KeyboardInterrupt:
-				done_readout = self._endReadOut()
-		return done_readout
+		#if self.len_output <= 1: #got no output
+		#	self.done_reading_old_output = True
+		#	self._getFileDim()
+		#else: #process output
+		while self.pos_output >= self.len_output or self.len_output <= 1:#got no output
+			#self.pos_output -= self.len_output
+			#self.done_reading_old_output = True
+			self._getNewOutput()
+				#print 55
+			#else:
+		#print self.pos_output, self.len_output, len(self.output)
+		line = self.output[self.pos_output]
+		if line == self.stop_via:
+			self._endReadOut()
+			raise StopIteration
+			
+		self.read_n_lines += 1
+		self.step_n_lines += 1
+		
+		
+		
+		self.pos_output += self._readoutEverNLine
+
+
+
+		#if self.pos_output+1 >= self.len_output:
+		#	self.done_reading_old_output = True
+		#print line.split(self.dim_seperator)
+		return line.split(self.dim_seperator)
+
+	def _printStatus(self):
+		if self.step_n_lines == self._infoEveryNLines:
+			print "readout %s lines" %self.read_n_lines
+			self.step_n_lines = 0
+
+	def _resetReadOut(self):
+		pass

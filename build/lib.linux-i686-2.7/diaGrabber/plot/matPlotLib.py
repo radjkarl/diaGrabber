@@ -131,7 +131,7 @@ class matPlotLib(_plot):
 				for i in self.plot_overlay[m][1]:
 					self.ax[m].plot(i[0],i[1], marker=',')#, color='r', ls='')
 					
-			if self.plot_overlay[2] != []:#draw lines
+			if self.plot_overlay[m][2] != []:#draw lines
 				for i in self.plot_overlay[m][2]:
 					self.ax[m].plot(i[0],i[1], marker='-')#, color='r', ls='')
 

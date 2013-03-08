@@ -25,8 +25,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="diaGrabber 0.1.1 documentation" href="#" />
-    <link rel="next" title="Getting started" href="tutorial.html" /> 
+    <link rel="next" title="Examples" href="tutorial.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,7 +40,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="tutorial.html" title="Examples"
              accesskey="N">next</a> |</li>
         <li><a href="#">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
       </ul>
@@ -78,26 +79,18 @@
 <h1>Contents:<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Getting started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#installing-your-doc-directory">Installing your doc directory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#reading-and-processing-3d-data-from-a-plaintext">Reading and processing 3D-data from a Plaintext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#starting-and-reading-a-stream">Starting and reading a stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#reading-from-a-libreoffice-file">Reading from a LibreOffice-File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#reading-from-multible-files">Reading from multible files</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="source.html"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source.html#diagrabber-source-plaintext"><tt class="docutils literal"><span class="pre">diaGrabber.source.plainText</span></tt></a></li>
-<li class="toctree-l2"><a class="reference internal" href="source.html#diagrabber-source-stream"><tt class="docutils literal"><span class="pre">diaGrabber.source.stream</span></tt></a></li>
-<li class="toctree-l2"><a class="reference internal" href="source.html#diagrabber-source-libreofficecalc"><tt class="docutils literal"><span class="pre">diaGrabber.source.libreOfficeCalc</span></tt></a></li>
-<li class="toctree-l2"><a class="reference internal" href="source.html#diagrabber-source-plaintextstream"><tt class="docutils literal"><span class="pre">diaGrabber.source.plainTextStream</span></tt></a></li>
-<li class="toctree-l2"><a class="reference internal" href="source.html#diagrabber-source-source"><tt class="docutils literal"><span class="pre">diaGrabber.source._source</span></tt></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="dimensions.html">Attach dimensions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dimensions.html#installing-your-doc-directory">Installing your doc directory</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="methods.html">Methods to ...</a></li>
-<li class="toctree-l1"><a class="reference internal" href="target.html">Defining the Target</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="target.html#matrix">Matrix</a></li>
-<li class="toctree-l2"><a class="reference internal" href="target.html#module-diaGrabber.target.discretePoints">discrete Points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diaGrabberAPI.html">The diaGrabber-API:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source.html"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html"><tt class="docutils literal"><span class="pre">diaGrabber.methods</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="target.html"><tt class="docutils literal"><span class="pre">diaGrabber.target</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="baseClasses.html">BaseClasses</a></li>
 </ul>
 </li>
 </ul>
@@ -134,7 +127,7 @@
 
   <h4>Next topic</h4>
   <p class="topless"><a href="tutorial.html"
-                        title="next chapter">Getting started</a></p>
+                        title="next chapter">Examples</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -167,7 +160,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="tutorial.html" title="Getting started"
+          <a href="tutorial.html" title="Examples"
              >next</a> |</li>
         <li><a href="#">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
       </ul>

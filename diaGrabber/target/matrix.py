@@ -36,11 +36,12 @@ class _matrix(object):
 			#Llegend) = list[str(...),... ]
 
 		#self.readOut_prepared = False
+		sourceClass._prepareReadOut(self)
+
 		self._build()
 		#if plotClass:#start showing window
 			#plotClass.show()
 		#self.mergeMatrix, self.densityMatrix = sourceClass._readOut(self)
-		sourceClass._prepareReadOut(self)
 		#sourceClass._readOut(self)
 
 		
@@ -59,14 +60,27 @@ class _matrix(object):
 		for i in range(self.nMerge):
 			self.mergeMatrix[i].fill(numpy.nan)
 
-
-
-
 		self._checkMinMax(self.basis_dim, self.nDim)
 
 		self.sortMatrix = []
 		for i in range(len(self.basis_dim)):
 			self.sortMatrix.append(self.basis_dim[i]._sort_range)
+
+
+
+	def _assign(self, basis_values, merge_values):
+		self._getPositionsIntensities(basis_values)
+		
+					#positionsIntensities = self.matrixClass._assign(self.basis_values)
+		for position, intensity in self.positionsIntensities:
+			tPostion = tuple(position)
+			for m in range(self.nMerge):
+				(replace_value, do_replace)= self.merge_dim[m]._mergeMethod._get(merge_values[m],
+					self.mergeMatrix[m][tPostion],self.densityMatrix[m][tPostion],intensity)
+				if do_replace:
+					self.mergeMatrix[m][tPostion] = replace_value
+					self.densityMatrix[m][tPostion] += intensity
+
 
 
 
@@ -77,7 +91,7 @@ class _matrix(object):
 		dim_names = []
 		for i in range(nDim):
 			if basis_dim[i]._take_all_values:
-				dims.append(basis_dim[i].index)
+				dims.append(basis_dim[i])#.index)
 				dim_names.append(basis_dim[i].name)
 		if len(dims) > 0:
 			print "...getting range for dims %s" %dim_names
@@ -86,9 +100,10 @@ class _matrix(object):
 			for i in range(nDim):
 				if basis_dim[i]._take_all_values:
 					basis_dim[i]._include_from_to = min_max[j]
+					basis_dim[i]._initSortRange()
 					j+=1
-				print "set range for %s to %s" %(basis_dim[i].name,
-					basis_dim[i]._include_from_to)
+					print "set range for %s to %s" %(basis_dim[i].name,
+						basis_dim[i]._include_from_to)
 
 
 	def fill(self):
@@ -446,8 +461,8 @@ class _matrix(object):
 			#points[m] = zip(*points[m])
 			for i in range(len(points)):
 				#print points[i]
-				positionsIntensities = self._assign(points[i])
-				for position, intensity in positionsIntensities:
+				self._getPositionsIntensities(points[i])
+				for position, intensity in self.positionsIntensities:
 					tPostion = tuple(position)
 					(replace_value, do_replace)= self.merge_dim[m]._mergeMethod._get(merge[m][i],
 						self.mergeMatrix[m][tPostion],self.densityMatrix[m][tPostion],intensity)
@@ -467,7 +482,7 @@ class coarseMatrix(_matrix):
 		for i in range(self.nDim):
 			self.positionsIntensities[0][0].append(0)
 						
-	def _assign(self, basis_values):
+	def _getPositionsIntensities(self, basis_values):
 		
 		for i in range(self.nDim):
 			difference_list = self.sortMatrix[i] - basis_values[i]
@@ -475,8 +490,9 @@ class coarseMatrix(_matrix):
 			nearest_point = difference_list.argmin()
 			self.basis_dim[i]._recent_position = nearest_point
 			self.positionsIntensities[0][0][i] = nearest_point
-		return self.positionsIntensities
+		#return self.positionsIntensities
 
+		#positionsIntensities = self._getPositionsIntensities(basis_values)
 
 
 class fineMatrix(_matrix):
@@ -510,8 +526,11 @@ class fineMatrix(_matrix):
 			#3D: 8 cells
 			self.positionsIntensities.append(deepcopy(self.positionsIntensities[0]))
 			
-	def _assign(self, basis_values):
-		newPositionsIntensities = deepcopy(self.positionsIntensities)
+	def _getPositionsIntensities(self, basis_values):
+		
+		for i in range(self.anzAffectedCells):#reset intensities (later there is a *=)
+			self.positionsIntensities[i][1] = 1
+		
 		for i in range(self.nDim):
 			difference_list = self.sortMatrix[i] - basis_values[i]
 			difference_list = abs(difference_list)
@@ -536,8 +555,8 @@ class fineMatrix(_matrix):
 			sec_nearest_intensity = transfered_intensity
 			intensity = nearest_intensity
 			for j in range(self.anzAffectedCells):
-				newPositionsIntensities[j][0][i] = write_point
-				newPositionsIntensities[j][1] *= intensity
+				self.positionsIntensities[j][0][i] = write_point
+				self.positionsIntensities[j][1] *= intensity
 
 				if n == self.affectedCellCounter[i]:
 					if write_point == nearest_point:
@@ -548,6 +567,7 @@ class fineMatrix(_matrix):
 						intensity = nearest_intensity
 					n = -1
 				n += 1
-		return newPositionsIntensities
+		
+		#return self.positionsIntensities
 
 
