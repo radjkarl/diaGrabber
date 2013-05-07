@@ -1,0 +1,620 @@
+# -*- coding: utf-8 *-*
+import sys
+import numpy as np
+
+import diaGrabber.methods.merge as mergeMethods
+import diaGrabber.methods.calc as calcMethods
+import diaGrabber.methods.exclude as excludeMethods
+import diaGrabber.methods.transform as transformMethods
+#import diaGrabber.methods.alias as aliasMethods
+
+from diaGrabber import _utils
+
+class source(object):
+	'''The basis-class for all type of sources provides some general functions. And
+	evaluate the 'data_type'
+	data_type can be "int", "float", hex" or "fooBar" in case you don't know the type of your data.
+	'''
+	def __init__(self, data_type):
+		self._basis_dim = []
+		self._merge_dim = []
+		self.value_line = [] # every readout-line is splittet and saved in this list
+
+		self._evalDataType(data_type)
+		
+		self._basisDimCounter, self._mergeDimCounter = 0,0
+
+
+	def setBasis(self, basis_list):
+		'''
+		In diaGrabber every generated basis-dimension will added to the basis.
+		Use this method to define an alternative list of basis-dimensions.
+		'''
+		for b in basis_list:
+			if b.__class__.__name__ != "basisDimension":
+				sys.exit("ERROR setBasis(basis_list) takes only basisDimension-classes")
+		self._basis_dim = basis_list
+		#update basisDim._basisIndex
+		for i, b in enumerate(self._basis_dim):
+			b._basisIndex = i
+		
+	def setMerge(self, merge_list):
+		'''
+		In diaGrabber every generated merge-dimension will added to the basis.
+		Use this method to define an alternative list of merge-dimensions.
+		'''
+		for m in merge_list:
+			if m.__class__.__name__ != "mergeDimension":
+				sys.exit("ERROR setBasis(basis_list) takes only mergeDimension-classes")
+		self._merge_dim = merge_list
+		#update basisDim._basisIndex
+		for i, m in enumerate(self._merge_dim):
+			m._mergeIndex = i
+	
+		
+########private############
+	def _evalDataType(self, data_type):
+		'''
+		* 'int': integer numbers
+		* 'float': floating-point numbers
+		* 'hex': hexadecimale numbers
+		'''
+		if data_type == "float":
+			self.evalStr = self._floatStr
+		elif data_type == "hex":
+			self.evalStr = self._hexStr
+		elif data_type == "int":
+			self.evalStr = self._intStr
+		else:
+			self.evalStr = self._unknownStr
+
+	def _floatStr(self, s):
+		'''when the values of the dimension are floating-point numbers, like {0.023}'''
+		return float(s)
+		
+	def _hexStr(self, s):
+		'''when the values of the dimension are hexadecimal integers, like {0xff}'''
+		return int(s,16)
+		
+	def _intStr(self, s):
+		'''when the values of the dimension are decimal integers, like {3}'''
+		return int(s,10)
+
+	def _unknownStr(self, s):
+		'''
+		when we dont know the type of the values of the dimension
+		we use this slow-method to transform a string to a number
+		'''
+		return eval(s)
+
+
+	def _getBasisMergeValues(self, in_range):
+		'''
+		in: list of string values, like ["0.1", "1.3", "#ff"]
+		process:
+			* extracts all basis- and merge-values from the given list
+			* transform strings to numbers
+		out: bool(are all basis-values in range)
+		'''
+		#in_range = True
+		###get merge-values
+		for m in range(self.nMerge):
+			try:
+				(in_range, self.merge_values[m]) = self._merge_dim[m]._update(in_range,
+					self.evalStr(self.value_line[self._merge_dim[m].index]))
+			except (IndexError, ValueError):
+				print "skipping merge ... %s" %self.value_line
+				return False
+		#calc for base
+		for dim in range(self.nBasis):
+			try:
+				(in_range, self.basis_values[dim]) = self._basis_dim[dim]._update(in_range,
+					self.evalStr(self.value_line[self._basis_dim[dim].index]))
+			except (IndexError, ValueError):
+				print "skipping basis... %s" %self.value_line
+				return False
+		return in_range
+
+
+	def _embeddBasisDim(self, new_dimension):
+		self._basis_dim.append(new_dimension)
+		self.value_line.append("")#better genrate now than later
+		new_dimension._basisIndex = self._basisDimCounter
+		self._basisDimCounter += 1
+
+	def _embeddMergeDim(self, new_dimension):
+		self._merge_dim.append(new_dimension)
+		self.value_line.append("")#better genrate now than later
+		new_dimension._mergeIndex = self._mergeDimCounter
+		self._mergeDimCounter += 1
+
+
+	def _prepareStandard(self):
+		'''
+		the standard of preparation running in all source-like-classes
+		infront of the readout
+		'''
+		#self.matrixClass = matrixClass
+		self.nBasis = len(self._basis_dim)
+		self.nMerge = len(self._merge_dim)
+
+		self.basis_values = []
+		for i in range(self.nBasis):
+			self.basis_values.append(0)
+
+		self.merge_values = []
+		for i in range(self.nMerge):
+			self.merge_values.append(0)
+
+
+	def _getMinMax(self,basis_dims):
+		'''
+		some targets, like matrices can only work with bounded dimensions.
+		in the case, that all values of a dimension are valid this method
+		looks for the maximum and minimum value of those unbounded-dimensions
+		'''
+		min_max = []
+		for i in range(len(basis_dims)):
+			min_max.append([None,None])
+
+		while True:
+			try:
+				self._getValueLine()
+			except StopIteration:
+				break
+			self._printStatus()
+
+			in_range = True
+			for n,dim in enumerate(basis_dims):
+				try:
+					(in_range, value) = dim._update(in_range,
+						self.evalStr(self.value_line[dim.index]))
+					if min_max[n][1] == None or value > min_max[n][1]:#max
+						min_max[n][1] = value
+					if min_max[n][0] == None or value < min_max[n][0]:#min
+						min_max[n][0] = value
+				except (IndexError, ValueError):
+					pass
+		failed_maxMin = []
+		for i,dim in enumerate(basis_dims):
+			if min_max[i] == [None,None]:
+				failed_maxMin.append(dim.name)
+		if len(failed_maxMin) > 0:
+			sys.exit("ERROR: cannot define min/max for basis-dimension(s) %s"
+				%(failed_maxMin) )
+		
+		self._resetReadOut()
+		return min_max
+
+
+	#def _readOut(self, readout_one_line, end_readOut):
+		#while True:
+			#try:
+				#if end_readOut:
+					#self._endReadOut()
+					#break
+				#self._getValueLine()
+				#in_range = self._getBasisMergeValues()
+				#if in_range:
+					#self.matrixClass._assign(self.basis_values, self.merge_values)
+				#self._printStatus()
+
+				#if readout_one_line:
+					#return False
+			#except StopIteration:
+				#break
+			#except KeyboardInterrupt:
+				#self._endReadOut()
+				#break
+		#print ""
+		#self._resetReadOut()
+		#return True # means i'm done with readout
+
+
+
+class dimension(object):
+	'''
+	The basis-class of merge- and basisDimension. Provides everything
+	that is identically for both of them.
+	'''
+	def __init__(self,name, index):
+		self.name = str(name)
+		self.index = int(index)
+		#self._calc = [] # list including all methods.calc-instances
+		#self._exclude = []# list including all methods.exclude-instances
+		#self._transform = False #can be loaded up with some methods.transform....
+		self._plotOnlyRecentPosition = False#only needed for basis-dim
+		self._calc_is_value = False
+		#get instances
+		self._calcMethod = _calcMethodClass()
+		self._excludeMethod = _excludeMethodClass()
+		self._transformMethod = _transformMethodClass()
+
+	def calcMethod(self):
+		'''call-method for instance of :class:`diaGrabber.source._source._calcMethodClass`'''
+		return self._calcMethod
+
+	def excludeMethod(self):
+		'''call-method for instance of :class:`diaGrabber.source._source._excludeMethodClass`'''
+		return self._excludeMethod
+
+	def transformMethod(self):
+		'''call-method for instance of :class:`diaGrabber.source._source._transformMethodClass`'''
+		return self._transformMethod
+
+	def setCalcResultToValue(self, calc_index):
+		"""set every value of the dimension to the result of one
+		entry in dimension.getCalc()"""
+		self._calc_is_value = True
+		self._calc_is_value_index = int(calc_index)
+		if self._calc_is_value_index >= len(self._calcMethod._list):
+			sys.exit("ERROR: 'calc_index' has to be <len(dimension.getCalcMethod())")
+
+
+
+
+
+
+	def _processDim(self):
+		'''	call the _get-method of all classes in .getCalc and .getExclude
+		return bool(in_range)'''
+		#calc values bounded to dim
+		for c in self._calcMethod._list:
+			c._get(self._recent_value)
+		for c in self._excludeMethod._list:
+			if c._get():
+				return False#not in range
+		if self._calc_is_value:
+			self._recent_value = self._calc[self._calc_is_value_index]
+		return True
+
+
+class basisDimension(dimension):
+	"""
+	basisDimensionText
+	
+	:param name: [... of the dimension] e.g. "time"
+	:type name: string
+	:param index_1: position in the source-file e.g. **1**
+	:type index_1: int
+	:param index_2: **"runningCounter"** generate this dimension as defined in :func:`diaGrabber.source._source.basisDimension.setCounter with *uptate=True*`
+	:type index_2: string
+	:param index_3: **"fixedCounter"** generate this dimension as defined in :func:`diaGrabber.source._source.basisDimension.setCounter with *uptate=False*`
+	:type index_3: string
+	:param resolution: [number of tracked values of the dimension] e.g. 100
+	:type resolution: int
+	:param includeMethod: method to border the value-range, see :func:`diaGrabber.source._source.basisDimension.evalIncludeMethod` for all options
+	:type includeMethod: string
+	"""
+	def __init__(self, name, index, resolution, includeMethod):
+		self._is_counter = False # take value from source by default
+		self._take_all_values = True
+		self._include_chronic = False
+		self._include_from_to = [None, None]
+		self._recent_position = 0 #will be updated by target-class
+		self._plot_range = slice(None,None,None)
+		self.resolution = int(resolution)
+		self._update_sort_range = True
+
+		if type(index) != int:
+			if index == "runningCounter" or index == "counter":
+				self.setCounter(update=True)
+				index = 0
+			elif index == "fixedCounter":
+				self.setCounter(update=False)
+				index = 0
+			else:
+				sys.exit("ERROR: idex has to be an iteger or 'runningCounter' or 'fixedCounter'")
+		super(basisDimension,self).__init__(name, index)
+
+		self.evalIncludeMethod(includeMethod)
+
+
+	def evalIncludeMethod(self, includeMethod):
+		'''
+		* 'all': include all values of the dimension
+		* 'chronic': include the last n=resolution values
+		* [START,STOP]: include all values from START to STOP
+		'''
+		if includeMethod == "all" or includeMethod == "" or includeMethod == None:
+			self._includeAll()
+		elif includeMethod == "chronic":
+			self._includeChronic()
+		elif type(includeMethod) == list:
+			if len(includeMethod) == 2:
+				self._includeFromTo(includeMethod)
+			else:
+				sys.exit("ERROR: includeMethod hast to be a list of len==2")
+		else:
+			sys.exit("ERROR includeMethod invalide")
+
+	def setPlotOnlyRecentPosition(self, TrueOrFalse):
+		'''Set this if you only want to plot the last readout basis-value.'''
+		self._plotOnlyRecentPosition = bool(TrueOrFalse)
+
+	def setCounter(self, start = 0, delta = 1, **kwargs):
+		'''Use this method to generate a dimension as a linear counter.
+
+		Optional kwargs ("keyword arguments") are:
+
+		==================     ========  ========   ==========================
+		Keyword	               Type      Default    Description
+		==================     ========  ========   ========================
+		*start*                float     **0**      the fist value of the counter
+		*delta*	               float     **1**      the difference which is add to the last couter-value
+		*update*               bool      **True**   *True*: continue counting *False*: create a fixed counter-list from start to start + (delta*resolution)
+		==================     ========  ===================================
+		'''
+		self._is_counter = True
+		self._counter_step = 0
+		#standard
+		self._recent_value = 0
+		self._start_value = 0
+		self._delta = 1
+		#individual
+		for key in kwargs:
+			if key == "update":
+				self._update_sort_range = bool(kwargs[key])
+			elif key == "start":
+				self._recent_value = float(kwargs[key])
+				self._start_value = float(kwargs[key])
+
+			elif key == "delta":
+				self._delta = float(kwargs[key])
+
+	
+	def setPlotRange(self, start=None, stop=None, step=None):
+		'''Define the visible range of the plotted values.
+		
+		:param start: defines the fist position in the range of all basis-values. {0} would be the first position.
+		:type start: int
+		:param start: defines the last position in the range of all basis-values. {RESOLUTION} would be the last position.
+		:type start: int
+		:param step: defines the number of basis-values to jump over for plotting. {1} would plot every value of this dimension. {10} would plot every 10st value.
+		:type start: int
+		type {None} if you don't want to define one entry.
+		'''
+		if start != None:
+			start = int(start)
+		if stop != None:
+			stop = int(stop)
+		if step != None:
+			step = int(step)
+			if step < 1:
+				sys.exit("ERROR [setPlotRange]: 'step' has to be >= 1")
+		
+		self._plot_range = slice(start,stop,step)
+
+#########private############
+
+	def _updateCounter(self):
+		'''build the next value of the (linear) counter-dimension like: y=mx+n'''
+		self._recent_value += self._delta
+		#for fixed_Couters: go to start value if at the end
+		if not self._update_sort_range:
+			self._counter_step += 1
+			if self._counter_step == self.resolution:
+				self._recent_value = self._start_value
+				self._counter_step = 0
+
+
+	def _includeAll(self):
+		'''Include all values and sort in a range from min to max values
+		dissolved by the resolution
+		!!!: not all sources can define the min and max values '''
+		self._take_all_values = True
+
+
+	def _includeFromTo(self,from_to_list):
+		'''include only values from x to y'''
+		self._include_from_to = from_to_list
+		self._take_all_values = False
+		self._initSortRange()
+
+	def _includeChronic(self):
+		'''Only take the last [dimension.resolution]-values
+		override when read more than that'''
+		self._take_all_values = False
+		self._include_chronic = True
+		#set the first include_from_to ... this has to be updated
+		#self._include_from_to = [-self.resolution+1,self.resolution-1]
+		self._include_from_to = [0,self.resolution-1]
+
+		self._chronic_step = 0
+		self._initSortRange()
+
+	def _updateChronic(self):
+		'''updates the sort-range for a chronic-dimension'''
+		self._chronic_step += 1
+		if self._chronic_step >= self.resolution:
+			self._chronic_step = 0
+		if self._update_sort_range:
+			self._sort_range[self._chronic_step] = self._recent_value
+	
+			if self._is_counter:
+				#the smallest/biggest value in the chronic is the value infront of the recent one
+				#this is correct because a counter increases/decreases monotone
+				try:
+					self._include_from_to[0] = self._sort_range[self._chronic_step+1]
+				# except the revent value ist the last value in range - than its the first one
+				except IndexError:
+					self._include_from_to[0] = self._sort_range[0]
+				self._include_from_to[1] = self._recent_value
+				
+			else:
+				self._include_from_to[0] = min(self._sort_range)
+				self._include_from_to[1] = max(self._sort_range)
+
+	def _initSortRange(self):
+		'''builds the (first) sort-range as a numpy.linspace(from,to,step)'''
+		self._sort_range = np.linspace(self._include_from_to[0],self._include_from_to[1],
+			self.resolution)
+
+
+
+	def _update(self, in_range, source_value):
+		'''main update-procedure which runs ever time a new value is readout from the source.'''
+		if self._is_counter:
+			self._updateCounter()
+		else:
+			self._recent_value = source_value
+
+		if self._include_chronic:
+			self._updateChronic()
+		elif self._take_all_values:
+			#update self._include_from_to with max in min values of the dim
+			if source_value < self._include_from_to[0] or self._include_from_to[0] == None:
+				self._include_from_to[0] = source_value
+			if source_value > self._include_from_to[1] or self._include_from_to[1] == None:
+				self._include_from_to[1] = source_value
+		else:
+			#check whether in range
+			if self._include_from_to[0] > self._recent_value or \
+					self._include_from_to[1] < self._recent_value:
+				in_range = False
+
+		if in_range:
+			in_range = self._processDim()
+
+		if in_range:
+			if self._plotOnlyRecentPosition:
+				self._plot_range = slice(self._recent_position,self._recent_position+1,1)
+
+		return in_range, self._recent_value
+
+
+class mergeDimension(dimension):
+	"""
+	mergeDimensionText
+	
+	:param name: ... of the dimension e.g. *"time"*
+	:type name: string
+	:param index: position in the source-file e.g. **1**
+	:type index: int
+	:param mergeMethod: defines way of handle merge-values in the same place in the target are. Default is :func:`diaGrabber.methods.merge.last`
+	:type mergeMethod: class from :class:`diaGrabber.methods.merge`
+	"""
+	def __init__(self,name, index, mergeMethodInstance):
+		super(mergeDimension,self).__init__(name, index)
+
+		if mergeMethodInstance == "" or mergeMethodInstance == None:
+			mergeMethodInstance = mergeMethods.last()
+		self.setMergeMethod(mergeMethodInstance)
+
+		#build private instaces
+		self._alias = _aliasClass(self)
+
+	#caller functions
+	def alias(self):
+		'''call-method for instance of :class:`diaGrabber.source._source._aliasClass`'''
+		return self._alias
+	
+	def setMergeMethod(self, mergeMethodInstance):
+		_utils.checkModuleInstance(mergeMethodInstance, mergeMethods)
+		self._mergeMethod = mergeMethodInstance
+
+
+
+
+
+	def _update(self, in_range, source_value):
+		'''main update-procedure which runs ever time a new value is readout from the source.'''
+		self._recent_value = source_value
+		in_range = self._processDim()
+		return in_range, self._recent_value
+
+
+
+
+class _aliasClass:
+	'''
+	This option ...
+	TODO: ... örtliche veränderung...
+	'''
+	def __init__(self, parent):
+		self._parent = parent
+		self._list = []
+		self._index = []
+	
+	def append(self, mergeDimensionInstance):
+		_utils.checkClassInstance(mergeDimensionInstance,self._parent)
+		self._list.append(mergeDimensionInstance)
+		self._index.append(mergeDimensionInstance._mergeIndex)
+	def set(self, mergeDimensionInstance, index):
+		_utils.checkClassInstance(mergeDimensionInstance,self._parent)
+		self._list[int(index)] = mergeDimensionInstance
+		self._index[int(index)] = mergeDimensionInstance._mergeIndex
+
+
+class _calcMethodClass:
+	'''
+	TODO
+	'''
+	def __init__(self):
+		self._list = []
+	def append(self, calcMethodInstance):
+		_utils.checkModuleInstance(calcMethodInstance,calcMethods)
+		self._list.append(calcMethodInstance)
+	def get(self, index=None):
+		if index==None:
+			#return every entry as list
+			return self._list
+		else:
+			return self._list[int(index)]
+	def set(self, calcMethodInstance, index=None):
+		if index==None:
+			self.appendCalcMethod(calcMethodInstance)
+		else:
+			_utils.checkModuleInstance(calcMethodInstance,calcMethods)
+			self._list[int(index)] = calcMethodInstance
+	def available(self):
+		'''return all available classes in methods.calc'''
+		return _utils.getAvailableClassesInModule(calcMethods)
+
+
+class _excludeMethodClass:
+	'''
+	assign one or more excludeMethod-classes of from :mod:`diaGrabber.methods.exclude`
+	Using this option you can exclude values from a dimension because of its development
+	when readed out.
+	'''
+	def __init__(self):
+		self._list = []
+	def append(self, excludeMethodInstance):
+		_utils.checkModuleInstance(excludeMethodInstance,excludeMethods)
+		self._list.append(excludeMethodInstance)
+
+	def get(index=None):
+		if index==None:
+			#return every entry as list
+			return self._list
+		else:
+			return self._list[int(index)]
+
+	def available(self):
+		'''return all available classes in methods.exlude'''
+		return _utils.getAvailableClassesInModule(excludeMethods)
+
+	def set(self, excludeMethodInstance, index=None):
+		if index==None:
+			self.appendExcludeMethod(excludeMethodInstance)
+		else:
+			_utils.checkModuleInstance(excludeMethodInstance,excludeMethods)
+			self._list[int(index)] = excludeMethodInstance
+
+class _transformMethodClass:
+	'''
+	assign one or more transformMethod-classes of from :mod:`diaGrabber.methods.transform`
+	using this option you can trnsform all basis-values after readout with the command::
+		target.transformDim()
+	'''
+	def __init__(self):
+		self._value=False
+	def set(self, transformMethodInstance):
+		_utils.checkModuleInstance(transformMethodInstance,transformMethods)
+		self._value = transformMethodInstance
+	def get(self):
+		return self._value
+	def available(self):
+		'''return all available classes in methods.transform'''
+		return _utils.getAvailableClassesInModule(transformMethods)

@@ -1,0 +1,229 @@
+# -*- coding: utf-8 *-*
+#from copy import deepcopy
+#import select
+import time
+import sys, os
+import fcntl
+import subprocess
+
+import _source
+
+class stream(_source.source):
+	def __init__(self, command, start_via, stop_via, dim_seperator,
+		data_type = "unknown",
+		key_to_end_process = "",
+		run_in_shell = False,
+		readoutEverNLine = 1,
+		infoEveryNLines = 1000):
+
+		super(stream,self).__init__(data_type)
+		#self.dimension = _dimension._dimension
+
+		self._command = command
+		self.run_in_shell = run_in_shell
+		self.file_name = command
+		self.key_to_end_process = key_to_end_process
+		self.dim_seperator = dim_seperator
+		self.start_via = start_via
+		self.stop_via = stop_via
+		self._readoutEverNLine = readoutEverNLine
+		self._infoEveryNLines = infoEveryNLines
+		
+		self._calc_readoutEverNLine = False
+		self._old_stream_len = 0
+
+	#class dimension(_dimension):
+		#'''...test'''
+		#def __init__(self, name, index=0):
+			#'''index = [collumn in your stream-output] e.g. 2'''
+			#try:
+				#self.index = int(index)
+			#except TypeError:
+				#self.index = 0
+			#super(stream.dimension, self).__init__(name, self.index)
+
+	def basisDimension(self, name, index,  resolution, includeMethod=None):
+		'''
+		:class:`diaGrabber.source._source.basisDimension` \n
+		'''	
+		new_dimension  = _source.basisDimension(name, index, resolution, includeMethod)
+		self._embeddBasisDim(new_dimension)
+		return new_dimension
+
+
+	def mergeDimension(self, name, index, mergeMethod=None):
+		'''
+		:class:`diaGrabber.source._source.mergeDimension` \n
+		'''	
+		new_dimension  = _source.mergeDimension(name, index, mergeMethod)
+		self._embeddMergeDim(new_dimension)
+		return new_dimension
+
+
+
+	def setInfoEveryNLines(self,nLines):
+		self._infoEveryNLines = int(nLines)
+
+	def getInfoEveryNLines(self):
+		return self._infoEveryNLines
+	
+
+	def setReadoutEveryNLine(self,nLine, print_nLine = False):
+		'''
+		Defines ever which lines diaGrabber will grab a line from the stream.
+		
+		:param nLine_1: number of lines to jump over e.g. **100**
+		:param nLine_2: **'calc'** to calculate the right number in case to readout as fast as the strem generates the output.
+		:type nLine_1: int
+		:type nLine_2: string
+		:param print_nLine: if nLine == 'calc': print the current value of it
+		:type print_nLine: bool
+
+
+		'''	
+		if nLine == "calc":
+			self._calc_readoutEverNLine = True
+			self._readoutEverNLine = 0#symbolic value
+		else:
+			self._readoutEverNLine = int(nLine)
+		self._print_readoutEverNLine = bool(print_nLine)
+		
+	def getReadoutEverNLine(self):
+		return self._readoutEverNLine
+	
+
+	def _getMinMax(self,dims):
+		sys.exit("ERROR: source.stream need a given dimension.includeFromTo()-range")
+
+
+
+
+	def _nonBlockRead(self, output):
+		''' even in a thread, a normal read with block until the buffer is full '''
+		fd = output.fileno()
+		fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+		fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+		try:
+			return output.read().strip().split("\n")
+		except:
+			return []
+
+
+
+
+
+	def _prepareReadOut(self):
+		self._prepareStandard()
+		#start stream
+		self.engine = subprocess.Popen(
+			self._command,
+			bufsize=-1,
+			stdin=sys.stdin,
+			shell = self.run_in_shell,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE)
+		if self.start_via != "":
+			#self.engine.stdin.write(b"%s\n" %self.start_via)
+			print(b"%s\n" %self.start_via)
+			self.engine.stdin.flush()
+
+		self.done_reading_old_output = True
+		self.done_readout = False
+		self.output = []
+		self.len_output = 0
+		self._old_len_output = 0
+		self._max_len_output = 0
+		self.pos_output = 0
+		self.read_n_lines = 0
+		self.step_n_lines = 0
+
+	def _endReadOut(self):
+		try:
+			if self.key_to_end_process != "":
+				print "finish process via key ' %s '" %self.key_to_end_process
+				for h in range(10): # to ensure ending
+					###dont work at the moment
+					self.engine.stdin.write(b"%s" %self.key_to_end_process)
+					#self.engine.stdin.flush()
+					#self.engine.stdin.close()
+		except (IOError, AttributeError):
+			pass
+		try:
+			print "closing process"
+			time.sleep(1)
+			#for h in range(10):
+			#self.engine.close()
+			self.engine.kill()
+			#self.engine.wait()
+		except (IOError, AttributeError):
+			pass
+
+
+	def _getNewOutput(self):
+		#get new output
+		self.output = self._nonBlockRead(self.engine.stdout)
+		#reset position
+		if self.len_output > 0:
+			self.len_output -=1
+		self.pos_output -= self.len_output
+		self._old_len_output = self.len_output
+		self.len_output = len(self.output)
+
+	def _getValueLine(self):
+		while self.pos_output >= self.len_output or self.len_output <= 1:#got no output
+			self._getNewOutput()
+			if self._calc_readoutEverNLine:
+				self._calcReadoutEverNLine()
+		line = self.output[self.pos_output]
+		if line == self.stop_via:
+			self._endReadOut()
+			raise StopIteration
+		self.read_n_lines += 1
+		self.step_n_lines += 1
+		self.pos_output += self._readoutEverNLine
+		#return line.split(self.dim_seperator)
+		self.value_line = line.split(self.dim_seperator)
+
+	def _calcReadoutEverNLine(self):
+		'''calculates self._readoutEverNLine according to the increase of stdout'''
+		#refresh max_len_output
+		if self.len_output > self._max_len_output:
+			self._max_len_output = self.len_output
+
+		if self._readoutEverNLine == 0:
+			#init
+			self._readoutEverNLine = int(0.5 * self.len_output)
+
+		elif self.len_output == self._max_len_output:
+			#in this case it seems to be that the max buffersize i reached
+			#thats not desired because now output-information will get lost
+			#therefore we make a big step, like ...
+			 self._readoutEverNLine = self._max_len_output#self.len_output
+
+		elif self.len_output == 0:# or self._old_len_output == 0:
+			#maybe we readout to fast -> downsize readout-step
+			#or thers no new output becuse the stream finisht -> we have time to process
+			#	every step
+				self._readoutEverNLine -= 1
+			
+		else:
+			#delta_len_output = self.len_output - self._old_len_output
+			if self.len_output - self._old_len_output > 0:
+				self._readoutEverNLine += 1
+			else:
+				self._readoutEverNLine -= 1
+	
+		if self._readoutEverNLine == 0:
+			self._readoutEverNLine = 1
+		
+		if self._print_readoutEverNLine:
+			print self._readoutEverNLine
+			
+
+	def _printStatus(self):
+		if self.step_n_lines == self._infoEveryNLines:
+			print "readout %s lines" %self.read_n_lines
+			self.step_n_lines = 0
+
+	def _resetReadOut(self):
+		pass

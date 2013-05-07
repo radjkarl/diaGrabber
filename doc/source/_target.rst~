@@ -1,0 +1,13 @@
+********************************
+:mod:`diaGrabber.source.target`
+********************************
+
+.. inheritance-diagram:: diaGrabber.target diaGrabber.target._matrixBase diaGrabber.target.coarseMatrix diaGrabber.target.fineMatrix
+
+:class:`diaGrabber.target._matrixBase`
+=========================================
+.. autoclass:: diaGrabber.target._matrixBase
+   :members:
+   :undoc-members:
+   :private-members:
+   :show-inheritance:
