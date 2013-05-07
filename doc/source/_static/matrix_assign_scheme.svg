@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="803.99359"
+   height="247.95296"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="matrix_assign_scheme.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow2Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Mend"
+       style="overflow:visible">
+      <path
+         id="path3804"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible">
+      <path
+         id="path3780"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="631.24156"
+     inkscape:cy="-161.38143"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="965"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1103.8233,-192.06385)">
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="rect5117"
+       width="35"
+       height="34.82143"
+       x="-138.27374"
+       y="593.00323"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="rect5119"
+       width="35"
+       height="34.82143"
+       x="-102.77881"
+       y="627.00323"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="593.00323"
+       x="-102.77881"
+       height="34.82143"
+       width="35"
+       id="rect5121"
+       style="fill:#f2f2f2;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="663.00323"
+       x="-208.27374"
+       height="34.82143"
+       width="35"
+       id="rect5111"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="rect5113"
+       width="35"
+       height="34.82143"
+       x="-208.27374"
+       y="697.00323"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="697.00323"
+       x="-172.77881"
+       height="34.82143"
+       width="35"
+       id="rect5115"
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="620.93359"
+       x="-469.99103"
+       height="79.573029"
+       width="86.576691"
+       id="rect5109"
+       style="fill:#cacaca;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+       id="rect5107"
+       width="86.576691"
+       height="79.573029"
+       x="-815.82141"
+       y="620.93359"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="317.00323"
+       x="-192.77881"
+       height="34.82143"
+       width="35"
+       id="rect4917"
+       style="fill:#6f6f6f;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#6f6f6f;fill-opacity:1;stroke:none"
+       id="rect4915"
+       width="35"
+       height="34.82143"
+       x="-157.92856"
+       y="281.64789"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="240.93361"
+       x="-555.99103"
+       height="79.573029"
+       width="86.576691"
+       id="rect4516"
+       style="fill:#6f6f6f;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#6f6f6f;fill-opacity:1;stroke:none"
+       id="rect4514"
+       width="86.576691"
+       height="79.573029"
+       x="-729.10712"
+       y="240.93361"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00796413px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -902.53575,240.93359 519.60718,0"
+       id="path2985"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2987"
+       d="m -902.53575,320.93359 519.60718,0"
+       style="fill:none;stroke:#000000;stroke-width:1.00796413px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -469.12101,241.47111 0,79.61893"
+       id="path2989"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2991"
+       d="m -555.82576,241.47111 0,79.61893"
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -642.53051,241.47111 0,79.61893"
+       id="path2993"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2995"
+       d="m -729.23526,241.47111 0,79.61893"
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -815.94001,241.47111 0,79.61893"
+       id="path2997"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path2999"
+       d="m -902.64476,217.47111 0,128.28937"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -382.41625,217.4711 0,128.28937"
+       id="path3001"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       d="m -930.92904,280.93359 617.20321,0"
+       id="path3003"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path4217"
+       sodipodi:cx="-234.86047"
+       sodipodi:cy="276.05994"
+       sodipodi:rx="14.647212"
+       sodipodi:ry="14.647212"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       transform="matrix(1.1389619,0,0,1.1389619,-435.00248,-33.572386)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-986.99878"
+       y="301.94556"
+       id="text4405"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4407"
+         x="-986.99878"
+         y="301.94556">x<tspan
+   style="font-size:14.74477577px;baseline-shift:sub"
+   id="tspan4409">start</tspan>=0</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4430"
+       y="301.44049"
+       x="-373.05457"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="301.44049"
+         x="-373.05457"
+         id="tspan4432"
+         sodipodi:role="line">x<tspan
+   id="tspan4434"
+   style="font-size:14.74477577px;baseline-shift:sub">end</tspan>=6</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4444"
+       y="286.40649"
+       x="-715.04492"
+       style="font-size:15.54784012px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="286.40649"
+         x="-715.04492"
+         id="tspan4446"
+         sodipodi:role="line">1.3</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4518"
+       y="253.3999"
+       x="-900.56982"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="253.3999"
+         x="-900.56982"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4524">0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-814.56982"
+       y="253.3999"
+       id="text4528"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4530"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-814.56982"
+         y="253.3999">1</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4532"
+       y="253.3999"
+       x="-726.56982"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="253.3999"
+         x="-726.56982"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4534">2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-640.56982"
+       y="253.3999"
+       id="text4536"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4538"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-640.56982"
+         y="253.3999">3</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4540"
+       y="253.3999"
+       x="-552.56982"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="253.3999"
+         x="-552.56982"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4542">4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-466.56979"
+       y="253.3999"
+       id="text4544"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4546"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-466.56979"
+         y="253.3999">5</tspan></text>
+    <path
+       transform="matrix(1.1389619,0,0,1.1389619,-209.00248,-33.572386)"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       sodipodi:ry="14.647212"
+       sodipodi:rx="14.647212"
+       sodipodi:cy="276.05994"
+       sodipodi:cx="-234.86047"
+       id="path4548"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.54784012px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-489.04492"
+       y="286.40649"
+       id="text4550"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4552"
+         x="-489.04492"
+         y="286.40649">2.4</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4554"
+       y="403.29837"
+       x="-1095.075"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="403.29837"
+         x="-1095.075"
+         id="tspan4556"
+         sodipodi:role="line">mergeMatrix<tspan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="tspan5139">1</tspan> = [           ,           ,   1.3   ,           ,   2.4   ,           ]</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1105.075"
+       y="435.29837"
+       id="text4560"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4562"
+         x="-1105.075"
+         y="435.29837">densityMatrix<tspan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="tspan5141">1</tspan> = [      0   ,     0    ,   1      ,     0    ,     1    ,     0    ]</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1071.075"
+       y="369.29837"
+       id="text4564"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4566"
+         x="-1071.075"
+         y="369.29837">basisMatrix = [   0.5   ,   1.5   ,   2.5   ,   3.5   ,   4.5   ,   5.5   ]</tspan></text>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect4576"
+       width="2.6516504"
+       height="6.4397225"
+       x="-860.61823"
+       y="277.57516"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="277.57516"
+       x="-773.91345"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect4578"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect4580"
+       width="2.6516504"
+       height="6.4397225"
+       x="-687.20874"
+       y="277.57516"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="277.57516"
+       x="-600.50397"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect4582"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect4584"
+       width="2.6516504"
+       height="6.4397225"
+       x="-513.79919"
+       y="277.57516"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="277.57516"
+       x="-427.09445"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect4586"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4592"
+       y="253.3999"
+       x="-378.56979"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="253.3999"
+         x="-378.56979"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4594">6</tspan></text>
+    <g
+       id="g4700"
+       transform="translate(-674.20816,-11.921331)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 586.29355,257.95588 0,140.32696"
+         id="path4606"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4675"
+         d="m 551.29354,257.95588 0,140.32696"
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 516.29353,257.95588 0,140.32696"
+         id="path4677"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4679"
+         d="m 481.29353,257.95588 0,140.32696"
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 446.29355,257.95588 0,140.32696"
+         id="path4681"
+         inkscape:connector-curvature="0" />
+      <g
+         transform="matrix(0,-1,0.62292613,0,311.58732,844.93618)"
+         id="g4693">
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 586.29355,215.95588 0,225.37351"
+           id="path4683"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4685"
+           d="m 551.29354,215.95588 0,225.37351"
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 516.29353,215.95588 0,225.37351"
+           id="path4687"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path4689"
+           d="m 481.29353,215.95588 0,225.37351"
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 446.29355,215.95588 0,225.37351"
+           id="path4691"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       d="m -228.47835,386.36708 c 169.70563,0 169.70563,0 169.70563,0"
+       id="path4713"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4899"
+       d="m -228.78194,387.26743 c 0,-169.70563 0,-169.70563 0,-169.70563"
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-83.054573"
+       y="403.44049"
+       id="text4901"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4903"
+         x="-83.054573"
+         y="403.44049">x</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4907"
+       y="237.7262"
+       x="-222.76886"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="237.7262"
+         x="-222.76886"
+         id="tspan4909"
+         sodipodi:role="line">y</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path4911"
+       sodipodi:cx="-234.86047"
+       sodipodi:cy="276.05994"
+       sodipodi:rx="14.647212"
+       sodipodi:ry="14.647212"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       transform="matrix(0.50137194,0,0,0.50137194,-7.9543686,145.78058)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="matrix(0.50137194,0,0,0.50137194,-64.8677,203.63772)"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       sodipodi:ry="14.647212"
+       sodipodi:rx="14.647212"
+       sodipodi:cy="276.05994"
+       sodipodi:cx="-234.86047"
+       id="path4913"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#b3b3b3;fill-opacity:1;stroke:none"
+       id="rect4923"
+       width="86.576691"
+       height="79.573029"
+       x="-555.99103"
+       y="620.93359"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="620.93359"
+       x="-729.10712"
+       height="79.573029"
+       width="86.576691"
+       id="rect4925"
+       style="fill:#808080;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4927"
+       d="m -902.53575,620.93359 519.60718,0"
+       style="fill:none;stroke:#000000;stroke-width:1.00796413px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00796413px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -902.53575,700.93359 519.60718,0"
+       id="path4929"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4931"
+       d="m -469.12101,621.47111 0,79.61893"
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -555.82576,621.47111 0,79.61893"
+       id="path4933"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4935"
+       d="m -642.53051,621.47111 0,79.61893"
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -729.23526,621.47111 0,79.61893"
+       id="path4937"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4939"
+       d="m -815.94001,621.47111 0,79.61893"
+       style="fill:none;stroke:#000000;stroke-width:0.78779429px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -902.64476,597.47111 0,128.28937"
+       id="path4941"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4943"
+       d="m -382.41625,597.4711 0,128.28937"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4945"
+       d="m -930.92904,660.93359 617.20321,0"
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       transform="matrix(1.1389619,0,0,1.1389619,-435.00248,346.42761)"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       sodipodi:ry="14.647212"
+       sodipodi:rx="14.647212"
+       sodipodi:cy="276.05994"
+       sodipodi:cx="-234.86047"
+       id="path4947"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4949"
+       y="681.94556"
+       x="-986.99878"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="681.94556"
+         x="-986.99878"
+         id="tspan4951"
+         sodipodi:role="line">x<tspan
+   id="tspan4953"
+   style="font-size:14.74477577px;baseline-shift:sub">start</tspan>=0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-373.05457"
+       y="681.44049"
+       id="text4955"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4957"
+         x="-373.05457"
+         y="681.44049">x<tspan
+   style="font-size:14.74477577px;baseline-shift:sub"
+   id="tspan4959">end</tspan>=6</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:15.54784012px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-715.04492"
+       y="666.40649"
+       id="text4961"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4963"
+         x="-715.04492"
+         y="666.40649">1.3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-900.56982"
+       y="633.3999"
+       id="text4965"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4967"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-900.56982"
+         y="633.3999">0</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4969"
+       y="633.3999"
+       x="-814.56982"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="633.3999"
+         x="-814.56982"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4971">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-726.56982"
+       y="633.3999"
+       id="text4973"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4975"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-726.56982"
+         y="633.3999">2</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4977"
+       y="633.3999"
+       x="-640.56982"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="633.3999"
+         x="-640.56982"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4979">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-552.56982"
+       y="633.3999"
+       id="text4981"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan4983"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-552.56982"
+         y="633.3999">4</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4985"
+       y="633.3999"
+       x="-466.56979"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="633.3999"
+         x="-466.56979"
+         sodipodi:role="line"
+         style="font-size:12px"
+         id="tspan4987">5</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path4989"
+       sodipodi:cx="-234.86047"
+       sodipodi:cy="276.05994"
+       sodipodi:rx="14.647212"
+       sodipodi:ry="14.647212"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       transform="matrix(1.1389619,0,0,1.1389619,-209.00248,346.42761)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4991"
+       y="666.40649"
+       x="-489.04492"
+       style="font-size:15.54784012px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="666.40649"
+         x="-489.04492"
+         id="tspan4993"
+         sodipodi:role="line">2.4</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-1095.075"
+       y="783.29834"
+       id="text4995"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4997"
+         x="-1095.075"
+         y="783.29834">mergeMatrix<tspan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="tspan5143">1</tspan> = [           ,    1.3  ,   1.3   ,           ,   2.4   ,    2.4  ]</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4999"
+       y="815.29834"
+       x="-1105.075"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="815.29834"
+         x="-1105.075"
+         id="tspan5001"
+         sodipodi:role="line">densityMatrix<tspan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="tspan5145">1</tspan> = [      0   ,    0.2  ,   0.8   ,     0    ,   0.6    ,   0.4  ]</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5003"
+       y="749.29834"
+       x="-1071.075"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="749.29834"
+         x="-1071.075"
+         id="tspan5005"
+         sodipodi:role="line">basisMatrix = [   0.5   ,   1.5   ,   2.5   ,   3.5   ,   4.5   ,   5.5   ]</tspan></text>
+    <rect
+       y="657.5752"
+       x="-860.61823"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect5007"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect5009"
+       width="2.6516504"
+       height="6.4397225"
+       x="-773.91345"
+       y="657.5752"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="657.5752"
+       x="-687.20874"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect5011"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect5013"
+       width="2.6516504"
+       height="6.4397225"
+       x="-600.50397"
+       y="657.5752"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="657.5752"
+       x="-513.79919"
+       height="6.4397225"
+       width="2.6516504"
+       id="rect5015"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect5017"
+       width="2.6516504"
+       height="6.4397225"
+       x="-427.09445"
+       y="657.5752"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-378.56979"
+       y="633.3999"
+       id="text5019"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan5021"
+         style="font-size:12px"
+         sodipodi:role="line"
+         x="-378.56979"
+         y="633.3999">6</tspan></text>
+    <rect
+       style="fill:#b3b3b3;fill-opacity:1;stroke:none"
+       id="rect5063"
+       width="35"
+       height="34.82143"
+       x="-172.77881"
+       y="663.00323"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       y="627.64789"
+       x="-137.92856"
+       height="34.82143"
+       width="35"
+       id="rect5065"
+       style="fill:#cccccc;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <g
+       transform="translate(-654.20816,334.07867)"
+       id="g5067"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5069"
+         d="m 586.29355,257.95588 0,140.32696"
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 551.29354,257.95588 0,140.32696"
+         id="path5071"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5073"
+         d="m 516.29353,257.95588 0,140.32696"
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 481.29353,257.95588 0,140.32696"
+         id="path5075"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5077"
+         d="m 446.29355,257.95588 0,140.32696"
+         style="fill:none;stroke:#000000;stroke-width:1.04586399px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <g
+         id="g5079"
+         transform="matrix(0,-1,0.62292613,0,311.58732,844.93618)">
+        <path
+           inkscape:connector-curvature="0"
+           id="path5081"
+           d="m 586.29355,215.95588 0,225.37351"
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 551.29354,215.95588 0,225.37351"
+           id="path5083"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path5085"
+           d="m 516.29353,215.95588 0,225.37351"
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 481.29353,215.95588 0,225.37351"
+           id="path5087"
+           inkscape:connector-curvature="0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path5089"
+           d="m 446.29355,215.95588 0,225.37351"
+           style="fill:none;stroke:#000000;stroke-width:1.32542789px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+    </g>
+    <path
+       inkscape:connector-curvature="0"
+       id="path5091"
+       d="m -208.47835,732.3671 c 169.70563,0 169.70563,0 169.70563,0"
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow2Mend)"
+       d="m -208.78194,733.2674 c 0,-169.7056 0,-169.7056 0,-169.7056"
+       id="path5093"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text5095"
+       y="749.44049"
+       x="-63.054573"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="749.44049"
+         x="-63.054573"
+         id="tspan5097"
+         sodipodi:role="line">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-202.76886"
+       y="583.7262"
+       id="text5099"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan5101"
+         x="-202.76886"
+         y="583.7262">y</tspan></text>
+    <path
+       transform="matrix(0.50137194,0,0,0.50137194,12.04563,491.78058)"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       sodipodi:ry="14.647212"
+       sodipodi:rx="14.647212"
+       sodipodi:cy="276.05994"
+       sodipodi:cx="-234.86047"
+       id="path5103"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path5105"
+       sodipodi:cx="-234.86047"
+       sodipodi:cy="276.05994"
+       sodipodi:rx="14.647212"
+       sodipodi:ry="14.647212"
+       d="m -220.21326,276.05994 c 0,8.08943 -6.55778,14.64721 -14.64721,14.64721 -8.08944,0 -14.64722,-6.55778 -14.64722,-14.64721 0,-8.08944 6.55778,-14.64722 14.64722,-14.64722 8.08943,0 14.64721,6.55778 14.64721,14.64722 z"
+       transform="matrix(0.50137194,0,0,0.50137194,-44.8677,549.63772)"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-771.07501"
+       y="589.29834"
+       id="text5123"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan5125"
+         x="-771.07501"
+         y="589.29834">1 basisDimension: x</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5127"
+       y="209.29834"
+       x="-771.07501"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_1D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="209.29834"
+         x="-771.07501"
+         id="tspan5129"
+         sodipodi:role="line">1 basisDimension: x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="-275.07501"
+       y="209.29834"
+       id="text5131"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/coarseMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan5133"
+         x="-275.07501"
+         y="209.29834">2 basisDimension: x,y</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5135"
+       y="553.29834"
+       x="-255.07501"
+       style="font-size:22.68395042px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       inkscape:export-filename="/home/karl/Arbeitsfläche/fineMatrix_2D.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         y="553.29834"
+         x="-255.07501"
+         id="tspan5137"
+         sodipodi:role="line">2 basisDimension: x,y</tspan></text>
+  </g>
+</svg>
