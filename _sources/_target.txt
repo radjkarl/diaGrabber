@@ -1,0 +1,13 @@
+********************************
+:mod:`diaGrabber.source.target`
+********************************
+
+.. inheritance-diagram:: diaGrabber.source._source.source diaGrabber.source._source.basisDimension diaGrabber.source._source.mergeDimension diaGrabber.source._source.dimension
+
+:class:`diaGrabber.target._matrixBase`
+=========================================
+.. autoclass:: diaGrabber.target._matrixBase
+   :members:
+   :undoc-members:
+   :private-members:
+   :show-inheritance:

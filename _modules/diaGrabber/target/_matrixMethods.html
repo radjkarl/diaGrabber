@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.target._matrixMethods &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="diaGrabber.target" href="../target.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li>
+          <li><a href="../target.html" accesskey="U">diaGrabber.target</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.target._matrixMethods</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">bottleneck</span> <span class="kn">as</span> <span class="nn">bn</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="nb">exit</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">griddata</span>
+
+<span class="c">#own modules</span>
+<span class="c">#from diaGrabber import source</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">_utils</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source._source</span> <span class="kn">import</span> <span class="n">mergeDimension</span><span class="p">,</span> <span class="n">basisDimension</span>
+
+
+<div class="viewcode-block" id="matrixMethods"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods">[docs]</a><span class="k">class</span> <span class="nc">matrixMethods</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">pass</span>
+
+<div class="viewcode-block" id="matrixMethods.autoZoom"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.autoZoom">[docs]</a>	<span class="k">def</span> <span class="nf">autoZoom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		**Required kwargs** (&quot;keyword arguments&quot;) are:</span>
+
+<span class="sd">		==================     ===============  =============    ================</span>
+<span class="sd">		Keyword	               Type             Example          Description</span>
+<span class="sd">		==================     ===============  =============    ================</span>
+<span class="sd">		*value*                float/string     *max*            The merge-value to zoom in. Type &#39;min&#39; or &#39;max&#39; to use the equivalent extrem-value in the matrix</span>
+<span class="sd">		*scale*                string           *&#39;relative&#39;*</span>
+<span class="sd">		                                        **OR**</span>
+<span class="sd">		                                        *&#39;absolute&#39;*</span>
+<span class="sd">		*level*                float            0.3              The relative zoom-level</span>
+<span class="sd">		                                                         0.3 means +-30% around the zoom-point</span>
+<span class="sd">		==================     ===============  =============    ================</span>
+
+<span class="sd">		**Optional kwargs** (&quot;keyword arguments&quot;) are:</span>
+
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		Keyword	               Type             Default      Description</span>
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		*mergeDim*             list(mergeDim)   [{all}]      one or more merge-dims to do the method on</span>
+<span class="sd">		*basisDim*             list(basisDim)   [{all}]      Which basisDimensions get a new scale.</span>
+<span class="sd">		*operator*             string           &quot;==&quot;         The zoom-point is defined as the first point in matrix where a value in &quot;==&quot; (equal), &quot;&gt;&quot; (bigger) etc. than the given *value*</span>
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+
+		<span class="c">#standard</span>
+		<span class="n">mergeDim</span><span class="o">=</span><span class="bp">None</span>
+		<span class="n">value</span><span class="o">=</span><span class="bp">None</span>
+		<span class="n">scale</span><span class="o">=</span><span class="bp">None</span>
+		<span class="n">level</span><span class="o">=</span><span class="bp">None</span>
+		<span class="n">operator</span> <span class="o">=</span> <span class="s">&quot;==&quot;</span>
+		<span class="n">basisDim</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">)</span>
+		<span class="c">#individual</span>
+		<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;mergeDim&quot;</span><span class="p">:</span>
+				<span class="n">_utils</span><span class="o">.</span><span class="n">checkClassInstance</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">],</span><span class="n">mergeDimension</span><span class="p">)</span>
+				<span class="n">mergeDim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;value&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+					<span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;max&quot;</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;min&quot;</span><span class="p">:</span>
+						<span class="nb">exit</span><span class="p">(</span><span class="s">&quot;ERROR: &#39;value&#39; can only be &#39;max&#39;, &#39;min&#39; or a float&quot;</span><span class="p">)</span>
+					<span class="n">value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;scale&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;absolute&quot;</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&quot;relative&quot;</span><span class="p">:</span>
+					<span class="nb">exit</span><span class="p">(</span><span class="s">&quot;ERROR: &#39;scale&#39; in method &#39;autoZoom&#39; has to be &#39;absolute&#39; or &#39;relative&#39;&quot;</span><span class="p">)</span>
+				<span class="n">scale</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;level&quot;</span><span class="p">:</span>
+				<span class="n">level</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;operator&quot;</span><span class="p">:</span>
+				<span class="n">operator</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;basisDim&quot;</span><span class="p">:</span>
+				<span class="n">basisDim</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+				<span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">basisDim</span><span class="p">):</span>
+					<span class="n">_utils</span><span class="o">.</span><span class="n">checkClassInstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">basisDimension</span><span class="p">)</span>
+					<span class="k">if</span> <span class="n">b</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">:</span>
+						<span class="nb">exit</span><span class="p">(</span><span class="s">&quot;ERROR: the given basisDimension does not belong to those from target&quot;</span><span class="p">)</span>
+					<span class="n">basisDim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;keyword &#39;</span><span class="si">%s</span><span class="s">&#39; not known&quot;</span> <span class="o">%</span><span class="n">key</span><span class="p">)</span>
+
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkRequiredArgs</span><span class="p">({</span>
+				<span class="s">&quot;mergeDim&quot;</span><span class="p">:</span><span class="n">mergeDim</span><span class="p">,</span>
+				<span class="s">&quot;value&quot;</span><span class="p">:</span><span class="n">value</span><span class="p">,</span>
+				<span class="s">&quot;scale&quot;</span><span class="p">:</span><span class="n">scale</span><span class="p">,</span>
+				<span class="s">&quot;level&quot;</span><span class="p">:</span><span class="n">level</span><span class="p">})</span>
+
+		<span class="c">#which mergeMatrix is involved?</span>
+		<span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">mergeDim</span><span class="p">)]</span>
+		<span class="c">#prepare value</span>
+		<span class="k">if</span> <span class="n">value</span><span class="o">==</span><span class="s">&quot;max&quot;</span><span class="p">:</span>
+			<span class="n">value</span> <span class="o">=</span> <span class="n">bn</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">value</span><span class="o">==</span><span class="s">&quot;min&quot;</span><span class="p">:</span>
+			<span class="n">value</span> <span class="o">=</span> <span class="n">bn</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+			
+			<span class="c">#value = eval(&quot;m&quot; + &quot;.&quot; + value + &quot;()&quot;)</span>
+
+		<span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;cannot autoZoom to nan&quot;</span><span class="p">)</span>
+		<span class="c">#get position in matrix</span>
+		<span class="n">positions</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="n">operator</span> <span class="o">+</span> <span class="s">&quot;m&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">... do autoZoom for basisDimensions at a mergeValue of </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">value</span>
+		<span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">positions</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">basisDim</span><span class="p">:</span>
+				<span class="c">#get basis-values at those positions</span>
+				<span class="n">zoompoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">n</span><span class="p">][</span><span class="n">p</span><span class="p">]</span>
+				<span class="c">#calc. the new range</span>
+				<span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="s">&quot;relative&quot;</span><span class="p">:</span>
+					<span class="n">basis_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">_include_from_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">_include_from_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+					<span class="n">zoomrange</span><span class="o">=</span><span class="p">[</span><span class="n">zoompoint</span><span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">basis_range</span><span class="o">*</span><span class="n">level</span><span class="p">),</span><span class="n">zoompoint</span><span class="o">+</span><span class="nb">abs</span><span class="p">(</span><span class="n">basis_range</span><span class="o">*</span><span class="n">level</span><span class="p">)]</span>
+					<span class="n">ampl</span> <span class="o">=</span> <span class="n">zoomrange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">zoomrange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="k">elif</span> <span class="n">scale</span> <span class="o">==</span> <span class="s">&quot;absolute&quot;</span><span class="p">:</span>
+					<span class="n">zoomrange</span><span class="o">=</span><span class="p">[</span><span class="n">zoompoint</span><span class="o">-</span><span class="n">level</span><span class="p">,</span><span class="n">zoompoint</span><span class="o">+</span><span class="n">level</span><span class="p">]</span>
+				<span class="c">#define a new include_from_to-range for that basisDim</span>
+				<span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> --&gt; </span><span class="si">%s</span><span class="s"> (offset: </span><span class="si">%s</span><span class="s">, amplitude: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">zoomrange</span><span class="p">,</span> <span class="n">zoompoint</span><span class="p">,</span> <span class="n">ampl</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">_includeFromTo</span><span class="p">(</span><span class="n">zoomrange</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s">&quot;ignored </span><span class="si">%s</span><span class="s"> for autozoom&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+
+</div>
+<div class="viewcode-block" id="matrixMethods.interpolate"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.interpolate">[docs]</a>	<span class="k">def</span> <span class="nf">interpolate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;nearest&quot;</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;interpolate NaNs (empty points) in matrix</span>
+<span class="sd">		:param method: {&quot;nearest&quot;, &quot;linear&quot;, &quot;cubic&quot;}</span>
+<span class="sd">		:type method: string</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&quot;cubic&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="n">method</span> <span class="o">=</span> <span class="s">&quot;linear&quot;</span>
+			<span class="k">print</span> <span class="s">&quot;method=&#39;cubic&#39; works only for one and two basisDimensions&quot;</span>
+		<span class="k">print</span> <span class="s">&quot;--&gt; interpolate matrix with method &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span><span class="n">method</span>
+		<span class="c">#build a nD-meshgrid in which the interolation can be solved</span>
+		<span class="n">nDgrid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multiDimMeshgrid</span><span class="p">()</span>
+		<span class="c">#extract points from matrix</span>
+		<span class="n">points</span><span class="p">,</span><span class="n">merge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformMatrixToPoints</span><span class="p">(</span><span class="n">nDgrid</span><span class="p">)</span>
+		<span class="c">#merge a dim-lists to a vector-list</span>
+		<span class="c">#--&gt; X(1,2,3) Y(4,5,6) -&gt; XY([1,4],[2,5],[3,6])</span>
+		<span class="n">pointsT</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">points</span><span class="p">)</span>
+		<span class="c">#do the interpolation</span>
+		<span class="k">print</span> <span class="s">&quot;do interpolation&quot;</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">griddata</span><span class="p">(</span><span class="n">pointsT</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span>
+					<span class="nb">tuple</span><span class="p">(</span><span class="n">nDgrid</span><span class="p">),</span> <span class="n">method</span><span class="p">)</span>
+			<span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">exInstance</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s">&quot;WARNING: interpolation of mergeMatrix </span><span class="si">%s</span><span class="s"> FAILED because of:&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+				<span class="k">print</span> <span class="s">&quot;    ValueError:&quot;</span><span class="p">,</span><span class="n">exInstance</span><span class="o">.</span><span class="n">args</span>
+				<span class="k">print</span> <span class="s">&quot;    continue with original values&quot;</span>
+		<span class="k">print</span> <span class="s">&quot;done&quot;</span>
+</div>
+<div class="viewcode-block" id="matrixMethods.transformDim"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.transformDim">[docs]</a>	<span class="k">def</span> <span class="nf">transformDim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rebuild_matrix</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+		<span class="c">#transform old basisMatrix</span>
+		<span class="n">some_dim_transformed</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">):</span>
+			<span class="c">#rewrite basisMatrix</span>
+			<span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_transformMethod</span><span class="o">.</span><span class="n">_list</span><span class="p">):</span>
+				<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_transformMethod</span><span class="o">.</span><span class="n">adhoc</span><span class="p">[</span><span class="n">n</span><span class="p">]:</span>
+					<span class="n">some_dim_transformed</span> <span class="o">=</span> <span class="bp">True</span>
+					<span class="c">#than: values were not transformed in readout</span>
+					<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span><span class="n">k</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+				<span class="c">##change dimension-unit and -range</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">unit</span>
+				<span class="n">new_range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">]</span>
+				<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+					<span class="n">new_range</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> \
+						<span class="n">k</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_getIncludeFromTo</span><span class="p">()[</span><span class="n">j</span><span class="p">])</span>
+			<span class="c">#init new range</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_includeFromTo</span><span class="p">(</span><span class="n">new_range</span><span class="p">)</span>
+	
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">some_dim_transformed</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s">&quot;WARNING: no transformMethod defined in basisDimension&quot;</span>
+		
+		<span class="c">##build discrete points from given matrix, and</span>
+		<span class="k">if</span> <span class="n">rebuild_matrix</span> <span class="ow">and</span> <span class="n">some_dim_transformed</span><span class="p">:</span>
+			<span class="n">points</span><span class="p">,</span> <span class="n">merge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transformMatrixToPoints</span><span class="p">()</span>
+			<span class="n">points</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+			<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+				<span class="c">##transform merge points</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">_transformMethod</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
+					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="n">m</span><span class="p">])):</span>
+						<span class="n">merge</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">_transformMethod</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">_transformMethod</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">name</span>
+				<span class="c">##..build new matrix from those discrete and transformed points</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">transformPointsToMatrix</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">merge</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="matrixMethods.transformPointsToMatrix"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.transformPointsToMatrix">[docs]</a>	<span class="k">def</span> <span class="nf">transformPointsToMatrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">merge</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_buildMatrices</span><span class="p">()</span><span class="c">#get new merge- sort-, densityMatrix</span>
+		<span class="c">#print self.basisMatrix[0]</span>
+		<span class="n">points</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">points</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_basis_dim</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_recent_value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+				<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">5000000</span><span class="p">:</span>
+					<span class="nb">exit</span><span class="p">()</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_getPositionsIntensities</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+				<span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">positionsIntensities</span><span class="p">:</span>
+					<span class="n">tPostion</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+					<span class="p">(</span><span class="n">replace_value</span><span class="p">,</span> <span class="n">do_replace</span><span class="p">)</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">_mergeMethod</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">densityMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">],</span><span class="n">intensity</span><span class="p">)</span>
+					<span class="k">if</span> <span class="n">do_replace</span><span class="p">:</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">]</span> <span class="o">=</span> <span class="n">replace_value</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">densityMatrix</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">tPostion</span><span class="p">]</span> <span class="o">+=</span> <span class="n">intensity</span>
+
+
+</div>
+<div class="viewcode-block" id="matrixMethods.transformMatrixToPoints"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.transformMatrixToPoints">[docs]</a>	<span class="k">def</span> <span class="nf">transformMatrixToPoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">givenMultiDimMeshgrid</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;transform all not-empty parts of a  matrix to discrete points&#39;&#39;&#39;</span>
+		<span class="k">print</span> <span class="s">&quot;transform marix-indices to discrete points&quot;</span>
+		
+		<span class="k">if</span> <span class="n">givenMultiDimMeshgrid</span><span class="p">:</span>
+			<span class="c">#print 111, givenMultiDimMeshgrid</span>
+			<span class="n">pointsi</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">givenMultiDimMeshgrid</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">pointsi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multiDimMeshgrid</span><span class="p">()</span>
+
+		<span class="c">#X,Y = numpy.meshgrid(basisMatrix[0],basisMatrix[1])</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">):</span>
+			<span class="c">#transform to list - necassary when removing NaNs via list.pop()</span>
+			<span class="n">pointsi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pointsi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+		<span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">merge</span> <span class="o">=</span> <span class="p">[]</span>
+		
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+			<span class="c">#points.append(deepcopy(pointsi))</span>
+			<span class="n">merge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+		<span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+		
+		<span class="c">#print i, self.nMerge, len(merge), merge[0]</span>
+		<span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+			<span class="c">#remove point if merge == nan</span>
+			<span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">merge</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]):</span>
+				<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nMerge</span><span class="p">):</span>
+					<span class="n">merge</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+				<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">):</span>
+					<span class="c">#print i,k,j, len(points[i][k]), len(merge[i])</span>
+					<span class="n">pointsi</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+				<span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+			<span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="k">print</span> <span class="s">&quot;done&quot;</span>
+
+		<span class="k">return</span> <span class="n">pointsi</span><span class="p">,</span> <span class="n">merge</span>
+
+</div>
+<div class="viewcode-block" id="matrixMethods.posterize"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.posterize">[docs]</a>	<span class="k">def</span> <span class="nf">posterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		This method discretize/posterize the values in the mergeMatrix (of a given mergeDimension)</span>
+<span class="sd">		to a given ammount of values (e.g. nValues= 4 ) or to a given list or values</span>
+<span class="sd">		(e.g. values = [1,2,4])</span>
+
+<span class="sd">		**Optional kwargs** (&quot;keyword arguments&quot;) are:</span>
+
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		Keyword	               Type             Default      Description</span>
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		*mergeDim*             list(mergeDim)   [{all}]      one or more merge-dims to do the method on</span>
+<span class="sd">		*nValues*              int              5            the ammount of different values</span>
+<span class="sd">		*values*               list             None         given different values</span>
+<span class="sd">		==================     ===============  =========    ================</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+
+		<span class="c">#standard</span>
+		<span class="n">mergeDim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span>
+		
+		<span class="n">nValues</span><span class="o">=</span><span class="mi">5</span>
+		<span class="n">values</span><span class="o">=</span><span class="bp">None</span>
+		<span class="c">#individual</span>
+		<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;mergeDim&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">list</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">tuple</span><span class="p">:</span>
+					<span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="p">]</span>
+				<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+					<span class="n">_utils</span><span class="o">.</span><span class="n">checkClassInstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">mergeDimension</span><span class="p">)</span>
+				<span class="n">mergeDim</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;nValues&quot;</span><span class="p">:</span>
+				<span class="n">nValues</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+			<span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;values&quot;</span><span class="p">:</span>
+				<span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;keyword &#39;</span><span class="si">%s</span><span class="s">&#39; not known&quot;</span> <span class="o">%</span><span class="n">key</span><span class="p">)</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkRequiredArgs</span><span class="p">({</span>
+				<span class="s">&quot;mergeDim&quot;</span><span class="p">:</span><span class="n">mergeDim</span><span class="p">})</span>
+
+		<span class="n">merge_names</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mergeDim</span><span class="p">:</span>
+			<span class="n">merge_names</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">i</span><span class="o">.</span><span class="n">name</span>
+		<span class="n">merge_names</span> <span class="o">=</span> <span class="n">merge_names</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">print</span> <span class="s">&quot;--&gt; Posterize mergeMatrices of (</span><span class="si">%s</span><span class="s">) to the values </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">merge_names</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mergeDim</span><span class="p">:</span>
+			<span class="c">#which mergeMatrix is involved?</span>
+			<span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+			
+			<span class="k">if</span> <span class="n">values</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="c">#create values-list</span>
+				<span class="n">values</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bn</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="n">bn</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">m</span><span class="p">),</span><span class="n">nValues</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">values</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+			<span class="c">#do posterizing</span>
+			<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;readwrite&#39;</span><span class="p">]):</span>
+				<span class="n">diff</span><span class="o">=</span><span class="n">values</span><span class="o">-</span><span class="n">x</span>
+				<span class="n">diff</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+				<span class="n">nearest</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+				<span class="n">x</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span> <span class="n">nearest</span> <span class="p">]</span>
+
+
+<span class="c">#######PRIVATE########</span>
+</div>
+<div class="viewcode-block" id="matrixMethods._multiDimMeshgrid"><a class="viewcode-back" href="../../../_matrix.html#diaGrabber.target._matrixMethods.matrixMethods._multiDimMeshgrid">[docs]</a>	<span class="k">def</span> <span class="nf">_multiDimMeshgrid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;like numpy.meshgrid but can also produce multi-dimensional meshgrids</span>
+<span class="sd">		takes  list of arrays, where len(list)=nBasis&#39;&#39;&#39;</span>
+		
+		<span class="k">print</span> <span class="s">&quot;create a multiDimMeshgrid&quot;</span>
+		<span class="c">#if type(basisMatrix)=array an error will be produced in numpy.repeat</span>
+		<span class="n">basisMatrix</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">)</span>
+		<span class="n">basisMatrix</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+		
+		<span class="n">lenBasis</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">newShape</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">]</span>
+	
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">basisMatrix</span><span class="p">:</span>
+			<span class="n">lenBasis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+		<span class="n">lenBasisrev</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">lenBasis</span><span class="p">)</span>
+		<span class="n">lenBasisrev</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+		<span class="n">newShape</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lenBasisrev</span><span class="p">)</span>
+		
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+				<span class="n">nRepeat</span> <span class="o">=</span> <span class="mi">1</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">nRepeat</span> <span class="o">=</span> <span class="n">lenBasis</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">lenBasis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*=</span><span class="n">nRepeat</span>
+			<span class="c">#double items</span>
+			<span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">nRepeat</span><span class="p">)</span>
+	
+		<span class="n">lenGrid</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">basisMatrix</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span><span class="p">):</span>
+			<span class="c">#repeate blocks</span>
+			<span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">lib</span><span class="o">.</span><span class="n">stride_tricks</span><span class="o">.</span><span class="n">as_strided</span><span class="p">(</span>
+				<span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">(</span><span class="n">lenGrid</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]),)</span><span class="o">+</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span><span class="o">+</span><span class="n">basisMatrix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">strides</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+			
+		<span class="c">#reshape blocks</span>
+		<span class="n">basisMatrix</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">basisMatrix</span><span class="p">)</span><span class="c">#reshape need an array</span>
+		<span class="k">print</span> <span class="s">&quot;done&quot;</span>
+		<span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">basisMatrix</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">newShape</span><span class="p">)))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li>
+          <li><a href="../target.html" >diaGrabber.target</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

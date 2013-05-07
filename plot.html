@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.plot &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="The diaGrabber-API" href="diaGrabberAPI.html" />
+    <link rel="next" title="to do" href="todo.html" />
+    <link rel="prev" title="diaGrabber.target" href="target.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="todo.html" title="to do"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="target.html" title="diaGrabber.target"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="diagrabber-plot">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.plot</span></tt><a class="headerlink" href="#diagrabber-plot" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-diaGrabber.plot.Gui">
+<span id="gui"></span><h2>Gui<a class="headerlink" href="#module-diaGrabber.plot.Gui" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.plot.Gui.Gui">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot.Gui.</tt><tt class="descname">Gui</tt><big>(</big><em>matrixClass</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/Gui.html#Gui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot.Gui.Gui" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a graphical frontend for viewing n-dimensional targets.
+Since it&#8217;s only possible to visualize exact either n mergeDimensions over one
+basisDimension (2d-graph) or one mergeDimension over two basisDimensions
+(merge coded als contrast/color) without deforming the values in the figure
+only at max. two basisDimensions are shown. All other basisDimensions were
+conentrated. By default all merge-values over that dimensions werde middled.</p>
+<p>In this class you have many options to choose which basis to show and in
+which way to concentrate other basisDimensions.
+It is also possible to slice a target and to view another basis.</p>
+<p>Each parameter and each botton controling the view is described in <a class="reference internal" href="#diaGrabber.plot._preferenceDock.preferenceDock" title="diaGrabber.plot._preferenceDock.preferenceDock"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.plot._preferenceDock.preferenceDock</span></tt></a>.</p>
+<p>Though it&#8217;s possible to customize the Gui you can also preconfigure the Gui
+by setting keyword-arguments when initializing the class.</p>
+<p>For a list of all possible keyword-arguments have a look at <a class="reference internal" href="#diaGrabber.plot.Gui.Gui.setArgs" title="diaGrabber.plot.Gui.Gui.setArgs"><tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.plot.Gui.Gui.plot">
+<tt class="descname">plot</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/Gui.html#Gui.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot.Gui.Gui.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a list of all possible Keyword-arguments have a look at <a class="reference internal" href="#diaGrabber.plot.Gui.Gui.setArgs" title="diaGrabber.plot.Gui.Gui.setArgs"><tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot.Gui.Gui.save">
+<tt class="descname">save</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/Gui.html#Gui.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot.Gui.Gui.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional kwargs (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="9%" />
+<col width="8%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>string</td>
+<td>[{All}]</td>
+<td>names of merges to save</td>
+</tr>
+<tr class="row-odd"><td><em>name</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>name-prefix of the image</td>
+</tr>
+<tr class="row-even"><td><em>type</em></td>
+<td>string</td>
+<td>&#8220;png&#8221;</td>
+<td>typ of the image [&#8220;png&#8221;,&#8221;jpg&#8221;,&#8221;tiff&#8221;,&#8221;svg&#8221;]</td>
+</tr>
+<tr class="row-odd"><td><em>parameters</em></td>
+<td>list</td>
+<td>[]</td>
+<td>takes all parameters accepted by pyQtGraph.exporters</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot.Gui.Gui.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/Gui.html#Gui.setArgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot.Gui.Gui.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional kwargs (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="5%" />
+<col width="7%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>interactive</em></td>
+<td>bool</td>
+<td>False</td>
+<td>[True, False]</td>
+</tr>
+<tr class="row-odd"><td><em>show</em></td>
+<td>list</td>
+<td>[{All}]</td>
+<td>a list of lists containing names of merge-(m) and basisDimensions(b) to show e.g. show = [ (m1,b1,b2), (m2,b2) ]</td>
+</tr>
+<tr class="row-even"><td><em>fps</em></td>
+<td>float</td>
+<td>20</td>
+<td>frames per seconds</td>
+</tr>
+<tr class="row-odd"><td><em>lps</em></td>
+<td>float</td>
+<td>None</td>
+<td>readout n lines from source per second (needs limitReadoutRate = True)</td>
+</tr>
+<tr class="row-even"><td><em>limitReadoutRate</em></td>
+<td>bool</td>
+<td>False</td>
+<td>Choose whether to limit the readoutrate via arg <em>lps</em></td>
+</tr>
+<tr class="row-odd"><td><em>enableAutoRange</em></td>
+<td>list</td>
+<td>[]</td>
+<td>[&#8220;x&#8221;, &#8220;y&#8221;]</td>
+</tr>
+<tr class="row-even"><td><em>colorTheme</em></td>
+<td>string</td>
+<td>&#8220;default&#8221;</td>
+<td>[&#8220;default&#8221;, &#8220;bright&#8221;]</td>
+</tr>
+<tr class="row-odd"><td><em>windowSize</em></td>
+<td>list</td>
+<td>[1000,600]</td>
+<td>[size_x, size_y]</td>
+</tr>
+<tr class="row-even"><td><em>showPreferences</em></td>
+<td>bool</td>
+<td>True</td>
+<td>[True, False]</td>
+</tr>
+<tr class="row-odd"><td><em>closeWhenFinished</em></td>
+<td>bool</td>
+<td>False</td>
+<td>[True, False] Choose whether to close the plot-window when fillInteractive() is done</td>
+</tr>
+<tr class="row-even"><td><em>save</em></td>
+<td>dict</td>
+<td>{}</td>
+<td>can include all keywords from the method &#8216;save&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diaGrabber.plot._preferenceDock">
+<span id="preferencedock"></span><h2>preferenceDock<a class="headerlink" href="#module-diaGrabber.plot._preferenceDock" title="Permalink to this headline">¶</a></h2>
+<p>The classes in this module were not controlled or called by the user itself.
+Only <a class="reference internal" href="#diaGrabber.plot.Gui.Gui" title="diaGrabber.plot.Gui.Gui"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.plot.Gui.Gui</span></tt></a> controll calls it.
+Nethertheless most methods are described and viewable in the API.</p>
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">ConcentrateOpt</tt><big>(</big><em>n</em>, <em>display</em>, <em>b</em>, <em>concBasisDict</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#ConcentrateOpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>class to handle all concentrated basisDimensions</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changeAsTime">
+<tt class="descname">changeAsTime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#ConcentrateOpt.changeAsTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changeAsTime" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMax">
+<tt class="descname">changeMax</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMean">
+<tt class="descname">changeMean</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMin">
+<tt class="descname">changeMin</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changeMin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changePlotRangeToPosition">
+<tt class="descname">changePlotRangeToPosition</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#ConcentrateOpt.changePlotRangeToPosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changePlotRangeToPosition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.changeSum">
+<tt class="descname">changeSum</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.changeSum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.ConcentrateOpt.setPAsTime">
+<tt class="descname">setPAsTime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#ConcentrateOpt.setPAsTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.ConcentrateOpt.setPAsTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>the parameter &#8216;as time&#8217; is only visible if 2 basisDimensions are active
+(in case of a plotted image)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.addContentOf">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">addContentOf</tt><big>(</big><em>prefTab</em>, <em>display</em>, <em>**opts</em><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.addContentOf" title="Permalink to this definition">¶</a></dt>
+<dd><p>whith the class plotMergeDims it&#8217;s possible to plot merges together
+over the same basis. in case a display needs other merges with a different
+base it can be added trough this class.</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.addContentOf.change2dPlotList">
+<tt class="descname">change2dPlotList</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.addContentOf.change2dPlotList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.addContentOf.change2dPlots">
+<tt class="descname">change2dPlots</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.addContentOf.change2dPlots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.addContentOf.get2dPlotDisplays">
+<tt class="descname">get2dPlotDisplays</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.addContentOf.get2dPlotDisplays" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a name of all displays having only one basis
+exclude displays with imageplots to prevent a staple of images</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.mainTab">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">mainTab</tt><big>(</big><em>prefDock</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#mainTab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.mainTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>class for the main-Tab</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.mainTab.restoreWidgetLayout">
+<tt class="descname">restoreWidgetLayout</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#mainTab.restoreWidgetLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.mainTab.restoreWidgetLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore widget-layout from &#8216;self.stateWidgetLayout&#8217; or
+(in case &#8216;Restore from file&#8217; is active) from file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.mainTab.saveWidgetLayout">
+<tt class="descname">saveWidgetLayout</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#mainTab.saveWidgetLayout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.mainTab.saveWidgetLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the state of the widgetlayout to &#8216;self.stateWidgetLayout&#8217;
+and (in case &#8216;&#8217;Save to file&#8217; is active) in file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">plotBasisDims</tt><big>(</big><em>prefTab</em>, <em>display</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.addConcentrateOpt">
+<tt class="descname">addConcentrateOpt</tt><big>(</big><em>n</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.addConcentrateOpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.addConcentrateOpt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.addPlotRange">
+<tt class="descname">addPlotRange</tt><big>(</big><em>n</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.addPlotRange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.addPlotRange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeFrom">
+<tt class="descname">changePlotRangeFrom</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.changePlotRangeFrom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeFrom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeStep">
+<tt class="descname">changePlotRangeStep</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.changePlotRangeStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeStep" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeTo">
+<tt class="descname">changePlotRangeTo</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.changePlotRangeTo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.changePlotRangeTo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotBasisDims.changePlotStatus">
+<tt class="descname">changePlotStatus</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotBasisDims.changePlotStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotBasisDims.changePlotStatus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.plotMergeDims">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">plotMergeDims</tt><big>(</big><em>prefTab</em>, <em>display</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotMergeDims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotMergeDims" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotMergeDims.changeAsDensity">
+<tt class="descname">changeAsDensity</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotMergeDims.changeAsDensity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotMergeDims.changeAsDensity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.plotMergeDims.changePlotMerge">
+<tt class="descname">changePlotMerge</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#plotMergeDims.changePlotMerge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.plotMergeDims.changePlotMerge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">preferenceDock</tt><big>(</big><em>Gui</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock" title="Permalink to this definition">¶</a></dt>
+<dd><p>main-class for the whole preference-dock-system</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock.addPrefTab">
+<tt class="descname">addPrefTab</tt><big>(</big><em>display</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock.addPrefTab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock.addPrefTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a tab owned by its display</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock.addToArea">
+<tt class="descname">addToArea</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock.addToArea"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock.addToArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>append parameterTree-instance to dockarea</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock.build">
+<tt class="descname">build</tt><big>(</big><em>preferences_size</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>does:</p>
+<ul class="simple">
+<li>add mainTab</li>
+<li>add preferenceTab for each display</li>
+<li>add the pref.Dock to the gui</li>
+<li>save the widget-layout</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock.createNewDisplay">
+<tt class="descname">createNewDisplay</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock.createNewDisplay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock.createNewDisplay" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li>ask Gui to create a new display</li>
+<li>add a new pref.Tab for it</li>
+<li>save the new layout</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceDock.removeTab">
+<tt class="descname">removeTab</tt><big>(</big><em>tab</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceDock.removeTab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceDock.removeTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove a pref.Tab from the preferenceDock, save widget-layout</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.preferenceTab">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">preferenceTab</tt><big>(</big><em>display</em>, <em>prefDock</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceTab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceTab" title="Permalink to this definition">¶</a></dt>
+<dd><p>the preference tab that belongs to each Display</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceTab.printChange">
+<tt class="descname">printChange</tt><big>(</big><em>param</em>, <em>changes</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceTab.printChange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceTab.printChange" title="Permalink to this definition">¶</a></dt>
+<dd><p>If anything changes in the tree, print a message</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceTab.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceTab.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceTab.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove a display and it&#8217;s appendant preferenceTab</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.preferenceTab.showTabOnClick">
+<tt class="descname">showTabOnClick</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#preferenceTab.showTabOnClick"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.preferenceTab.showTabOnClick" title="Permalink to this definition">¶</a></dt>
+<dd><p>show the related preference-tab if the mouse click on the viewBox of
+a display.
+this is done trough manipluating the &#8216;mouseClickEvent&#8217;-routine of
+the viewBox of the display.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.readoutPlotRates">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">readoutPlotRates</tt><big>(</big><em>Gui</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#readoutPlotRates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.readoutPlotRates" title="Permalink to this definition">¶</a></dt>
+<dd><p>in case of an interactive plotted readout of the sources
+this class provides the parameters to change the plotrate (frames per second)
+and the readoutrate (lines per second)</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.readoutPlotRates.changeFPS">
+<tt class="descname">changeFPS</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#readoutPlotRates.changeFPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.readoutPlotRates.changeFPS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.readoutPlotRates.changeLPS">
+<tt class="descname">changeLPS</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#readoutPlotRates.changeLPS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.readoutPlotRates.changeLPS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.readoutPlotRates.changeLimitReadoutRate">
+<tt class="descname">changeLimitReadoutRate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#readoutPlotRates.changeLimitReadoutRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.readoutPlotRates.changeLimitReadoutRate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.readoutPlotRates.changeReadoutEveryNLine">
+<tt class="descname">changeReadoutEveryNLine</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#readoutPlotRates.changeReadoutEveryNLine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.readoutPlotRates.changeReadoutEveryNLine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.saveRestorePrefs">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">saveRestorePrefs</tt><big>(</big><em>prefTab</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#saveRestorePrefs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.saveRestorePrefs" title="Permalink to this definition">¶</a></dt>
+<dd><p>save/restore parameters in the preferenceTab</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.saveRestorePrefs.restorePreferences">
+<tt class="descname">restorePreferences</tt><big>(</big><em>sgn</em>, <em>state=None</em>, <em>add_missing_remove_extra=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#saveRestorePrefs.restorePreferences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.saveRestorePrefs.restorePreferences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.saveRestorePrefs.savePreferences">
+<tt class="descname">savePreferences</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#saveRestorePrefs.savePreferences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.saveRestorePrefs.savePreferences" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">sliceImage</tt><big>(</big><em>prefTab</em>, <em>display</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#sliceImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage.changeActivate">
+<tt class="descname">changeActivate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#sliceImage.changeActivate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage.changeActivate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage.changeWhichBasis">
+<tt class="descname">changeWhichBasis</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#sliceImage.changeWhichBasis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage.changeWhichBasis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage.changeWhichDisplay">
+<tt class="descname">changeWhichDisplay</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#sliceImage.changeWhichDisplay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage.changeWhichDisplay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage.getAvDisplays">
+<tt class="descname">getAvDisplays</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage.getAvDisplays" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the name of all other displays than the own one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.sliceImage.getShowBasis">
+<tt class="descname">getShowBasis</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.plot._preferenceDock.sliceImage.getShowBasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the name of all inactive/concentrated basisDimensions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions">
+<em class="property">class </em><tt class="descclassname">diaGrabber.plot._preferenceDock.</tt><tt class="descname">viewOptions</tt><big>(</big><em>prefTab</em>, <em>display</em>, <em>**opts</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>this class includes all otions manipulating the view of the display</p>
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changeAutoRangeX">
+<tt class="descname">changeAutoRangeX</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changeAutoRangeX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changeAutoRangeX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changeAutoRangeY">
+<tt class="descname">changeAutoRangeY</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changeAutoRangeY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changeAutoRangeY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changeCrosshair">
+<tt class="descname">changeCrosshair</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changeCrosshair"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changeCrosshair" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changeLockAspect">
+<tt class="descname">changeLockAspect</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changeLockAspect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changeLockAspect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changePlotOverlay">
+<tt class="descname">changePlotOverlay</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changePlotOverlay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changePlotOverlay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.plot._preferenceDock.viewOptions.changeTransposeAxes">
+<tt class="descname">changeTransposeAxes</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/plot/_preferenceDock.html#viewOptions.changeTransposeAxes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.plot._preferenceDock.viewOptions.changeTransposeAxes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">diaGrabber.plot</span></tt></a><ul>
+<li><a class="reference internal" href="#module-diaGrabber.plot.Gui">Gui</a></li>
+<li><a class="reference internal" href="#module-diaGrabber.plot._preferenceDock">preferenceDock</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="target.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">diaGrabber.target</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="todo.html"
+                        title="next chapter">to do</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/plot.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="todo.html" title="to do"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="target.html" title="diaGrabber.target"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

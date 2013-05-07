@@ -1,0 +1,47 @@
+.. _introduction:
+
+
+***************
+Introduction
+***************
+The basic idea of diaGrabber is shown in the following image and will be described now.
+
+.. image:: _static/idea_of_diaGrabber.png
+
+Imagine to have some data, maybe stored in a file or generated trough a stream. ``diaGrabber`` calls this **source**.
+Each source includes values sorted in **basis-** and **mergeDimensions**.
+
+basisDimension
+^^^^^^^^^^^^^^^
+...counter
+
+mergeDimension
+^^^^^^^^^^^^^^^
+...
+
+
+The values of the source were stored in a **target** which is usualy a matrix. See mod::`diaGrabber.target._matrix.matrixBase` for more information.
+It is possible to filter the values before they are stored in a target.
+Some of those filters are:
+	* **include**
+	* ...
+
+It is also possible to process the values via:
+	* **calc**
+	* **transform**
+
+.......
+
+To get all possible functions of a module you can have a look at the Application programming interface of diaGrabber at :ref:`api`.
+Another possibility is to (install and) open an interactive python-shell, like `iPython <http://ipython.org/>`_ or `IDLE <http://en.wikipedia.org/wiki/IDLE_(Python)>`_ 
+and to import diaGrabber in it via::
+
+	import diGrabber
+	diaGrabber.
+
+and then pressing the **[TAB]-key** shows all possible classes and functions including its `docstrings <http://www.python.org/dev/peps/pep-0257/>`_.
+
+To import all necassary moduls directly type::
+
+	from diaGrabber import source, target, plot
+	from diaGrabber.source.methods import merge, calc, exclude, transform

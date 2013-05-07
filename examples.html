@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Examples &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="next" title="The Graphical user interface" href="gui.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="The Graphical user interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="examples">
+<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>The following chapters include some of the example-procedures in /examples.
+At the moment the creation of a procedure is fully text-based. Dont panic: it is easier than it looks like.
+Go to <a class="reference internal" href="diaGrabberAPI.html#api"><em>The diaGrabber-API</em></a>  to get all a full overview over the possibilities of <tt class="docutils literal"><span class="pre">diaGrabber</span></tt></p>
+<div class="section" id="a-simple-2d-plot">
+<h2>a simple 2d-plot<a class="headerlink" href="#a-simple-2d-plot" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+<span class="c"># this is the most easiest example: one file, two dimensions, a simple graph to plot</span>
+<span class="c">#######################</span>
+
+
+<span class="c"># after installing diaGrabber you can create procedures everywhere</span>
+<span class="c"># you just have to include some of the modules of diaGrabber via...</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+<span class="c"># thats your source: a libreOffice-file</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">libreOfficeCalc</span><span class="p">(</span>
+	<span class="nb">file</span><span class="o">=</span> <span class="s">&quot;ressources/2d.ods&quot;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="s">&quot;Tabelle1&quot;</span><span class="p">,</span> <span class="n">dataType</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+
+<span class="c"># this will be our &#39;x&#39;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;I&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;mA&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;A2:A100&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="c"># and this our &#39;y&#39;</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;B2:B100&quot;</span><span class="p">)</span>
+
+<span class="c"># read more about merge- and basis-dimensions the the documentation</span>
+<span class="c"># to understand its differences</span>
+
+
+<span class="c"># we need a target to fill with the values from our source:</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coarseMatrix</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fill</span><span class="p">()</span>
+
+
+<span class="c"># ... and something to plot:</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">Gui</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">showPreferences</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c"># at the end: we save the plot in file</span>
+<span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">,</span><span class="n">folder</span><span class="o">=</span><span class="s">&quot;output&quot;</span><span class="p">,</span><span class="n">ftype</span><span class="o">=</span><span class="s">&quot;txt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-software-oscilloscope">
+<h2>a software-oscilloscope<a class="headerlink" href="#a-software-oscilloscope" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+
+<span class="c"># In this example we want to read values from a programm generating a stream.</span>
+<span class="c"># diaGrabber is able to plot the values in realtime - therefore it&#39;s possible</span>
+<span class="c"># to build something like an oscilloscope.</span>
+
+
+<span class="c"># business as usual: we import everything that we need from diaGrabber</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+
+
+<span class="c"># we create a instance of the stream-source-class</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span>
+	<span class="c"># i&#39;ve written a programm which will generate a sine and a cosine-stream</span>
+	<span class="c"># its written in quess what ... python</span>
+	<span class="n">command</span> <span class="o">=</span> <span class="s">&quot;python&quot;</span><span class="p">,</span>
+	<span class="c"># thats the name of the file</span>
+	<span class="nb">file</span><span class="o">=</span><span class="s">&quot;ressources/test_stream.py&quot;</span><span class="p">,</span>
+	<span class="c"># if the stream is complete it will print &quot;done&quot;. giving this information to</span>
+	<span class="c"># diaGrabber will stopp the readout-process when the stream is done.</span>
+	<span class="n">stopVia</span><span class="o">=</span><span class="s">&quot;done&quot;</span><span class="p">,</span>
+	<span class="c"># all values printed in one line are seperated by a space:</span>
+	<span class="n">dimSeparator</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">,</span>
+	<span class="c"># the stream produces float-numbers:</span>
+	<span class="n">dataType</span><span class="o">=</span> <span class="s">&quot;float&quot;</span><span class="p">,</span>
+	<span class="c"># if we want to kill the stream direct from diaGrabber:</span>
+	<span class="n">keyToEndProcess</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\x1a</span><span class="s">&quot;</span><span class="p">,</span> <span class="c">#Esc</span>
+	<span class="c"># this python-script only works when it&#39;s started in a shell - other executables</span>
+	<span class="c"># can run without it</span>
+	<span class="n">runInShell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+<span class="c"># the stream only gives merge-(y)-values.</span>
+<span class="c"># therefore we create a basis as a counter</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;n&quot;</span><span class="p">,</span>
+	<span class="n">unit</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">,</span>
+	<span class="n">resolution</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+	<span class="c"># there are two different counters available:</span>
+	<span class="n">index</span><span class="o">=</span><span class="s">&quot;fixedCounter&quot;</span><span class="p">,</span><span class="c">#from 0 to 49 (resolution-1)</span>
+	<span class="c">#and: index=&quot;runningCounter&quot;, #from 0 to x, where x in the number of readed lines</span>
+	<span class="n">include</span><span class="o">=</span><span class="s">&quot;chronic&quot;</span>
+	<span class="c"># with &#39;chronic&#39; we define that this basis stores only the last n values,</span>
+	<span class="c"># where n is the resolution</span>
+	<span class="p">)</span>
+
+<span class="c"># here are our two mergeDimensions:</span>
+<span class="n">ch0</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;ch0&quot;</span><span class="p">,</span>
+	<span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span>
+	<span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ch1</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;ch1&quot;</span><span class="p">,</span>
+	<span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span>
+	<span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># to explain to you the merge-method &#39;alias&#39; we add annother mergeDimension</span>
+<span class="c"># which only stores  new value if this value is bigger than the last value at</span>
+<span class="c"># the same basis-position</span>
+<span class="n">ch0max</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;ch0max&quot;</span><span class="p">,</span>
+	<span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span>
+	<span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+	<span class="n">merge</span><span class="o">=</span><span class="n">merge</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c"># with the following command we let the mergeDimension &#39;ch1&#39; only to take new</span>
+<span class="c"># values if the last value of &#39;ch0max&#39; also was taken</span>
+<span class="n">ch1</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ch0max</span><span class="p">)</span>
+
+
+<span class="c"># now we set some arguments for our stream:</span>
+<span class="n">f</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span>
+	<span class="c"># in many cases the stream-source would produce faster new output, than</span>
+	<span class="c"># diaGrabber can process and plot</span>
+	<span class="c"># therefore we tell diaGrabber only to grab as much values as it can</span>
+	<span class="c"># process in the same time:</span>
+	<span class="n">readoutEveryNLine</span><span class="o">=</span><span class="s">&quot;calc&quot;</span><span class="p">,</span>
+	<span class="c"># we want to know the number of skipped lines:</span>
+	<span class="n">showCalcNLine</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+	<span class="c"># every n lines diaGrabber will print a status:</span>
+	<span class="n">infoEveryNLine</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+
+<span class="c"># we give our source to the target:</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coarseMatrix</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c"># we create a Gui-instance (graphical user interface)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">Gui</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="c"># we start the interactive plotting of the readout:</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fillInteractive</span><span class="p">(</span><span class="n">p</span><span class="p">,</span>
+	<span class="c"># we have per default 20 frames-per-second ... but 15 are enough for us</span>
+	<span class="n">fps</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+	<span class="c"># because our sine-waves increase there values continous an autorange</span>
+	<span class="c"># of the y-axis is reasonable</span>
+	<span class="n">enableAutoRange</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">],</span>
+	<span class="c"># one of the tree mergeDimensions was just a &#39;helper&#39; and we dont want to</span>
+	<span class="c"># plot it. so we define what merge to plot over what basis:</span>
+	<span class="n">show</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;ch0&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">),(</span><span class="s">&#39;ch1&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">)],</span>
+	<span class="c"># the the stream in done, the Gui will close too</span>
+	<span class="n">closeWhenFinished</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># if the stream is complete we save its last values in file:</span>
+<span class="n">t</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;stream&quot;</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s">&quot;output&quot;</span><span class="p">,</span><span class="n">ftype</span><span class="o">=</span><span class="s">&quot;txt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="compare-different-sources">
+<h2>compare different sources<a class="headerlink" href="#compare-different-sources" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+
+<span class="c"># this example shows you the posiblity to compaire and connect values of</span>
+<span class="c"># different sources.</span>
+
+<span class="c"># the make this more elusive imagine there are two bavarian professors</span>
+<span class="c"># roaming trough the deep bavarian forest (in direction x,y) and explore rare butterflies.</span>
+<span class="c"># there are 5 different types of them: (0,1,2,3,4).</span>
+<span class="c"># both professors want to know whats the best height for its habitat</span>
+<span class="c"># there are some differences in the written results of the professors:</span>
+	<span class="c"># * different prefixes (one write distances in km, the other im m)</span>
+	<span class="c"># * differenct ammount of values</span>
+	<span class="c"># * different resolutions of the basiDimensions</span>
+	
+<span class="c"># the aim is to connect the results of the &#39;Type&#39; and to compair the results of</span>
+<span class="c"># &quot;best height/Mueller&quot; with &quot;best height/Schroeder&quot;</span>
+
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+
+<span class="c">#here are Prof. Muellers results:</span>
+<span class="c">#################################</span>
+<span class="n">mueller</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">libreOfficeCalc</span><span class="p">(</span>
+	<span class="nb">file</span><span class="o">=</span> <span class="s">&quot;3d_b.ods&quot;</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s">&quot;ressources/&quot;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">dataType</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+<span class="c">##BASIS (in km)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">mueller</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;k&#39;</span><span class="p">,</span><span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;a2:a229&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">mueller</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;k&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;b2:b229&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c">##MERGE</span>
+<span class="n">type_max</span> <span class="o">=</span> <span class="n">mueller</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;Type&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;d2:d229&quot;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="n">merge</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="n">bestHeight</span> <span class="o">=</span> <span class="n">mueller</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;best height/Mueller&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;c2:c229&quot;</span><span class="p">)</span>
+<span class="c"># the best height is defined as the height, where the type is maximal</span>
+<span class="n">bestHeight</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_max</span><span class="p">)</span>
+
+
+
+<span class="c"># and this are Prof. Schroeder results:</span>
+<span class="c">#######################################</span>
+<span class="n">schroeder</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">libreOfficeCalc</span><span class="p">(</span>
+	<span class="n">folder</span><span class="o">=</span><span class="s">&quot;ressources/&quot;</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span> <span class="s">&quot;3d_a.ods&quot;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="s">&quot;sheet1&quot;</span><span class="p">,</span> <span class="n">dataType</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+
+<span class="c">##BASIS## (in m)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">schroeder</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;a2:a317&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">schroeder</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;b2:b317&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c">##MERGE##</span>
+<span class="n">type_max</span> <span class="o">=</span> <span class="n">schroeder</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;Type&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">,</span>
+	<span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;d2:d317&quot;</span><span class="p">,</span><span class="n">merge</span><span class="o">=</span><span class="n">merge</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="n">bestHeight</span> <span class="o">=</span> <span class="n">schroeder</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;best height/Schroeder&quot;</span><span class="p">,</span>  <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;c&quot;</span><span class="p">,</span>
+	<span class="n">unit</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;c2:c317&quot;</span><span class="p">)</span>
+<span class="n">bestHeight</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_max</span><span class="p">)</span>
+<span class="c"># in contrast to prof. mueller prof. schroeder also captured the quantity of the</span>
+<span class="c"># butterflies:</span>
+<span class="n">quantity</span> <span class="o">=</span> <span class="n">schroeder</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;Quantity&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;e2:e317&quot;</span><span class="p">)</span>
+
+
+
+<span class="c"># now we hand over the results of Prof. Schroeder and Prof. Mueller to the target:</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">coarseMatrix</span><span class="p">(</span> <span class="p">(</span><span class="n">schroeder</span><span class="p">,</span><span class="n">mueller</span><span class="p">)</span> <span class="p">)</span>
+
+
+<span class="c">#we create the Gui-instance</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">Gui</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">colorTheme</span> <span class="o">=</span> <span class="s">&quot;bright&quot;</span><span class="p">)</span>
+
+<span class="c"># we fill our target interactive</span>
+<span class="c"># (later we will see the routes that both profs. have taken)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fillInteractive</span><span class="p">(</span><span class="n">p</span><span class="p">,</span>
+	<span class="c"># ..and limit the number of readout-lines per second to 20</span>
+	<span class="n">lps</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+	<span class="c"># ... frames per second will be 5</span>
+	<span class="n">fps</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+	<span class="c"># ... and show (at first) only two merge-values</span>
+	<span class="n">show</span><span class="o">=</span><span class="p">[(</span><span class="s">&quot;best height/Schroeder&quot;</span><span class="p">,</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">),(</span><span class="s">&quot;best height/Mueller&quot;</span><span class="p">,</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">)]</span>
+	<span class="p">)</span>
+
+<span class="c"># we like to interpolate one the results without ovewriting them</span>
+<span class="c"># that&#39;s why we copy the relevant result</span>
+<span class="n">t</span><span class="o">.</span><span class="n">copyMerge</span><span class="p">(</span><span class="s">&quot;Type&quot;</span><span class="p">,</span><span class="s">&quot;Type2&quot;</span><span class="p">)</span>
+
+<span class="c"># now we start the interpolation with &#39;interpolateFine&#39;</span>
+<span class="c"># this is a very powerfull, but slow method:</span>
+<span class="n">t</span><span class="o">.</span><span class="n">interpolateFine</span><span class="p">(</span>
+	<span class="c"># we want to interpolate only the following result:</span>
+	<span class="n">mergeName</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Type2&quot;</span><span class="p">],</span>
+	<span class="c"># the focusexponent weight the moments of the existent point on an empty</span>
+	<span class="c"># point as follows: moment = 1 / (distance_to_point^focusExponent)</span>
+	<span class="c"># therefore a big focusExponent gives very sharp crossover between points</span>
+	<span class="n">focusExponent</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+	<span class="c"># the moment of existent points depends on the ammount of points in this cell</span>
+	<span class="n">evalPointDensity</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+	<span class="c"># we dont want to get interpolated values on points which are to far away</span>
+	<span class="c"># so we define a max. absolute distance:</span>
+	<span class="n">maxDistance</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;x&quot;</span><span class="p">:</span><span class="mf">1e3</span><span class="p">,</span><span class="s">&quot;y&quot;</span><span class="p">:</span><span class="mf">1e3</span><span class="p">}</span> <span class="c"># which is 1 km</span>
+	<span class="p">)</span>
+
+<span class="c"># we copy the result again</span>
+<span class="n">t</span><span class="o">.</span><span class="n">copyMerge</span><span class="p">(</span><span class="s">&quot;Type2&quot;</span><span class="p">,</span><span class="s">&quot;Type3&quot;</span><span class="p">)</span>
+
+<span class="c"># the last copy will be posterized. with this method it is quit easy to</span>
+<span class="c"># recognize areas in an image which belongs together.</span>
+<span class="n">t</span><span class="o">.</span><span class="n">posterize</span><span class="p">(</span>
+	<span class="c"># because there were only 5 discrete types (0-4) we take this values again:</span>
+	<span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+	<span class="n">mergeName</span><span class="o">=</span><span class="s">&quot;Type3&quot;</span> <span class="p">)</span>
+
+
+<span class="c"># now we want to see all merges - that&#39;s why we don&#39;t set the show-argument this time</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="c"># diaGrabber only draw four different displays - all other are tabbet bedind</span>
+<span class="c"># the last display</span>
+<span class="c"># trough the power of &#39;Qt&#39; you can grab a tab and move it wherever you want.</span>
+<span class="c"># klick on a display the the right preference-tab will be shown.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-from-large-files">
+<h2>reading from large files<a class="headerlink" href="#reading-from-large-files" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 *-*</span>
+
+<span class="c"># This example shows the readout of a large plainText-file</span>
+<span class="c"># during this example you will see the Gui (the graphical user interface) for</span>
+<span class="c"># 3 times.</span>
+<span class="c"># to know where you are in the procedure, I will tag this positions like this:</span>
+<span class="c">###################</span>
+<span class="c">######(SEE?)#######</span>
+<span class="c">###################</span>
+
+<span class="c"># at first some business as usual: we import everything that we need from diaGrabber</span>
+<span class="kn">from</span> <span class="nn">FEPdiaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+<span class="c"># our file is located in ressources/, each dimension is seperated with a space</span>
+<span class="c"># the values are of type float (something like 1.23)</span>
+<span class="n">f</span><span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">plainText</span><span class="p">(</span>
+	<span class="n">folder</span><span class="o">=</span><span class="s">&quot;ressources&quot;</span><span class="p">,</span>
+	<span class="nb">file</span><span class="o">=</span><span class="s">&quot;large.txt&quot;</span><span class="p">,</span>
+	<span class="n">dimSeperator</span><span class="o">=</span><span class="s">&quot; &quot;</span><span class="p">,</span>
+	<span class="n">dataType</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">,</span>
+	<span class="c">#using the following attribute we avoid the (maybe time-expensive)</span>
+	<span class="c">#counting of lines:</span>
+	<span class="n">nFileLines</span><span class="o">=</span><span class="mi">40000</span>
+	<span class="p">)</span>
+
+
+<span class="c"># this file is the result of a simulation of a 2d-scan of an electron-beam (eBeam)</span>
+
+<span class="c"># in the file is a timestamp the the beginning of each line:</span>
+<span class="n">time</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;time&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c"># the eBeam scans with a triangle-wave over a substrate</span>
+<span class="c"># therefore it moves in x-direction with a simple linear ramp-function</span>
+<span class="n">ramp</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;ramp&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;V&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="c"># and in y-direction with a triangle-function</span>
+<span class="n">triangle</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;triangle&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;V&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+<span class="c"># and the signal of an apperature to measure the eBeam:</span>
+<span class="n">beam</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;beam&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;V&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+
+<span class="c"># the following definitions are optional</span>
+<span class="c">##############</span>
+
+<span class="c"># the sweep-signal of the scan in stored in Volt</span>
+<span class="c"># to get the real deviation we need to transform the Volt-signal into Meters:</span>
+<span class="n">Volt2m_x</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">interpolationTable</span><span class="p">([</span>
+	<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">74.095e-3</span><span class="o">*</span><span class="mi">2</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">64.701e-3</span><span class="o">*</span><span class="mi">2</span><span class="p">]</span>
+	<span class="p">],</span> <span class="s">&quot;m&quot;</span><span class="p">)</span>
+<span class="n">Volt2m_y</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">interpolationTable</span><span class="p">([</span>
+	<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">53.168e-3</span><span class="o">*</span><span class="mi">2</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">],</span>
+	<span class="p">[</span><span class="mi">1</span><span class="p">,</span>   <span class="mf">51.716e-3</span><span class="o">*</span><span class="mi">2</span><span class="p">]</span>
+	<span class="p">],</span> <span class="s">&quot;m&quot;</span><span class="p">)</span>
+<span class="c"># the transform-module has many other fancy classes to transform units</span>
+<span class="c"># checkout the documantation!</span>
+
+<span class="c">#now we append the two transform-instances to our sweep-signals:</span>
+<span class="n">ramp</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Volt2m_y</span><span class="p">)</span>
+<span class="n">triangle</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Volt2m_x</span><span class="p">)</span>
+
+<span class="c"># for some reason we only want to take those values where the triangle moves up.</span>
+<span class="c"># to exclude all other values we let diaGrabber calculate the middle-difference</span>
+<span class="c"># of the last 3 values of the triangle-signal</span>
+<span class="c"># because of the simulated scan we could also only use the last value, but</span>
+<span class="c"># in real measurements the fluctuation of a signal can be so large that we need</span>
+<span class="c"># to middle our calculations in some way</span>
+<span class="n">triangle</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calc</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="c"># now we define to exclude all values where the result of the calculated values</span>
+<span class="c"># is less than zero:</span>
+<span class="n">triangle</span><span class="o">.</span><span class="n">exclude</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exclude</span><span class="o">.</span><span class="n">calcSmallerValue</span><span class="p">(</span><span class="n">triangle</span><span class="o">.</span><span class="n">calc</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">))</span>
+
+<span class="c"># we give the source to our target:</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">fineMatrix</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c"># we initiate the graphical user interface:</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">Gui</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+	<span class="n">colorTheme</span> <span class="o">=</span> <span class="s">&quot;bright&quot;</span><span class="p">)</span>
+
+<span class="c"># our source is relatively large, maybe we dont want to readout every line in it.</span>
+<span class="c"># to spare time we choose only to read every fifth line in the first run:</span>
+<span class="n">f</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">readoutEveryNLine</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c"># we readout the source and fill the target with its values</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fill</span><span class="p">()</span>
+<span class="c"># we command to plot</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="c">###################</span>
+<span class="c">######(SEE?)#######</span>
+<span class="c">###################</span>
+
+<span class="c"># because we didn&#39;t know the range in which our basisDimensions vary diaGrabber will</span>
+<span class="c"># scanns the file before the first readout for the max. and min. values of</span>
+<span class="c"># all unbounded basisDimensions</span>
+<span class="c"># if we used &#39;fillInteractive(p)&#39; than &#39;fill&#39; we would see a bright point somewhere in the image.</span>
+<span class="c"># this is our point of interest.</span>
+<span class="c"># diaGrabber allow you to zoom to a defined point in the targetMatrix.</span>
+<span class="n">t</span><span class="o">.</span><span class="n">autoZoom</span><span class="p">(</span>
+	<span class="n">mergeName</span><span class="o">=</span><span class="s">&#39;beam&#39;</span><span class="p">,</span>
+	<span class="n">value</span><span class="o">=</span><span class="s">&quot;max&quot;</span><span class="p">,</span> <span class="c"># in this case we are looking for the maximum value of &#39;beam&#39;</span>
+	<span class="n">scale</span><span class="o">=</span><span class="s">&quot;relative&quot;</span><span class="p">,</span>
+	<span class="n">level</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span>
+	<span class="c"># we want to set a range for all basisDimensions of 15% above and under the point</span>
+	<span class="p">)</span>
+
+<span class="c"># now we want to read every line from the source:</span>
+<span class="n">f</span><span class="o">.</span><span class="n">setArgs</span><span class="p">(</span><span class="n">readoutEveryNLine</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c"># we fill our matrix again. but now we want to look at the readout-process</span>
+<span class="c"># with the following method:</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fillInteractive</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+
+<span class="c"># now i want to show you some process-methods for matrix-like targets:</span>
+
+<span class="c"># this method allows you to transform all dimensions which has a filled</span>
+<span class="c"># transform()-container</span>
+<span class="n">t</span><span class="o">.</span><span class="n">transformDim</span><span class="p">(</span><span class="n">rebuildMatrix</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="c"># if our tranfrom-method is far away from linear function we also can rebuild</span>
+<span class="c"># the matrix after the transfromation via rebuildMatrix=True</span>
+
+<span class="c"># this transformation only works for those transfrom-instances which wouldnt</span>
+<span class="c"># have an adhoc-transformation in the readout-process. to do this just add the</span>
+<span class="c"># argument &#39;adhoc=True&#39; in a transform-instance</span>
+
+
+<span class="c"># as you have seen our bright point is better resolved now. but there is much empty</span>
+<span class="c"># space arround it. to fill the gaps we choose the following interpolation-method</span>
+<span class="c"># on our &#39;beam&#39;-field</span>
+<span class="n">t</span><span class="o">.</span><span class="n">interpolateFast</span><span class="p">(</span><span class="n">mergeName</span><span class="o">=</span><span class="s">&quot;beam&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;cubic&quot;</span><span class="p">)</span>
+
+
+<span class="c"># finally we plot again.</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="c">###################</span>
+<span class="c">######(SEE?)#######</span>
+<span class="c">###################</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-n-dimensional-problems">
+<h2>working with n-dimensional problems<a class="headerlink" href="#working-with-n-dimensional-problems" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># This example show you the possibility of working with multidimensional problems</span>
+
+<span class="c"># As usual we need to include all modules of diaGrabber</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">plot</span>
+<span class="kn">from</span> <span class="nn">diaGrabber.source.methods</span> <span class="kn">import</span> <span class="n">merge</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">transform</span>
+
+
+<span class="c"># This is our source: a libreOffice-document.</span>
+<span class="c"># There are two sheets in the document:</span>
+	<span class="c"># in &#39;functions&#39; are all values written as a function of the mergeDimension</span>
+	<span class="c"># in &#39;values&#39; are only the raw values of it.</span>
+	<span class="c"># REMEMBER: source.libreOfficeCalc can only read out values, not functions!</span>
+<span class="n">ods</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">libreOfficeCalc</span><span class="p">(</span>
+	<span class="nb">file</span><span class="o">=</span> <span class="s">&quot;5d.ods&quot;</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s">&quot;ressources/&quot;</span><span class="p">,</span> <span class="n">sheet</span><span class="o">=</span><span class="s">&quot;values&quot;</span><span class="p">,</span> <span class="n">dataType</span><span class="o">=</span><span class="s">&quot;float&quot;</span><span class="p">)</span>
+
+<span class="c"># In this dokument one mergeDimension (merge) depends on four different</span>
+<span class="c"># basisDimensions (one,two,tree,four)</span>
+<span class="n">merge</span> <span class="o">=</span> <span class="n">ods</span><span class="o">.</span><span class="n">mergeDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;merge&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;F3:F600&quot;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="n">merge</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c"># the given prefix &#39;m&#39; stands for milli. If you use this attribute all values</span>
+<span class="c"># were transformed in the readout. in this case /1000</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">ods</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;one&quot;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s">&quot;m/s&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;A3:A600&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">two</span> <span class="o">=</span> <span class="n">ods</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;two&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m/s&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;B3:B600&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">three</span> <span class="o">=</span> <span class="n">ods</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;three&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m/s&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;C3:C600&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">four</span> <span class="o">=</span> <span class="n">ods</span><span class="o">.</span><span class="n">basisDimension</span><span class="p">(</span>
+	<span class="n">name</span><span class="o">=</span><span class="s">&quot;four&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;m&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&quot;m/s&quot;</span><span class="p">,</span> <span class="n">cellRange</span><span class="o">=</span><span class="s">&quot;D3:D600&quot;</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+
+
+<span class="c"># now we put the source &#39;ods&#39; into the target</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">fineMatrix</span><span class="p">(</span> <span class="n">ods</span> <span class="p">)</span>
+
+<span class="c"># the command to fill the target with the values of the source</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fill</span><span class="p">()</span>
+
+
+<span class="c"># to see the result we need to create a instance of plot.Gui:</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">Gui</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+	<span class="n">colorTheme</span> <span class="o">=</span> <span class="s">&quot;bright&quot;</span><span class="p">,</span>
+	<span class="n">closeWhenFinished</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+<span class="c"># there are many ways to individualize the Gui. You can find all possible</span>
+<span class="c"># attributes in the documentation of this class.</span>
+
+
+<span class="c"># now the command to plot:</span>
+<span class="n">p</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c"># if everything worked well you should see a grey-image and on the left side</span>
+<span class="c"># a preference-menue. Right-click on the colorbar to choose a different set of</span>
+<span class="c"># colors.</span>
+<span class="c"># because its very hard to visualize data with more than 3 dimensions (x,y,contrast)</span>
+<span class="c"># the mergeValues in the basisDimensions &#39;tree&#39; and &#39;four&#39; were concentrated.</span>
+<span class="c"># the standard for this procedure is &#39;mean&#39;</span>
+
+<span class="c"># if a mergeDimension is fragmented in a basisDimension it can be better to</span>
+<span class="c"># use &#39;sum&#39; instead of &#39;mean&#39;.</span>
+
+<span class="c"># it is also possible to show the mergeValues at a given &#39;position&#39; of the</span>
+<span class="c"># basisDimension or to show the basisDimension a a timeline via &#39;as time&#39;.</span>
+
+<span class="c"># a very fancy method is to slice your nD-target. to understand this think of</span>
+<span class="c"># a tasty smoked peanut-tofu. imagine the color the tofu is your mergeDimension</span>
+<span class="c"># and the position x,y,z are your basisDimensions. your are not able to see</span>
+<span class="c"># through the tofu. you only see the border.</span>
+<span class="c"># using slices is like taking a knife and slice the tofu in every position you want.</span>
+<span class="c"># to use this function you first have to create a second display-widget with</span>
+<span class="c"># the add-button on the main widget.</span>
+<span class="c"># than &#39;activate&#39; the slice, choose this its displaynumber and the basisDimension</span>
+<span class="c"># you want to look at.</span>
+<span class="c"># et voila: a line appears and on the second image the slice is shown.</span>
+
+
+<span class="c"># now close the image.</span>
+<span class="c"># i want you to show the method &#39;fillInteractive&#39;. With this you can watch the</span>
+<span class="c"># plot while the sources were readout.</span>
+<span class="n">t</span><span class="o">.</span><span class="n">fillInteractive</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">lps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c"># lps stands here for &#39;lines-per-second&#39;</span>
+
+<span class="c"># if everything works you see the plot -black-.</span>
+<span class="c"># as you see the image &#39;is filled&#39; with the values of the source - but quite slow.</span>
+<span class="c"># you can speed up the readout trough deactivating the limit of the readout-rate.</span>
+<span class="c"># the main reason of the slow readout is however the time-expensive plotting of the image.</span>
+<span class="c"># therefore you can fill your target faster is you decrease the &#39;frames per second&#39;</span>
+<span class="c"># from 20 (default) to ... maybe 5?</span>
+
+<span class="c"># annother method to accelerate the procedure is to decrease the displayed size of</span>
+<span class="c"># your target trough manipulating the &#39;plot-range&#39; of the displayed basisDimensions</span>
+<span class="c"># there are three values: the start- and stop-position and the step.</span>
+<span class="c"># if your basis has a resolution of 40 there are 0 to 39 positions.</span>
+<span class="c"># increasing the &#39;step&#39; indicates diaGrabber only to plot every &#39;step&#39; position</span>
+<span class="c"># eg. start=0, stop=20, step=5 will only plot the positions 0,5,10,15,20</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Examples</a><ul>
+<li><a class="reference internal" href="#a-simple-2d-plot">a simple 2d-plot</a></li>
+<li><a class="reference internal" href="#a-software-oscilloscope">a software-oscilloscope</a></li>
+<li><a class="reference internal" href="#compare-different-sources">compare different sources</a></li>
+<li><a class="reference internal" href="#reading-from-large-files">reading from large files</a></li>
+<li><a class="reference internal" href="#working-with-n-dimensional-problems">working with n-dimensional problems</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="gui.html"
+                        title="next chapter">The Graphical user interface</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/examples.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="The Graphical user interface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

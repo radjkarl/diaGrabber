@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Baseclasses for Targets &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="BaseClasses" href="baseClasses.html" />
+    <link rel="next" title="Proprietary Modules of diaGrabber" href="FEP_proprietary.html" />
+    <link rel="prev" title="BaseClasses" href="baseClasses.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FEP_proprietary.html" title="Proprietary Modules of diaGrabber"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="baseClasses.html" title="BaseClasses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li>
+          <li><a href="baseClasses.html" accesskey="U">BaseClasses</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="baseclasses-for-targets">
+<h1>Baseclasses for Targets<a class="headerlink" href="#baseclasses-for-targets" title="Permalink to this headline">¶</a></h1>
+<p class="graphviz">
+<img src="_images/inheritance-39519f2359c80ffc5650d46fb5f4b90aad43984a.png" alt="Inheritance diagram of diaGrabber.target._matrix.matrixBase, diaGrabber.target.coarseMatrix.coarseMatrix, diaGrabber.target.fineMatrix.fineMatrix, diaGrabber.target._matrixMethods.matrixMethods" usemap="#inheritancee76a50133c" class="inheritance"/>
+<map id="inheritancee76a50133c" name="inheritancee76a50133c">
+<area shape="rect" id="node1" href="target.html#diaGrabber.target.fineMatrix.fineMatrix" title="diaGrabber.target.fineMatrix.fineMatrix" alt="" coords="548,4,749,25"/>
+<area shape="rect" id="node2" href="target.html#diaGrabber.target._matrix.matrixBase" title="diaGrabber.target._matrix.matrixBase" alt="" coords="299,23,497,44"/>
+<area shape="rect" id="node6" href="target.html#diaGrabber.target.coarseMatrix.coarseMatrix" title="diaGrabber.target.coarseMatrix.coarseMatrix" alt="" coords="533,42,764,63"/>
+<area shape="rect" id="node4" href="#diaGrabber.target._matrixMethods.matrixMethods" title="diaGrabber.target._matrixMethods.matrixMethods" alt="" coords="5,23,262,44"/>
+</map>
+</p>
+<div class="section" id="baseclass-for-all-matrices">
+<h2>Baseclass for all matrices<a class="headerlink" href="#baseclass-for-all-matrices" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.target._matrix.matrixBase">
+<em class="property">class </em><tt class="descclassname">diaGrabber.target._matrix.</tt><tt class="descname">matrixBase</tt><big>(</big><em>sourceClassList</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.target._matrixMethods.matrixMethods" title="diaGrabber.target._matrixMethods.matrixMethods"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.target._matrixMethods.matrixMethods</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sourceClassList</strong> (<em>tuple, list</em>) &#8211; One or more instances of source-classes</td>
+</tr>
+</tbody>
+</table>
+<p>Base-Class for all matix-like-targets.
+Includes every method that is equal for them.</p>
+<p>Using more source-classes can be usefull to:</p>
+<blockquote>
+<div><ul class="simple">
+<li>combine (<strong>same merge-dimensions</strong>)</li>
+<li>compare (<strong>different merge-dimensions</strong>)</li>
+</ul>
+</div></blockquote>
+<p>values.
+When more sources are used each source has to have
+<strong>the same basis (with same names and units)</strong>
+Different ranges and resolutions will be fitted.
+If different sources includes mergeDimensions of the same name (<strong>and unit</strong>)
+their values are assembled.
+Depending on the number of used basis- and mergeDimensions all matrix-targets
+create three different matrices:</p>
+<blockquote>
+<div><ul class="simple">
+<li>basisMatrix (1D-numpy.array)</li>
+<li>mergeMatrix (nD-numpy.array)</li>
+<li>densityMatrix (nD-numpy.array)</li>
+</ul>
+</div></blockquote>
+<p>...</p>
+<a class="reference internal image-reference" href="_images/matrix_build_scheme.png"><img alt="_images/matrix_build_scheme.png" src="_images/matrix_build_scheme.png" style="width: 290.0px; height: 286.5px;" /></a>
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._assign">
+<tt class="descname">_assign</tt><big>(</big><em>sourceClass</em>, <em>merge_to_matrix</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._assign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign all self.merge_values to the self.mergeMatrix
+Get the position/intensity of a value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._buildMatrices">
+<tt class="descname">_buildMatrices</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._buildMatrices" title="Permalink to this definition">¶</a></dt>
+<dd><p>create:</p>
+<ul class="simple">
+<li><strong>mergeMatrix</strong> - a list of nD-arrays containing nan (later overridden bymerge-values</li>
+<li><strong>densityMatrix</strong> - a list of nD-arrays containing the number of overridden-merge-values</li>
+<li><strong>basisMatrix</strong> - a list of 1D-arrays containing th range of all basis-values</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._checkMinMax">
+<tt class="descname">_checkMinMax</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._checkMinMax" title="Permalink to this definition">¶</a></dt>
+<dd><p>get minMax-range for all unlimited dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._combineMergeDims">
+<tt class="descname">_combineMergeDims</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._combineMergeDims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._fill">
+<tt class="descname">_fill</tt><big>(</big><em>readout_one_line</em>, <em>end_readOut</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Intrinsic method to readout all sources and to fill the matrix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._fitBasisDims">
+<tt class="descname">_fitBasisDims</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._fitBasisDims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._getReadoutEveryNLine">
+<tt class="descname">_getReadoutEveryNLine</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._getReadoutEveryNLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>because every source-file has a identically value for it we can take the first one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._prepareFill">
+<tt class="descname">_prepareFill</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._prepareFill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase._setReadoutEveryNLine">
+<tt class="descname">_setReadoutEveryNLine</tt><big>(</big><em>readoutEveryNLine</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase._setReadoutEveryNLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to set the value _readout_every_n_line in every given source-class.
+If a source-class donst has this attribute, restore the original value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase.fill">
+<tt class="descname">fill</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase.fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readout the whole source, then continue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase.fillInteractive">
+<tt class="descname">fillInteractive</tt><big>(</big><em>plotInstance</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase.fillInteractive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the matrix with the source-values and plot the progress.
+Therefore a plotInstance which is able to plot interactive is needed.
+kwargs can be those from the plot-method of the used &#8216;plotInstance&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase.load">
+<tt class="descname">load</tt><big>(</big><em>name</em>, <em>folder=''</em>, <em>ftype='bin'</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load previous saved matrices.
+Only ftype=&#8217;bin&#8217; is supported at the moment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrix.matrixBase.save">
+<tt class="descname">save</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrix.matrixBase.save" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Save the following matrices (of all mergeDimensions) to file:</dt>
+<dd><ul class="first last simple">
+<li>basisMatrix</li>
+<li>mergeMatrix</li>
+<li>densityMatrix</li>
+</ul>
+</dd>
+</dl>
+<p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="21%" />
+<col width="18%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>name</em></td>
+<td>string</td>
+<td>&#8220;test&#8221;</td>
+<td>prename of the saved files.</td>
+</tr>
+</tbody>
+</table>
+<p>Optional kwargs (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="6%" />
+<col width="5%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>folder</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>Name of the folder to save in</td>
+</tr>
+<tr class="row-odd"><td><em>ftype</em></td>
+<td>string</td>
+<td>&#8220;bin&#8221;</td>
+<td>&#8220;bin&#8221;: output is saved in computer-readable binary-form, &#8220;txt&#8221;: output is saved in a human-readable-form</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="methods-to-process-filled-matrices">
+<h2>Methods to process filled matrices<a class="headerlink" href="#methods-to-process-filled-matrices" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods">
+<em class="property">class </em><tt class="descclassname">diaGrabber.target._matrixMethods.</tt><tt class="descname">matrixMethods</tt><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>This class includes a list of methods inherited (and hence callable)
+by all matrix-like targets.</p>
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods._multiDimMeshgrid">
+<tt class="descname">_multiDimMeshgrid</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods._multiDimMeshgrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods._multiDimMeshgrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>like np.meshgrid but can also produce multi-dimensional meshgrids
+takes  list of arrays, where len(list)=nBasis</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.autoZoom">
+<tt class="descname">autoZoom</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods.autoZoom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.autoZoom" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="11%" />
+<col width="9%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>str</td>
+<td>myMergeName</td>
+<td>the name of the merge-dim to do the method on</td>
+</tr>
+<tr class="row-odd"><td><em>value</em></td>
+<td>float/string</td>
+<td><em>max</em></td>
+<td>The merge-value to zoom in. Type &#8216;min&#8217; or &#8216;max&#8217; to use the equivalent extrem-value in the matrix</td>
+</tr>
+<tr class="row-even"><td><em>scale</em></td>
+<td>string</td>
+<td><em>&#8216;relative&#8217;</em>
+<strong>OR</strong>
+<em>&#8216;absolute&#8217;</em></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><em>level</em></td>
+<td>float</td>
+<td>0.3</td>
+<td>The relative zoom-level
+0.3 means +-30% around the zoom-point</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="7%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>basisNames</em></td>
+<td>list(basisNames)</td>
+<td>[{all}]</td>
+<td>Which basisDimensions get a new scale.</td>
+</tr>
+<tr class="row-odd"><td><em>operator</em></td>
+<td>string</td>
+<td>&#8220;==&#8221;</td>
+<td>The zoom-point is defined as the first point in matrix where a value in &#8220;==&#8221; (equal), &#8220;&gt;&#8221; (bigger) etc. than the given <em>value</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.copyMerge">
+<tt class="descname">copyMerge</tt><big>(</big><em>presentMergeName</em>, <em>newMergeName</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.copyMerge" title="Permalink to this definition">¶</a></dt>
+<dd><p>copy an existent mergeDim, including its merge- and densityMatrix
+return the copied mergeDim</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.interpolateFast">
+<tt class="descname">interpolateFast</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.interpolateFast" title="Permalink to this definition">¶</a></dt>
+<dd><p>interpolate NaNs (empty points) in matrix
+<strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="18%" />
+<col width="11%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>list(mergeDim)</td>
+<td>[{all}]</td>
+<td>one or more merge-dims to do the method on</td>
+</tr>
+<tr class="row-odd"><td><em>method</em></td>
+<td>str</td>
+<td>&#8216;nearest&#8217;</td>
+<td>{&#8220;nearest&#8221;, &#8220;linear&#8221;, &#8220;cubic&#8221;}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.interpolateFine">
+<tt class="descname">interpolateFine</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.interpolateFine" title="Permalink to this definition">¶</a></dt>
+<dd><p>interpolate NaNs (empty points) in matrix.
+In contrast to  <tt class="xref py py-func docutils literal"><span class="pre">interpolateFast()</span></tt> this function is comparatively slow.
+Therefore it can take a some minutes to finish interpolation on mergeMatrices that have reslutions &gt; 30 in each basisDimension.
+However this function enables you to:</p>
+<blockquote>
+<div><ul class="simple">
+<li>blurring between points (<em>focusExponent</em>). Thus it is possible to get smooth intersections between heavy scattered values.</li>
+<li>extrapolate</li>
+<li>limit the maximum interpolation/extrapolation distance (related to the unit of the chosen basisDimension)</li>
+<li>weight distances in each basisDimension</li>
+</ul>
+</div></blockquote>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="18%" />
+<col width="11%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>list(mergeDim)</td>
+<td>[{all}]</td>
+<td>one or more merge-dims to do the method on</td>
+</tr>
+<tr class="row-odd"><td><em>focusExponent</em></td>
+<td>float</td>
+<td>10</td>
+<td>xxxxx</td>
+</tr>
+<tr class="row-even"><td><em>evalPointDensity</em></td>
+<td>bool</td>
+<td>True</td>
+<td>xxxxxxxx</td>
+</tr>
+<tr class="row-odd"><td><em>maxDistance</em></td>
+<td>dict</td>
+<td>{None}</td>
+<td>{basisName:maxDistance,..}</td>
+</tr>
+<tr class="row-even"><td><em>distanceFactor</em></td>
+<td>dict</td>
+<td>{1}</td>
+<td>{basisName:factor,..}</td>
+</tr>
+</tbody>
+</table>
+<div class="math">
+\[moment = 1/distance^{focusExponent}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.posterize">
+<tt class="descname">posterize</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods.posterize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.posterize" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method discretize/posterize the values in the mergeMatrix (of a given mergeDimension)
+to a given ammount of values (e.g. nValues= 4 ) or to a given list or values
+(e.g. values = [1,2,4])</p>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="20%" />
+<col width="10%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>list(mergeNames)</td>
+<td>[{all}]</td>
+<td>one or more merge-dims to do the method on</td>
+</tr>
+<tr class="row-odd"><td><em>nValues</em></td>
+<td>int</td>
+<td>5</td>
+<td>the ammount of different values</td>
+</tr>
+<tr class="row-even"><td><em>values</em></td>
+<td>list</td>
+<td>None</td>
+<td>given different values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.transformDim">
+<tt class="descname">transformDim</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods.transformDim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.transformDim" title="Permalink to this definition">¶</a></dt>
+<dd><table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="18%" />
+<col width="11%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>mergeName</em></td>
+<td>list(mergeDim)</td>
+<td>[{all}]</td>
+<td>one or more merge-dims to do the method on</td>
+</tr>
+<tr class="row-odd"><td><em>rebuildMatrix</em></td>
+<td>bool</td>
+<td>False</td>
+<td>xxxxxxxxxx</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.transformMatrixToPoints">
+<tt class="descname">transformMatrixToPoints</tt><big>(</big><em>givenMultiDimMeshgrid=None</em>, <em>mergeIndex=0</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods.transformMatrixToPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.transformMatrixToPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform all not-empty parts of a  matrix to discrete points</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.target._matrixMethods.matrixMethods.transformPointsToMatrix">
+<tt class="descname">transformPointsToMatrix</tt><big>(</big><em>points</em>, <em>merge</em>, <em>mergeIndex=0</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/target/_matrixMethods.html#matrixMethods.transformPointsToMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.target._matrixMethods.matrixMethods.transformPointsToMatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Baseclasses for Targets</a><ul>
+<li><a class="reference internal" href="#baseclass-for-all-matrices">Baseclass for all matrices</a></li>
+<li><a class="reference internal" href="#methods-to-process-filled-matrices">Methods to process filled matrices</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="baseClasses.html"
+                        title="previous chapter">BaseClasses</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="FEP_proprietary.html"
+                        title="next chapter">Proprietary Modules of <strong>diaGrabber</strong></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/_matrix.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="FEP_proprietary.html" title="Proprietary Modules of diaGrabber"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="baseClasses.html" title="BaseClasses"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li>
+          <li><a href="baseClasses.html" >BaseClasses</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

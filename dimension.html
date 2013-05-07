@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source._dimension &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
+    <link rel="next" title="Container-Classes" href="container.html" />
+    <link rel="prev" title="diaGrabber.source" href="source.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="container.html" title="Container-Classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="source.html" title="diaGrabber.source"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API:</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="diagrabber-source-dimension">
+<span id="dimension"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt><a class="headerlink" href="#diagrabber-source-dimension" title="Permalink to this headline">¶</a></h1>
+<p class="graphviz">
+<img src="_images/inheritance-1b0516305a6e456050e6ed5ead2979fc3c45301d.png" alt="Inheritance diagram of diaGrabber.source._dimension.basisDimension, diaGrabber.source._dimension.mergeDimension, diaGrabber.source._dimension.dimension" usemap="#inheritance86c3c88e3e" class="inheritance"/>
+<map id="inheritance86c3c88e3e" name="inheritance86c3c88e3e">
+<area shape="rect" id="node1" href="#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension" alt="" coords="341,5,672,33"/>
+<area shape="rect" id="node2" href="#diaGrabber.source._dimension.dimension" title="diaGrabber.source._dimension.dimension" alt="" coords="7,30,292,58"/>
+<area shape="rect" id="node4" href="#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension" alt="" coords="347,55,667,83"/>
+</map>
+</p>
+<div class="section" id="baseclass-for-all-dimensions">
+<h2>Baseclass for all dimensions<a class="headerlink" href="#baseclass-for-all-dimensions" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source._dimension.dimension">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">dimension</tt><a class="reference internal" href="_modules/diaGrabber/source/_dimension.html#dimension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source._dimension.dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The basis-class of merge- and basisDimension. Provides everything
+that is identically for both of them.</p>
+<dl class="method">
+<dt id="diaGrabber.source._dimension.dimension.calc">
+<tt class="descname">calc</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.dimension.calc" title="Permalink to this definition">¶</a></dt>
+<dd><p>call-method for instance of <a class="reference internal" href="container.html#diaGrabber.source.methods._container._calcContainer" title="diaGrabber.source.methods._container._calcContainer"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source.methods._container._calcContainer</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.dimension.exclude">
+<tt class="descname">exclude</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.dimension.exclude" title="Permalink to this definition">¶</a></dt>
+<dd><p>call-method for instance of <a class="reference internal" href="container.html#diaGrabber.source.methods._container._excludeContainer" title="diaGrabber.source.methods._container._excludeContainer"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source.methods._container._excludeContainer</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.dimension.setCalcResultToValue">
+<tt class="descname">setCalcResultToValue</tt><big>(</big><em>calc_index</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.dimension.setCalcResultToValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>set every value of the dimension to the result of one
+entry in dimension.getCalc()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.dimension.setCounter">
+<tt class="descname">setCounter</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/_dimension.html#dimension.setCounter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source._dimension.dimension.setCounter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to generate a dimension as a linear counter.</p>
+<p>Optional kwargs (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="12%" />
+<col width="15%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>start</em></td>
+<td>float</td>
+<td><strong>0</strong></td>
+<td>the fist value of the counter</td>
+</tr>
+<tr class="row-odd"><td><em>delta</em></td>
+<td>float</td>
+<td><strong>1</strong></td>
+<td>the difference which is
+add to the last couter-value</td>
+</tr>
+<tr class="row-even"><td><em>update</em></td>
+<td>bool</td>
+<td><strong>True</strong></td>
+<td><strong>True</strong>: continue counting
+<strong>False</strong>: create a fixed
+counter-list from start
+to start + (delta*resolution)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.dimension.transform">
+<tt class="descname">transform</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.dimension.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>call-method for instance of <a class="reference internal" href="container.html#diaGrabber.source.methods._container._transformContainer" title="diaGrabber.source.methods._container._transformContainer"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source.methods._container._transformContainer</span></tt></a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="basisdimension">
+<h2>basisDimension<a class="headerlink" href="#basisdimension" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source._dimension.basisDimension">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">basisDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._dimension.dimension" title="diaGrabber.source._dimension.dimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.dimension</span></tt></a></p>
+<p>basisDimensions determine the shape and size of the target. Therefore its values are
+strictly bounded to a range of discrete points.</p>
+<p>see <tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt> fo all possible arguments.</p>
+<dl class="method">
+<dt id="diaGrabber.source._dimension.basisDimension.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="16%" />
+<col width="10%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>name</em></td>
+<td>str</td>
+<td>&#8220;one&#8221;</td>
+<td>the name of the basisDimension</td>
+</tr>
+<tr class="row-odd"><td><em>unit</em></td>
+<td>str</td>
+<td>&#8220;m/s&#8221;</td>
+<td>the unit of the basisDimension</td>
+</tr>
+<tr class="row-even"><td><em>index</em></td>
+<td>int</td>
+<td>0</td>
+<td>the position in the source-file
+&#8216;0&#8217; will be the first one</td>
+</tr>
+<tr class="row-odd"><td><em>resolution</em></td>
+<td>int</td>
+<td>50</td>
+<td>the number of different
+positions stored in the range
+of all values of the
+basisDimension</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="16%" />
+<col width="10%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>prefix</em></td>
+<td>float/str</td>
+<td>1</td>
+<td>the prefix of the
+unit. can be a float
+or a string like &#8216;m&#8217; for milli
+see <tt class="xref py py-func docutils literal"><span class="pre">_evalPrefix()</span></tt> for all
+possibilities</td>
+</tr>
+<tr class="row-odd"><td><em>include</em></td>
+<td>list/str</td>
+<td>&#8220;all&#8221;</td>
+<td>in opposite to mergeDimensions
+every basisDimension is strictly
+bounded. That means every basis
+has a range in which its values
+can vary. Typing <strong>&#8216;all&#8217;</strong>
+indicates diaGrabber to look
+for the min. and max. values
+in the source(s) and set the
+range as [min,max]
+typing <strong>[x,y]</strong> would bound
+the basis-values between x,y
+all values bigger and lower than
+those would be excluded
+typing <strong>chronic</strong> bounds the
+basis not to the size but to the
+ammound of values. this means
+that in this case every last n
+values would be stored, where
+n is the value of &#8216;resolution&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.basisDimension.setPlotOnlyRecentPosition">
+<tt class="descname">setPlotOnlyRecentPosition</tt><big>(</big><em>TrueOrFalse</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.setPlotOnlyRecentPosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this if you only want to plot the last readout basis-value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.basisDimension.setPlotRange">
+<tt class="descname">setPlotRange</tt><big>(</big><em>start=None</em>, <em>stop=None</em>, <em>step=None</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension.setPlotRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the visible range of the plotted values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; defines the fist position in the range of all basis-values. {0} would be the first position.</li>
+<li><strong>start</strong> &#8211; defines the last position in the range of all basis-values. {RESOLUTION} would be the last position.</li>
+<li><strong>step</strong> &#8211; defines the number of basis-values to jump over for plotting. {1} would plot every value of this dimension. {10} would plot every 10st value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>type {None} if you don&#8217;t want to define one entry.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mergedimension">
+<h2>mergeDimension<a class="headerlink" href="#mergedimension" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source._dimension.mergeDimension">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">mergeDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._dimension.dimension" title="diaGrabber.source._dimension.dimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.dimension</span></tt></a></p>
+<p>Values of mergeDimensions where directly written into the matrices of the target.
+That&#8217;s why it&#8217;s values were not bounded. If merge-values are store in postitions
+of the mergeMatrix which are not empty, its values have to be merged
+(that gives the name of the dimension). Have a look at <a class="reference internal" href="methods.html#module-diaGrabber.source.methods.merge" title="diaGrabber.source.methods.merge"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods.merge</span></tt></a> to see all methods
+of merging values together.</p>
+<p>see <tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt> fo all possible arguments.</p>
+<dl class="method">
+<dt id="diaGrabber.source._dimension.mergeDimension.alias">
+<tt class="descname">alias</tt><big>(</big><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>With this method you can bound the success of taking a new merge-value
+on the success of other mergeDimensions.
+Example:</p>
+<div class="highlight-python"><pre>one = mergeDimension(... merge=merge.max() )
+two = mergeDimension( ... )
+two.alias.append(one)</pre>
+</div>
+<p>In this case only merge-values of the dimension &#8216;two&#8217; were taken if those
+values of &#8216;one&#8217; were also taken.</p>
+<p>See all possible methods of alias() in:
+<a class="reference internal" href="container.html#diaGrabber.source.methods._container._aliasContainer" title="diaGrabber.source.methods._container._aliasContainer"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source.methods._container._aliasContainer</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._dimension.mergeDimension.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="16%" />
+<col width="10%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>name</em></td>
+<td>str</td>
+<td>&#8220;one&#8221;</td>
+<td>the name of the basisDimension</td>
+</tr>
+<tr class="row-odd"><td><em>unit</em></td>
+<td>str</td>
+<td>&#8220;m/s&#8221;</td>
+<td>the unit of the basisDimension</td>
+</tr>
+<tr class="row-even"><td><em>index</em></td>
+<td>int</td>
+<td>0</td>
+<td>the position in the source-file
+&#8216;0&#8217; will be the first one</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="8%" />
+<col width="10%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>prefix</em></td>
+<td>float/str</td>
+<td>1</td>
+<td>the prefix of the
+unit. can be a float
+or a string like &#8216;m&#8217; for milli
+see <tt class="xref py py-func docutils literal"><span class="pre">_evalPrefix()</span></tt> for all
+possibilities</td>
+</tr>
+<tr class="row-odd"><td><em>merge</em></td>
+<td>instance</td>
+<td>merge.last()</td>
+<td>see                          <a class="reference internal" href="methods.html#module-diaGrabber.source.methods.merge" title="diaGrabber.source.methods.merge"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods.merge</span></tt></a> for all possible options</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a><ul>
+<li><a class="reference internal" href="#baseclass-for-all-dimensions">Baseclass for all dimensions</a></li>
+<li><a class="reference internal" href="#basisdimension">basisDimension</a></li>
+<li><a class="reference internal" href="#mergedimension">mergeDimension</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="source.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">diaGrabber.source</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="container.html"
+                        title="next chapter">Container-Classes</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/dimension.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="container.html" title="Container-Classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="source.html" title="diaGrabber.source"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
