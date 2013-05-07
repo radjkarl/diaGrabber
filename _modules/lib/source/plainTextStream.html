@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib.source.plainTextStream &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="lib.source" href="../source.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lib.html" >lib</a> &raquo;</li>
+          <li><a href="../source.html" accesskey="U">lib.source</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lib.source.plainTextStream</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="c">#from copy import deepcopy</span>
+<span class="c">#import select</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="c">#, os</span>
+<span class="c">#import fcntl</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">linecache</span>
+
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_dimension</span>
+<span class="kn">from</span> <span class="nn">_source</span> <span class="kn">import</span> <span class="n">_source</span>
+
+<div class="viewcode-block" id="plainTextStream"><a class="viewcode-back" href="../../../source.html#lib.source.plainTextStream.plainTextStream">[docs]</a><span class="k">class</span> <span class="nc">plainTextStream</span><span class="p">(</span><span class="n">_source</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">start_via</span><span class="p">,</span> <span class="n">stop_via</span><span class="p">,</span> <span class="n">dim_seperator</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span>
+		<span class="n">data_type</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span><span class="p">,</span>
+		<span class="n">key_to_end_process</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+		<span class="n">readoutEverNLine</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+		<span class="n">infoEveryNLines</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+
+		<span class="nb">super</span><span class="p">(</span><span class="n">plainTextStream</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">data_type</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">_dimension</span><span class="o">.</span><span class="n">dimension</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">output_file</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="n">command</span>
+		<span class="c">#self.file_name = command</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">key_to_end_process</span> <span class="o">=</span> <span class="n">key_to_end_process</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim_seperator</span> <span class="o">=</span> <span class="n">dim_seperator</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">start_via</span> <span class="o">=</span> <span class="n">start_via</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">stop_via</span> <span class="o">=</span> <span class="n">stop_via</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readoutEverNLine</span> <span class="o">=</span> <span class="n">readoutEverNLine</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_infoEveryNLines</span> <span class="o">=</span> <span class="n">infoEveryNLines</span>
+
+
+
+<div class="viewcode-block" id="plainTextStream.setInfoEveryNLines"><a class="viewcode-back" href="../../../source.html#lib.source.plainTextStream.plainTextStream.setInfoEveryNLines">[docs]</a>	<span class="k">def</span> <span class="nf">setInfoEveryNLines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nLines</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_infoEveryNLines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nLines</span><span class="p">)</span></div>
+<div class="viewcode-block" id="plainTextStream.getInfoEveryNLines"><a class="viewcode-back" href="../../../source.html#lib.source.plainTextStream.plainTextStream.getInfoEveryNLines">[docs]</a>	<span class="k">def</span> <span class="nf">getInfoEveryNLines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_infoEveryNLines</span>
+	
+</div>
+<div class="viewcode-block" id="plainTextStream.setReadoutEverNLine"><a class="viewcode-back" href="../../../source.html#lib.source.plainTextStream.plainTextStream.setReadoutEverNLine">[docs]</a>	<span class="k">def</span> <span class="nf">setReadoutEverNLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nLine</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readoutEverNLine</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nLine</span><span class="p">)</span></div>
+<div class="viewcode-block" id="plainTextStream.getReadoutEverNLine"><a class="viewcode-back" href="../../../source.html#lib.source.plainTextStream.plainTextStream.getReadoutEverNLine">[docs]</a>	<span class="k">def</span> <span class="nf">getReadoutEverNLine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readoutEverNLine</span>
+	
+</div>
+	<span class="k">def</span> <span class="nf">_getMinMax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dims</span><span class="p">):</span>
+		<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&quot;ERROR: source.stream need a given dimension.includeFromTo()-range&quot;</span><span class="p">)</span>
+
+
+
+
+	<span class="c">#def _non_block_read(self, output):</span>
+		<span class="c">#&#39;&#39;&#39; even in a thread, a normal read with block until the buffer is full &#39;&#39;&#39;</span>
+		<span class="c">#fd = output.fileno()</span>
+		<span class="c">#fl = fcntl.fcntl(fd, fcntl.F_GETFL)</span>
+		<span class="c">#fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)</span>
+		<span class="c">#try:</span>
+			<span class="c">#return output.read().strip().split(&quot;\n&quot;)</span>
+		<span class="c">#except:</span>
+			<span class="c">#return []</span>
+
+
+
+
+
+	<span class="k">def</span> <span class="nf">_prepareReadOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrixClass</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_prepareStandard</span><span class="p">(</span><span class="n">matrixClass</span><span class="p">)</span>
+		<span class="c">#start stream</span>
+		<span class="c">#sys.stdin.write(b&quot;%s\n&quot; %self.key_to_end_process)</span>
+		<span class="c">#from tempfile import SpooledTemporaryFile as tempfile</span>
+		<span class="c">#self.tempfile = tempfile()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span>
+			<span class="n">bufsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+			<span class="c">#shell=True,</span>
+			<span class="c">#close_fds=True,</span>
+			<span class="n">stdin</span> <span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span><span class="c">#self.tempfile,#</span>
+			<span class="n">stdout</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span><span class="c">#subprocess.PIPE,</span>
+			<span class="c">#stderr=subprocess.PIPE)</span>
+			<span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_via</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+			<span class="c">#print self.start_via,44</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">start_via</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+		<span class="c">#self.engine.stdin.close()#preventing senseless waiting</span>
+		<span class="c">#self.engine.terminate()</span>
+
+		<span class="c">#self.done_reading_old_output = True</span>
+		<span class="c">#self.done_readout = False</span>
+		<span class="c">#self.output = []</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pos_output</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">read_n_lines</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">step_n_lines</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">step</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">max_try</span> <span class="o">=</span> <span class="mi">5</span>
+		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span><span class="c">#step &lt; max_steps:</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">len_output</span> <span class="o">=</span>  <span class="nb">len</span><span class="p">(</span><span class="nb">file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+				<span class="k">break</span>
+			<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span><span class="c">#found no readable file called self.file_name</span>
+				<span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="k">print</span> <span class="s">&quot;found no file called </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span>
+				<span class="n">step</span><span class="o">+=</span><span class="mi">1</span>
+				<span class="k">print</span> <span class="s">&quot;try again </span><span class="si">%s</span><span class="s"> times&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">max_try</span><span class="o">-</span><span class="n">step</span><span class="p">)</span>
+				<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+				<span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="n">max_try</span><span class="p">:</span>
+					<span class="k">print</span> <span class="s">&quot;ERROR: doest your output_file exist?&quot;</span>
+					<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_endReadOut</span><span class="p">()</span> <span class="c"># end subprocess</span>
+					<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+					<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+	<span class="k">def</span> <span class="nf">_endReadOut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_to_end_process</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s">&quot;finish process via key &#39; </span><span class="si">%s</span><span class="s"> &#39;&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">key_to_end_process</span>
+				<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="c"># to ensure ending</span>
+					<span class="c">#sys.stdin.write(b&quot;%s\n&quot; %self.key_to_end_process)</span>
+
+					<span class="c">###dont work at the moment</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">key_to_end_process</span><span class="p">)</span>
+					<span class="c">#self.engine.stdin.flush()</span>
+					<span class="c">#self.engine.stdin.close()</span>
+		<span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+			<span class="k">pass</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s">&quot;closing process&quot;</span>
+			<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+			<span class="c">#for h in range(10):</span>
+			<span class="c">#self.engine.close()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+			<span class="c">#self.engine.wait()</span>
+		<span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+			<span class="k">pass</span>
+		<span class="k">finally</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">True</span>
+
+	<span class="k">def</span> <span class="nf">_readOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readout_interrupt</span><span class="p">,</span> <span class="n">end_readOut</span><span class="p">):</span>
+		
+		<span class="c"># ensure, that the process will terminate</span>
+		<span class="k">if</span> <span class="n">end_readOut</span><span class="p">:</span>
+			<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_endReadOut</span><span class="p">()</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">False</span>
+
+
+
+	<span class="c">#def _readOut(self, readout_one_line, end_readOut):</span>
+		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span><span class="c">#self.pos_output &lt; self.len_output:</span>
+			<span class="c">#i = self.readOut_range[self.step_in_readOut_range]</span>
+			<span class="k">try</span><span class="p">:</span>
+		<span class="c">#for i in readOut_range:</span>
+				<span class="n">line</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_output</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+				<span class="c">#linecache.clearcache()</span>
+				<span class="n">file_dim</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_seperator</span><span class="p">)</span>
+				
+				<span class="bp">self</span><span class="o">.</span><span class="n">_assignValues</span><span class="p">(</span><span class="n">file_dim</span><span class="p">)</span>
+				
+				<span class="bp">self</span><span class="o">.</span><span class="n">pos_output</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readoutEverNLine</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">read_n_lines</span> <span class="o">+=</span> <span class="mi">1</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">step_n_lines</span> <span class="o">+=</span> <span class="mi">1</span>
+							
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_n_lines</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_infoEveryNLines</span> <span class="ow">or</span> \
+						<span class="bp">self</span><span class="o">.</span><span class="n">pos_output</span> <span class="o">&gt;=</span><span class="bp">self</span><span class="o">.</span><span class="n">len_output</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">len_output</span> <span class="o">=</span>  <span class="nb">len</span><span class="p">(</span><span class="nb">file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+					<span class="n">perc_done</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_n_lines</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">len_output</span><span class="p">)</span>
+					<span class="k">print</span> <span class="s">&quot;readout </span><span class="si">%s</span><span class="s"> from approx. </span><span class="si">%s</span><span class="s"> lines (</span><span class="si">%s</span><span class="s"> Percent)&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">read_n_lines</span><span class="p">,</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">len_output</span><span class="p">,</span><span class="n">perc_done</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">step_n_lines</span> <span class="o">=</span> <span class="mi">0</span>
+					<span class="k">if</span> <span class="n">perc_done</span> <span class="o">&gt;=</span><span class="mf">1.0</span><span class="p">:</span>
+						<span class="k">print</span> <span class="mi">333</span><span class="p">,</span> <span class="n">perc_done</span>
+						<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_endReadOut</span><span class="p">()</span>
+						<span class="k">break</span>
+				<span class="k">if</span> <span class="n">readout_interrupt</span><span class="p">:</span>
+					<span class="n">done_readout</span><span class="o">=</span><span class="bp">False</span>
+					<span class="k">break</span>
+					
+					
+			<span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+				<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_endReadOut</span><span class="p">()</span>
+
+
+		<span class="k">return</span> <span class="n">done_readout</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lib.html" >lib</a> &raquo;</li>
+          <li><a href="../source.html" >lib.source</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="The diaGrabber-API" href="diaGrabberAPI.html" />
+    <link rel="next" title="diaGrabber.source._dimension" href="dimension.html" />
+    <link rel="prev" title="The diaGrabber-API" href="diaGrabberAPI.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="diaGrabber.source._dimension"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="diaGrabberAPI.html" title="The diaGrabber-API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="diagrabber-source">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source</span></tt><a class="headerlink" href="#diagrabber-source" title="Permalink to this headline">¶</a></h1>
+<p class="graphviz">
+<img src="_images/inheritance-636cf9848e310c2d0ba05640aa549281b4077999.png" alt="Inheritance diagram of diaGrabber.source.plainText.plainText, diaGrabber.source.stream.stream, diaGrabber.source.libreOfficeCalc.libreOfficeCalc, diaGrabber.source._source.source" usemap="#inheritance768c943b0c" class="inheritance"/>
+<map id="inheritance768c943b0c" name="inheritance768c943b0c">
+<area shape="rect" id="node1" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc" title="diaGrabber.source.libreOfficeCalc.libreOfficeCalc" alt="" coords="295,5,620,33"/>
+<area shape="rect" id="node2" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source" alt="" coords="5,55,245,83"/>
+<area shape="rect" id="node4" href="#diaGrabber.source.stream.stream" title="diaGrabber.source.stream.stream" alt="" coords="339,55,576,83"/>
+<area shape="rect" id="node6" href="#diaGrabber.source.plainText.plainText" title="diaGrabber.source.plainText.plainText" alt="" coords="329,106,585,134"/>
+</map>
+</p>
+<div class="section" id="baseclass-for-all-sources">
+<h2>Baseclass for all sources<a class="headerlink" href="#baseclass-for-all-sources" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source._source.source">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._source.</tt><tt class="descname">source</tt><big>(</big><em>data_type</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The basis-class for all type of sources provides some general functions. And
+evaluate the &#8216;data_type&#8217;
+data_type can be &#8220;int&#8221;, &#8220;float&#8221;, hex&#8221; or &#8220;fooBar&#8221; in case you don&#8217;t know the type of your data.</p>
+<dl class="method">
+<dt id="diaGrabber.source._source.source._evalDataType">
+<tt class="descname">_evalDataType</tt><big>(</big><em>data_type</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source._evalDataType" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li>&#8216;int&#8217;: integer numbers</li>
+<li>&#8216;float&#8217;: floating-point numbers</li>
+<li>&#8216;hex&#8217;: hexadecimale numbers</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._source.source.setBasis">
+<tt class="descname">setBasis</tt><big>(</big><em>basis_list</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source.setBasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>In diaGrabber every generated basis-dimension will added to the basis.
+Use this method to define an alternative list of basis-dimensions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source._source.source.setMerge">
+<tt class="descname">setMerge</tt><big>(</big><em>merge_list</em><big>)</big><a class="headerlink" href="#diaGrabber.source._source.source.setMerge" title="Permalink to this definition">¶</a></dt>
+<dd><p>In diaGrabber every generated merge-dimension will added to the basis.
+Use this method to define an alternative list of merge-dimensions.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diaGrabber.source.plainText">
+<span id="plaintext"></span><h2>plainText<a class="headerlink" href="#module-diaGrabber.source.plainText" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.plainText.plainText">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.plainText.</tt><tt class="descname">plainText</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/plainText.html#plainText"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.plainText.plainText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readout values from a plain-text saved in file. The format has to be similar to the following example:</p>
+<div class="highlight-python"><pre>value00 value01 value02
+value10 value11 value12
+...</pre>
+</div>
+<p>Where the values of all dimensions are written in one line, seperated by one or
+more signs like spaces &#8216; &#8216; or tab &#8216;     &#8216;.</p>
+<p>For a list of all possible Keyword-arguments have a look at <a class="reference internal" href="#diaGrabber.source.plainText.plainText.setArgs" title="diaGrabber.source.plainText.plainText.setArgs"><tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.source.plainText.plainText.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainText.plainText.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>includes
+<a class="reference internal" href="dimension.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a>
+to the source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainText.plainText.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainText.plainText.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>includes
+<a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a>
+to the source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.plainText.plainText.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.plainText.plainText.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="7%" />
+<col width="14%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>file</em></td>
+<td>string</td>
+<td><strong>&#8216;myFile.txt&#8217;</strong></td>
+<td>the name of your plainText-file</td>
+</tr>
+<tr class="row-odd"><td><em>dimSeperator</em></td>
+<td>string</td>
+<td><strong>&#8216; &#8216;</strong> (space)</td>
+<td>the sign, that seperates the values in one line e.g. &#8216;      &#8216; for a tab</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="5%" />
+<col width="10%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>dataType</em></td>
+<td>string</td>
+<td>&#8220;unknown&#8221;</td>
+<td>for all possible values are defined  see <a class="reference internal" href="#diaGrabber.source._source.source._evalDataType" title="diaGrabber.source._source.source._evalDataType"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._source.source._evalDataType()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td><em>nFileLines</em></td>
+<td>int</td>
+<td>0</td>
+<td>if you know the number of lines in your file you can avoid the (time-consuming) counting of it through <em>diaGrabber</em></td>
+</tr>
+<tr class="row-even"><td><em>readoutEveryNLine</em></td>
+<td>int</td>
+<td>1</td>
+<td>if you don&#8217;t need every line of your file you can spare time by readout only every n line of it</td>
+</tr>
+<tr class="row-odd"><td><em>folder</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>the name of the folder of the file</td>
+</tr>
+<tr class="row-even"><td><em>buffer</em></td>
+<td>int</td>
+<td>10e6</td>
+<td>max. size(byte) loaded into RAM
+insert &#8216;0&#8217; to read the whole file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diaGrabber.source.stream">
+<span id="stream"></span><h2>stream<a class="headerlink" href="#module-diaGrabber.source.stream" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.stream.stream">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.stream.</tt><tt class="descname">stream</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/stream.html#stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.stream.stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Readout values from a process which produces unlimited or limited output to RAM.
+The process output after the following scheme:</p>
+<div class="highlight-python"><pre>time0 --&gt; "value00 value01 value02"
+time1 --&gt; "value10 value11 value12"
+...</pre>
+</div>
+<p>Where the values of all dimensions are written in one line, seperated by one or
+more signs like spaces &#8216; &#8216; or tab &#8216;     &#8216;.</p>
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.stream.stream.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>includes
+<a class="reference internal" href="dimension.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a>
+to the source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.stream.stream.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>includes
+<a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a>
+to the source</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.stream.stream.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.stream.stream.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="8%" />
+<col width="17%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>command</em></td>
+<td>string</td>
+<td>&#8216;python&#8217;
+<strong>OR</strong> &#8216;./&#8217;</td>
+<td>The command to start the stream</td>
+</tr>
+<tr class="row-odd"><td><em>file</em></td>
+<td>string</td>
+<td>&#8216;test.py&#8217;</td>
+<td>The name of the stream</td>
+</tr>
+<tr class="row-even"><td><em>dimSeparator</em></td>
+<td>string</td>
+<td><strong>space</strong>: &#8216; &#8216;
+<strong>OR TAB</strong>: &#8216;  &#8216;</td>
+<td>One or more signs which seperates the values in every line</td>
+</tr>
+<tr class="row-odd"><td><em>stopVia</em></td>
+<td>string</td>
+<td>&#8216;done&#8217;</td>
+<td>If the stream is limited
+this string let&#8217;s diaGrabber
+when the stream finishes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="4%" />
+<col width="4%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>folder</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>Name of the parent folder of
+the stream</td>
+</tr>
+<tr class="row-odd"><td><em>readoutEveryNLine</em></td>
+<td>string/int</td>
+<td>1</td>
+<td>if you don&#8217;t need every line of
+your file you can spare time by
+readout only every n line of it.
+Most likely the stream generates
+faster new output than diaGrabber can process, In this case this value has to be greater than 1, Type <strong>&#8216;calc&#8217;</strong> to let diaGrabber decide this value corresponding to the development of the amount of unprocessed output.</td>
+</tr>
+<tr class="row-even"><td><em>showCalcNLine</em></td>
+<td>bool</td>
+<td>False</td>
+<td>if <em>readoutEveryNLine</em> == &#8216;calc&#8217; Setting this value to True print out every new calculated value of <em>readoutEveryNLine</em></td>
+</tr>
+<tr class="row-odd"><td><em>infoEveryNLine</em></td>
+<td>int</td>
+<td>1000</td>
+<td>Prints every n reaout-lines
+a status.</td>
+</tr>
+<tr class="row-even"><td><em>dataType</em></td>
+<td>string</td>
+<td>&#8220;unknown&#8221;</td>
+<td>for all possible values are defined  see <a class="reference internal" href="#diaGrabber.source._source.source._evalDataType" title="diaGrabber.source._source.source._evalDataType"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._source.source._evalDataType()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td><em>keyToEndProcess</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>This entry will finish the stream-output</td>
+</tr>
+<tr class="row-even"><td><em>runInShell</em></td>
+<td>bool</td>
+<td>False</td>
+<td>Decide whether a process has to
+be called out of a shell.
+Set this value to True if the
+stream doesn&#8217;t start.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-diaGrabber.source.libreOfficeCalc">
+<span id="libreofficecalc"></span><h2>libreOfficeCalc<a class="headerlink" href="#module-diaGrabber.source.libreOfficeCalc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.libreOfficeCalc.</tt><tt class="descname">libreOfficeCalc</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/libreOfficeCalc.html#libreOfficeCalc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to read values from a libre/open-office-calc document
+For a list of all possible Keyword-arguments have a look at <a class="reference internal" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setArgs" title="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setArgs"><tt class="xref py py-func docutils literal"><span class="pre">setArgs()</span></tt></a></p>
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.basisDimension">
+<tt class="descname">basisDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.basisDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new basis-dimension to the source.
+See <a class="reference internal" href="dimension.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a> for further explanation and options.
+Replaces keyword &#8216;index&#8217; with &#8216;cellRange&#8217;:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cellRange</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; [&#8220;START:STOP&#8221;] range of the cells in the ods-file e.g. &#8220;C2:C1000&#8221; or &#8220;A1:E10&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.mergeDimension">
+<tt class="descname">mergeDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new merge-dimension to the source.
+See <a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a> for further explanation and options.
+Replaces keyword &#8216;index&#8217; with &#8216;cellRange&#8217;:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cellRange</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; &#8220;START:STOP&#8221; range of the cells in the ods-file e.g. <em>&#8220;C2:C1000&#8221;</em> or <em>&#8220;A1:E10&#8221;</em></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setArgs">
+<tt class="descname">setArgs</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="14%" />
+<col width="17%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Example</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>file</em></td>
+<td>string</td>
+<td>&#8220;myFile.ods&#8221;</td>
+<td>Name of the ODS-File</td>
+</tr>
+<tr class="row-odd"><td><em>sheet</em></td>
+<td>string/int</td>
+<td>&#8220;sheet1&#8221; OR 1</td>
+<td>Sheet-name or number in the ODS-file</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="6%" />
+<col width="8%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Keyword</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>folder</em></td>
+<td>string</td>
+<td>&#8220;&#8221;</td>
+<td>Name of the parent-folder of the file</td>
+</tr>
+<tr class="row-odd"><td><em>readoutEveryNLine</em></td>
+<td>int</td>
+<td>1</td>
+<td>read every n line from the file</td>
+</tr>
+<tr class="row-even"><td><em>dataType</em></td>
+<td>string</td>
+<td>&#8220;unknown&#8221;</td>
+<td>for all possible values are defined  see <a class="reference internal" href="#diaGrabber.source._source.source._evalDataType" title="diaGrabber.source._source.source._evalDataType"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._source.source._evalDataType()</span></tt></a></td>
+</tr>
+<tr class="row-odd"><td><em>ignoreEmptyCells</em></td>
+<td>bool</td>
+<td>True</td>
+<td>Set to False to exit, when cells inthe cellRange of thedimensions are empty</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a><ul>
+<li><a class="reference internal" href="#baseclass-for-all-sources">Baseclass for all sources</a></li>
+<li><a class="reference internal" href="#module-diaGrabber.source.plainText">plainText</a></li>
+<li><a class="reference internal" href="#module-diaGrabber.source.stream">stream</a></li>
+<li><a class="reference internal" href="#module-diaGrabber.source.libreOfficeCalc">libreOfficeCalc</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="diaGrabberAPI.html"
+                        title="previous chapter">The diaGrabber-API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dimension.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/source.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="diaGrabber.source._dimension"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="diaGrabberAPI.html" title="The diaGrabber-API"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

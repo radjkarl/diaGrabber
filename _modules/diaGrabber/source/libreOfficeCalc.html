@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source.libreOfficeCalc &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="diaGrabber" href="../../diaGrabber.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" accesskey="U">diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.source.libreOfficeCalc</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="c">#bla</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">ooolib</span>
+	<span class="c"># open/libre-office support</span>
+	<span class="c"># see old: http://sourceforge.net/projects/ooolib/</span>
+	<span class="c"># see new: https://code.google.com/p/odslib-python/</span>
+<span class="kn">from</span> <span class="nn">_dimension</span> <span class="kn">import</span> <span class="n">_dimension</span>
+<span class="kn">from</span> <span class="nn">_source</span> <span class="kn">import</span> <span class="n">_source</span>
+
+<div class="viewcode-block" id="libreOfficeCalc"><a class="viewcode-back" href="../../../source.html#diaGrabber.source.libreOfficeCalc.libreOfficeCalc">[docs]</a><span class="k">class</span> <span class="nc">libreOfficeCalc</span><span class="p">(</span><span class="n">_source</span><span class="p">):</span>
+	<span class="sd">&#39;&#39;&#39;allow to read values from a libre/open-office-calc document&#39;&#39;&#39;</span>
+	<span class="c">##########mmist</span>
+
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ODS_file_name</span><span class="p">,</span> <span class="n">sheet_name_or_number</span><span class="p">,</span>
+			<span class="n">data_type</span><span class="o">=</span><span class="s">&quot;unknown&quot;</span><span class="p">,</span> <span class="n">print_error_when_cell_is_empty</span> <span class="o">=</span> <span class="bp">False</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;prepare for reading values from an libreOffice-calc-document</span>
+<span class="sd">		needs:</span>
+<span class="sd">		* ODS_file_name = &quot;name of the file&quot; e.g. &quot;myfile.ods&quot;</span>
+<span class="sd">		* sheet_name_or_number =&quot;name&quot; OR number of the sheet e.g. &quot;sheet1&quot; OR 4</span>
+
+<span class="sd">			&#39;&#39;&#39;</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">libreOfficeCalc</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">data_type</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">ODS_file_name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">doc</span> <span class="o">=</span> <span class="n">ooolib</span><span class="o">.</span><span class="n">Calc</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">empty_cell_list</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">finished_building_empty_cell_list</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">print_error_when_cell_is_empty</span> <span class="o">=</span> <span class="n">print_error_when_cell_is_empty</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span> <span class="o">=</span> <span class="n">sheet_name_or_number</span>
+		
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readout_every_n_line</span> <span class="o">=</span> <span class="mi">1</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">_index_counter</span> <span class="o">=</span> <span class="mi">0</span> <span class="c">#helps to indices the dimensions</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">file_dim</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">coord_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+		
+<div class="viewcode-block" id="libreOfficeCalc.setReadoutEveryNLine"><a class="viewcode-back" href="../../../source.html#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.setReadoutEveryNLine">[docs]</a>	<span class="k">def</span> <span class="nf">setReadoutEveryNLine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readout_every_n_line</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readout_every_n_line</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">readout_every_n_line</span><span class="p">)</span>
+		</div>
+<div class="viewcode-block" id="libreOfficeCalc.dimension"><a class="viewcode-back" href="../../../source.html#diaGrabber.source.libreOfficeCalc.libreOfficeCalc.dimension">[docs]</a>	<span class="k">def</span> <span class="nf">dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cell_range</span><span class="p">):</span>
+			<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">			needs:</span>
+<span class="sd">			* cell_range = &quot;START:STOP&quot; e.g. &quot;C2:C1000&quot;</span>
+<span class="sd">				* it&#39;s also possible to scan multiple collums... just type e.g. &quot;A1:E10&quot;</span>
+<span class="sd">			&#39;&#39;&#39;</span>		
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ODSdimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cell_range</span><span class="p">)</span>
+
+	<span class="c">######PRIVATE############</span>
+
+</div>
+	<span class="k">class</span> <span class="nc">_ODSdimension</span><span class="p">(</span><span class="n">_dimension</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;special dimension-class with extra functionality from libreOffice-processes</span>
+<span class="sd">		which uses some atributes from its parent class</span>
+<span class="sd">		and inherit from the general _dimension&#39;&#39;&#39;</span>
+		<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cell_range</span><span class="p">):</span>
+			<span class="n">index</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">_index_counter</span>
+			<span class="n">parent</span><span class="o">.</span><span class="n">_index_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+			<span class="nb">super</span><span class="p">(</span><span class="n">libreOfficeCalc</span><span class="o">.</span><span class="n">dimension</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_getCoordRange</span><span class="p">(</span><span class="n">cell_range</span><span class="p">)</span>
+
+			<span class="n">parent</span><span class="o">.</span><span class="n">file_dim</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span><span class="c">#better genrate now than later</span>
+			<span class="n">parent</span><span class="o">.</span><span class="n">coord_list</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+		
+		<span class="k">def</span> <span class="nf">_getCoordRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_range</span><span class="p">):</span>
+			<span class="sd">&#39;&#39;&#39;in: cell_range e.g. &quot;A1:A100&quot;</span>
+<span class="sd">			out: coord_range = [X_start, X_stop, Y_start, Y_stop] e.q. [0,10,2,2]&#39;&#39;&#39;</span>
+			<span class="n">cell_range</span> <span class="o">=</span> <span class="n">cell_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+			<span class="n">start</span> <span class="o">=</span> <span class="n">cell_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cell_range</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+				<span class="n">stop</span> <span class="o">=</span> <span class="n">cell_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">stop</span> <span class="o">=</span> <span class="n">start</span>
+	
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">)):</span>
+				<span class="k">if</span> <span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+					<span class="k">break</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">X_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformLetters2Coordinates</span><span class="p">(</span><span class="n">start</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Y_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">[</span><span class="n">i</span><span class="p">:])</span>
+			
+			<span class="bp">self</span><span class="o">.</span><span class="n">X_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_start</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Y_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_start</span>
+			
+	
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stop</span><span class="p">)):</span>
+				<span class="k">if</span> <span class="n">stop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+					<span class="k">break</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">X_stop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformLetters2Coordinates</span><span class="p">(</span><span class="n">stop</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">Y_stop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stop</span><span class="p">[</span><span class="n">i</span><span class="p">:])</span>
+			
+		<span class="k">def</span> <span class="nf">_transformLetters2Coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+			<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">			in: letter e.g. &quot;A&quot; or &quot;E&quot;</span>
+<span class="sd">			out: number related to letter e.g. 1 or 5</span>
+<span class="sd">			&#39;&#39;&#39;</span>
+			<span class="n">letters</span> <span class="o">=</span> <span class="s">&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>
+			<span class="k">def</span> <span class="nf">letters2numbers</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">letr</span><span class="p">,</span><span class="n">n</span><span class="o">%</span><span class="mi">26</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span>
+				<span class="n">letr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">letters</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">52</span><span class="p">]))):</span>
+				<span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+			<span class="n">coordinate_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">letters2numbers</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+			<span class="n">coordinateX</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">coordinate_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+			<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coordinate_list</span><span class="p">)):</span>
+				<span class="n">coordinateX</span> <span class="o">+=</span> <span class="n">coordinate_list</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">*</span> <span class="mi">26</span> <span class="o">**</span> <span class="n">m</span>
+				<span class="n">m</span> <span class="o">-=</span> <span class="mi">1</span>
+			<span class="k">return</span> <span class="n">coordinateX</span>
+
+
+	<span class="k">def</span> <span class="nf">_getMinMax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dims</span><span class="p">):</span>
+		<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="bp">NotImplemented</span><span class="p">)</span>
+		
+	<span class="k">def</span> <span class="nf">_prepareReadOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrixClass</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_prepareStandard</span><span class="p">(</span><span class="n">matrixClass</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">set_sheet_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+			<span class="n">found_sheet</span> <span class="o">=</span> <span class="bp">False</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">get_sheet_count</span><span class="p">()):</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">set_sheet_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">get_sheet_name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span><span class="p">:</span>
+					<span class="n">found_sheet</span> <span class="o">=</span> <span class="bp">True</span>
+					<span class="k">break</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="n">found_sheet</span><span class="p">:</span>
+				<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&quot;ERROR: sheet-name &#39;</span><span class="si">%s</span><span class="s">&#39; doesn&#39;t exist in your ods-file&quot;</span>
+				<span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_or_number</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&quot;&quot;&quot;ERROR: sheet_name_or_number must be a integer (e.g. 3) or </span><span class="se">\</span>
+<span class="s">			a string (&#39;name&#39;&quot;&quot;&quot;</span><span class="p">)</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">&quot;reading values from sheet &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">get_sheet_name</span><span class="p">())</span>
+
+
+	<span class="k">def</span> <span class="nf">_readOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readout_one_line</span><span class="p">,</span> <span class="n">end_readOut</span><span class="p">):</span>
+		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readout_every_n_line</span><span class="p">):</span>
+				<span class="n">done_readout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updateCoordinates</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">done_readout</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_grabODSValues</span><span class="p">()</span>
+		
+			<span class="bp">self</span><span class="o">.</span><span class="n">_assignValues</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_dim</span><span class="p">)</span>
+			
+			<span class="k">if</span> <span class="n">readout_one_line</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+			<span class="k">if</span> <span class="n">end_readOut</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+
+		<span class="k">return</span> <span class="bp">True</span> <span class="c"># means i&#39;m done with readout</span>
+
+
+
+	<span class="k">def</span> <span class="nf">_updateCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">dim</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">coord_list</span><span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">X_step</span><span class="p">,</span> <span class="n">dim</span><span class="o">.</span><span class="n">Y_step</span><span class="p">]</span>
+			<span class="n">dim</span><span class="o">.</span><span class="n">Y_step</span> <span class="o">+=</span> <span class="mi">1</span>
+			<span class="k">if</span> <span class="n">dim</span><span class="o">.</span><span class="n">Y_step</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">.</span><span class="n">Y_stop</span><span class="p">:</span><span class="c">#at end of line</span>
+				<span class="n">dim</span><span class="o">.</span><span class="n">Y_step</span> <span class="o">=</span> <span class="n">dim</span><span class="o">.</span><span class="n">Y_start</span>
+				<span class="n">dim</span><span class="o">.</span><span class="n">X_step</span> <span class="o">+=</span> <span class="mi">1</span>
+				<span class="k">if</span> <span class="n">dim</span><span class="o">.</span><span class="n">X_step</span> <span class="o">&gt;</span> <span class="n">dim</span><span class="o">.</span><span class="n">X_stop</span><span class="p">:</span>
+					<span class="c">#as soon as the first dim reaches the end of the coord-range</span>
+					<span class="k">return</span> <span class="bp">True</span> <span class="c">#done readout</span>
+		<span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">basis_dim</span><span class="p">:</span>
+			<span class="n">done_readout</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">done_readout</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_dim</span><span class="p">:</span>
+				<span class="n">done_readout</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">done_readout</span> <span class="c">#continue readout</span>
+
+
+	<span class="k">def</span> <span class="nf">_grabODSValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		in: coord_list = [ [x1,y1] ,..., [xN,yN] ]</span>
+<span class="sd">		out: value_list = [ [&quot;value in x1&quot;,&quot;value in y1&quot;] ,... ]</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="c">#value_list = []</span>
+		<span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coord_list</span><span class="p">):</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">file_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc</span><span class="o">.</span><span class="n">get_cell_value</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+			<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_error_when_cell_is_empty</span><span class="p">:</span>
+					<span class="c">#print(&quot;First and last ODS-Values: %s ... %s&quot;</span>
+					<span class="c">#% (value_list[0], value_list[-1]))</span>
+					<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="s">&quot;&quot;&quot;ERROR while reading value from the ODS-file...</span>
+<span class="s">					are empty cells in your range?&quot;&quot;&quot;</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">file_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+			<span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">file_dim</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../diaGrabber.html" >diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

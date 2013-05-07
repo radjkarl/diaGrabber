@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>diaGrabber.source.methods._container &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../../index.html" />
+    <link rel="up" title="diaGrabber" href="../../../diaGrabber.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../../diaGrabber.html" accesskey="U">diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for diaGrabber.source.methods._container</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">_utils</span>
+<span class="kn">import</span> <span class="nn">calc</span> <span class="kn">as</span> <span class="nn">calcMethods</span>
+<span class="kn">import</span> <span class="nn">exclude</span> <span class="kn">as</span> <span class="nn">excludeMethods</span>
+<span class="kn">import</span> <span class="nn">transform</span> <span class="kn">as</span> <span class="nn">transformMethods</span>
+
+<div class="viewcode-block" id="_aliasContainer"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._aliasContainer">[docs]</a><span class="k">class</span> <span class="nc">_aliasContainer</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	This option ...</span>
+<span class="sd">	TODO: ... örtliche veränderung...</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">__class__</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="p">[]</span>
+	
+<div class="viewcode-block" id="_aliasContainer.append"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._aliasContainer.append">[docs]</a>	<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mergeDimensionInstance</span><span class="p">):</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkClassInstance</span><span class="p">(</span><span class="n">mergeDimensionInstance</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mergeDimensionInstance</span><span class="p">)</span>
+		<span class="c">#self._index.append(mergeDimensionInstance._mergeIndex)</span>
+</div>
+<div class="viewcode-block" id="_aliasContainer.set"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._aliasContainer.set">[docs]</a>	<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mergeDimensionInstance</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkClassInstance</span><span class="p">(</span><span class="n">mergeDimensionInstance</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">mergeDimensionInstance</span>
+		<span class="c">#self._index[int(index)] = mergeDimensionInstance._mergeIndex</span>
+
+</div></div>
+<div class="viewcode-block" id="_calcContainer"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._calcContainer">[docs]</a><span class="k">class</span> <span class="nc">_calcContainer</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	TODO</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="_calcContainer.append"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._calcContainer.append">[docs]</a>	<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calcMethodInstance</span><span class="p">):</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkModuleInstance</span><span class="p">(</span><span class="n">calcMethodInstance</span><span class="p">,</span><span class="n">calcMethods</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">calcMethodInstance</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="_calcContainer.get"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._calcContainer.get">[docs]</a>	<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">index</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="c">#return every entry as list</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span>
+</div>
+<div class="viewcode-block" id="_calcContainer.set"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._calcContainer.set">[docs]</a>	<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">calcMethodInstance</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">index</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">appendCalcMethod</span><span class="p">(</span><span class="n">calcMethodInstance</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">_utils</span><span class="o">.</span><span class="n">checkModuleInstance</span><span class="p">(</span><span class="n">calcMethodInstance</span><span class="p">,</span><span class="n">calcMethods</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">calcMethodInstance</span>
+</div>
+<div class="viewcode-block" id="_calcContainer.available"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._calcContainer.available">[docs]</a>	<span class="k">def</span> <span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;return all available classes in methods.calc&#39;&#39;&#39;</span>
+		<span class="k">return</span> <span class="n">_utils</span><span class="o">.</span><span class="n">getAvailableClassesInModule</span><span class="p">(</span><span class="n">calcMethods</span><span class="p">)</span>
+</div>
+	<span class="k">def</span> <span class="nf">_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span>
+			<span class="n">l</span><span class="o">.</span><span class="n">_clean</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="_excludeContainer"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._excludeContainer">[docs]</a><span class="k">class</span> <span class="nc">_excludeContainer</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	assign one or more excludeMethod-classes of from :mod:`diaGrabber.methods.exclude`</span>
+<span class="sd">	Using this option you can exclude values from a dimension because of its development</span>
+<span class="sd">	when readed out.</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="_excludeContainer.append"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._excludeContainer.append">[docs]</a>	<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excludeMethodInstance</span><span class="p">):</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkModuleInstance</span><span class="p">(</span><span class="n">excludeMethodInstance</span><span class="p">,</span><span class="n">excludeMethods</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">excludeMethodInstance</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="_excludeContainer.get"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._excludeContainer.get">[docs]</a>	<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">index</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="c">#return every entry as list</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span>
+</div>
+<div class="viewcode-block" id="_excludeContainer.available"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._excludeContainer.available">[docs]</a>	<span class="k">def</span> <span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;return all available classes in methods.exlude&#39;&#39;&#39;</span>
+		<span class="k">return</span> <span class="n">_utils</span><span class="o">.</span><span class="n">getAvailableClassesInModule</span><span class="p">(</span><span class="n">excludeMethods</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="_excludeContainer.set"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._excludeContainer.set">[docs]</a>	<span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">excludeMethodInstance</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">index</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">appendExcludeMethod</span><span class="p">(</span><span class="n">excludeMethodInstance</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">_utils</span><span class="o">.</span><span class="n">checkModuleInstance</span><span class="p">(</span><span class="n">excludeMethodInstance</span><span class="p">,</span><span class="n">excludeMethods</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">excludeMethodInstance</span>
+</div></div>
+<div class="viewcode-block" id="_transformContainer"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._transformContainer">[docs]</a><span class="k">class</span> <span class="nc">_transformContainer</span><span class="p">:</span>
+	<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	assign one or more transformMethod-classes of from :mod:`diaGrabber.methods.transform`</span>
+<span class="sd">	using this option you can trnsform all basis-values after readout with the command::</span>
+<span class="sd">		target.transformDim()</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adhoc</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="_transformContainer.append"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._transformContainer.append">[docs]</a>	<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformMethodInstance</span><span class="p">,</span> <span class="n">adhoc</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		*adhoc*: transform each value in readout</span>
+<span class="sd">		&#39;&#39;&#39;</span>
+		<span class="n">_utils</span><span class="o">.</span><span class="n">checkModuleInstance</span><span class="p">(</span><span class="n">transformMethodInstance</span><span class="p">,</span><span class="n">transformMethods</span><span class="p">)</span>
+		<span class="c">#for key in kwargs:</span>
+		<span class="c">#	if key == &quot;adhoc&quot;:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">adhoc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">adhoc</span><span class="p">))</span>
+		<span class="c">#	else:</span>
+		<span class="c">#		raise KeyError(&quot;keyword &#39;%s&#39; not known&quot; %key)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transformMethodInstance</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="_transformContainer.get"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._transformContainer.get">[docs]</a>	<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span>
+</div>
+<div class="viewcode-block" id="_transformContainer.available"><a class="viewcode-back" href="../../../../container.html#diaGrabber.source.methods._container._transformContainer.available">[docs]</a>	<span class="k">def</span> <span class="nf">available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&#39;&#39;&#39;return all available classes in methods.transform&#39;&#39;&#39;</span>
+		<span class="k">return</span> <span class="n">_utils</span><span class="o">.</span><span class="n">getAvailableClassesInModule</span><span class="p">(</span><span class="n">transformMethods</span><span class="p">)</span>
+</div>
+	<span class="k">def</span> <span class="nf">_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">:</span>
+			<span class="n">l</span><span class="o">.</span><span class="n">_clean</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../../diaGrabber.html" >diaGrabber</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

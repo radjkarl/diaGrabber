@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FEPdiaGrabber.target._FEPmatrixMethods &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for FEPdiaGrabber.target._FEPmatrixMethods</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="c">#import bottleneck as bn</span>
+<span class="c">#from sys import exit</span>
+<span class="c">#from copy import deepcopy</span>
+<span class="c">#from scipy.interpolate import griddata</span>
+
+<span class="c">#own modules</span>
+<span class="c">#from diaGrabber import source</span>
+<span class="kn">from</span> <span class="nn">diaGrabber</span> <span class="kn">import</span> <span class="n">_utils</span>
+
+
+<div class="viewcode-block" id="FEPmatrixMethods"><a class="viewcode-back" href="../../../FEP_proprietary.html#FEPdiaGrabber.target._FEPmatrixMethods.FEPmatrixMethods">[docs]</a><span class="k">class</span> <span class="nc">FEPmatrixMethods</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">pass</span>
+
+
+<div class="viewcode-block" id="FEPmatrixMethods.eval2dGaussianDistribution"><a class="viewcode-back" href="../../../FEP_proprietary.html#FEPdiaGrabber.target._FEPmatrixMethods.FEPmatrixMethods.eval2dGaussianDistribution">[docs]</a>	<span class="k">def</span> <span class="nf">eval2dGaussianDistribution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dEB_types</span><span class="o">=</span><span class="p">[],</span> <span class="n">merge</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+		<span class="k">print</span> <span class="s">&quot;eval2dGaussianDistribution&quot;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nBasis</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+			<span class="nb">exit</span><span class="p">(</span><span class="s">&quot;ERROR: eval2dGaussianDistribution works only for 2d-matrixes&quot;</span><span class="p">)</span>
+		<span class="n">min_dEB_types</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.75</span><span class="p">]</span><span class="c">#are at least necassary to get deviation to normaldistr.</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">min_dEB_types</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dEB_types</span><span class="p">:</span>
+				<span class="n">dEB_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="c">#important to the the standard deviation</span>
+			
+		<span class="c">#from smalles to biggest diameter</span>
+		<span class="n">dEB_types</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+		<span class="n">dEB_types</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span><span class="c">#e.q.d_EB_75, d_EB_50, d_EB_25</span>
+		<span class="n">dEB_types</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.95</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">merge</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">merge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">merge</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dim</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&quot;given merge is not a member of merge-dims im target&quot;</span><span class="p">)</span>
+		<span class="n">w</span> <span class="o">=</span> <span class="n">merge</span><span class="o">.</span><span class="n">_mergeIndex</span>
+		
+		<span class="n">peak</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">])</span>
+		<span class="n">peak_location</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">]</span><span class="o">==</span><span class="n">peak</span><span class="p">))</span>
+		<span class="n">peak_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">peak_location</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+		<span class="n">peak_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">peak_location</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+
+		<span class="c">##removing all nan-values in array:</span>
+		<span class="n">clean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="o">~</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+		<span class="c">##building histogramm (with 5 equal sized bins) of the distribution of the values</span>
+		<span class="n">histo</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">clean</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+		<span class="c">##the environmental value is defines as the value of the first (lowest) bin</span>
+		<span class="n">environment</span> <span class="o">=</span> <span class="n">histo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+		<span class="n">dEB_limit</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">dEB</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">border_locations</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">deviationTh2RealList</span> <span class="o">=</span> <span class="p">[]</span>
+		
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_types</span><span class="p">)):</span>
+			<span class="n">dEB_limit</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">peak</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span><span class="o">*</span><span class="n">dEB_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">environment</span> <span class="p">)</span>
+			<span class="n">dEB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+			<span class="n">border_locations</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+			<span class="n">deviationTh2RealList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			
+		<span class="n">n_circle_points</span> <span class="o">=</span> <span class="mi">40</span><span class="c">#has to be int(multiple of 2)</span>
+		<span class="n">n_part_diameters</span> <span class="o">=</span> <span class="n">n_circle_points</span><span class="o">/</span><span class="mi">2</span>
+		<span class="n">delta_radian</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">n_circle_points</span>
+		
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)):</span>
+			<span class="n">radian</span> <span class="o">=</span> <span class="mf">0.0</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_circle_points</span><span class="p">):</span>
+				<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="c">#at peak_location</span>
+				<span class="n">at_border</span> <span class="o">=</span> <span class="bp">False</span>
+				<span class="k">while</span> <span class="ow">not</span> <span class="n">at_border</span><span class="p">:</span>
+					<span class="n">x</span> <span class="o">=</span> <span class="n">peak_location</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">radian</span><span class="p">))</span>
+					<span class="n">y</span> <span class="o">=</span> <span class="n">peak_location</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">radian</span><span class="p">))</span>
+					<span class="k">try</span><span class="p">:</span>
+
+						<span class="k">if</span> <span class="ow">not</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">])</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mergeMatrix</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dEB_limit</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span><span class="c">#found border</span>
+							<span class="n">at_border</span> <span class="o">=</span> <span class="bp">True</span>
+							<span class="c">#if [x,y] not in border_locations[d]:</span>
+							<span class="n">border_locations</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">])</span>
+					<span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+						<span class="nb">exit</span><span class="p">(</span><span class="s">&quot;ERROR: peak of merge </span><span class="si">%s</span><span class="s"> in matrix is to close to border&quot;</span><span class="p">)</span>
+					<span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+				<span class="n">radian</span> <span class="o">+=</span> <span class="n">delta_radian</span>
+
+
+		<span class="n">border_coords</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">border_locations</span><span class="p">)</span>
+		<span class="n">distances</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">border_locations</span><span class="p">)</span>
+
+		<span class="c">#reset the middle of the gaussiandistr. as the middle of the first (95%) polygon</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">border_locations</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+			<span class="n">border_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">border_locations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
+									<span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">border_locations</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]]</span>
+		<span class="n">polygon</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">border_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		<span class="c">##build mean ... doest work good</span>
+		<span class="c">##peak_coord= [sum(polygon[0])/len(polygon[0]),sum(polygon[1])/len(polygon[1])]</span>
+		<span class="c">##build half of max-min:</span>
+		<span class="n">minx</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">polygon</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		<span class="n">maxx</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">polygon</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		<span class="n">miny</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">polygon</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">maxy</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">polygon</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+		<span class="n">peak_coord</span><span class="o">=</span> <span class="p">[</span><span class="n">minx</span><span class="o">+</span><span class="p">(</span><span class="n">maxx</span><span class="o">-</span><span class="n">minx</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">miny</span><span class="o">+</span><span class="p">(</span><span class="n">maxy</span><span class="o">-</span><span class="n">miny</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+
+
+		<span class="c">##calc the x-y-coord of all borders in d_EB_types</span>
+		<span class="c">##and the distance from eBeammiddle to border</span>
+
+		<span class="k">print</span> <span class="s">&quot;Gausian-Diameters are...&quot;</span>
+		
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)):</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">border_locations</span><span class="p">[</span><span class="n">d</span><span class="p">])):</span>
+				<span class="n">border_coords</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">border_locations</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
+										<span class="bp">self</span><span class="o">.</span><span class="n">basisMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">border_locations</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]]</span>
+				<span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_utils</span><span class="o">.</span><span class="n">pktAbs2</span><span class="p">(</span><span class="n">border_coords</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">i</span><span class="p">],</span><span class="n">peak_coord</span><span class="p">)</span>
+
+			<span class="c">#values for dEB_types[i]</span>
+			<span class="n">dEB</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="p">])</span><span class="c">#mean</span>
+			<span class="k">if</span> <span class="n">dEB_types</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.50</span><span class="p">:</span>
+				<span class="n">st_deviation</span> <span class="o">=</span> <span class="n">dEB</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+			<span class="k">print</span> <span class="s">&quot;    for </span><span class="si">%s</span><span class="s"> -&gt; </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">dEB_types</span><span class="p">[</span><span class="n">d</span><span class="p">],</span><span class="n">dEB</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+
+		
+		<span class="c">##get max/min diameter-factor and the radian(max_diameter) for each d_EB-area</span>
+		<span class="n">minMax_dEB</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span><span class="c">#for each diameter</span>
+			<span class="n">minMax_dEB</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">])</span><span class="c">#min, max, max/min, radian_of_max</span>
+			<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_part_diameters</span><span class="p">):</span>
+				<span class="c"># == radius + radius in opposite dir.</span>
+				<span class="n">part_diameter</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">+</span><span class="n">n_part_diameters</span><span class="p">]</span>
+				<span class="c">#print minMax_dEB, d</span>
+				<span class="k">if</span> <span class="n">part_diameter</span> <span class="o">&lt;</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span><span class="c">#min</span>
+					<span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">part_diameter</span>
+				<span class="k">if</span> <span class="n">part_diameter</span> <span class="o">&gt;</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>  <span class="ow">or</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span><span class="c">#max</span>
+					<span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">part_diameter</span>
+					<span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">delta_radian</span> <span class="o">*</span> <span class="n">i</span>
+			<span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c">#max/min</span>
+		<span class="c">#get mean max/min-factor and mean radian_of_max</span>
+		<span class="n">mean_maxMin_dEB</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">mean_max_radian</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span><span class="c">#for each diameter</span>
+			<span class="n">mean_maxMin_dEB</span> <span class="o">+=</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+			<span class="n">mean_max_radian</span> <span class="o">+=</span> <span class="n">minMax_dEB</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+		<span class="n">mean_maxMin_dEB</span> <span class="o">/=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="n">mean_max_radian</span> <span class="o">/=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+		<span class="k">print</span> <span class="s">&quot;The mean factor max/min-diameter is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mean_maxMin_dEB</span>
+		<span class="k">print</span> <span class="s">&quot;The mean radian of the max diameter is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">mean_max_radian</span>
+
+		<span class="c">#calc deviation to a normaldisribution defined as:</span>
+		<span class="c">#normal_distribution_fn = \</span>
+		<span class="n">corrF</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span> <span class="p">(</span>
+					<span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">st_deviation</span><span class="o">*</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span>
+					<span class="p">(</span> <span class="p">(</span> <span class="mi">0</span> <span class="o">/</span>  <span class="n">st_deviation</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">peak</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)):</span>
+			<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
+				<span class="n">dEB_th</span> <span class="o">=</span> <span class="n">corrF</span> <span class="o">*</span> <span class="p">(</span>
+					<span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">st_deviation</span><span class="o">*</span> <span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">e</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span>
+					<span class="p">(</span> <span class="p">(</span> <span class="n">x</span> <span class="o">/</span>  <span class="n">st_deviation</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">peak</span><span class="o">-</span><span class="n">environment</span><span class="p">)</span>
+
+				<span class="n">deviationTh2RealList</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span> <span class="p">(</span><span class="n">dEB_th</span> <span class="o">-</span> <span class="n">dEB_limit</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="o">/</span> <span class="n">dEB_th</span><span class="p">)</span><span class="c">#dEB_limit[d]/dEB_th#</span>
+			<span class="n">deviationTh2RealList</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">/=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">[</span><span class="n">d</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c">#middle fo difference between theory and reality</span>
+		<span class="c">##middle of all deviantion-rings</span>
+		<span class="n">relDevianceTh2Real</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">deviationTh2RealList</span><span class="p">)</span> <span class="o">/</span>  <span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">deviationTh2RealList</span><span class="p">))</span>
+		<span class="k">print</span> <span class="s">&quot;The relative deviation/variance between theoretical an real distribution is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">relDevianceTh2Real</span>
+
+		<span class="c">#add point middle of gaussian:</span>
+		<span class="n">peak_coord</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Mittelpunkt&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peak_coord</span><span class="p">)</span>
+		<span class="c">#self.plot_overlay[w][0].append(&quot;Mittelpunkt&quot;)#x-,y-list</span>
+		<span class="c">###redundant!!!-&gt;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Mittelpunkt&quot;</span><span class="p">)</span><span class="c">#x-,y-list</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;deviation= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">relDevianceTh2Real</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;maxRad= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">mean_max_radian</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;max/min-d-factor= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">mean_maxMin_dEB</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;d_EB50= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">dEB</span><span class="p">[</span><span class="n">dEB_types</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)])</span>
+		<span class="c">#add rings</span>
+		<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">dEB_limit</span><span class="p">)):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">border_coords</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span><span class="c">#x-,y-list</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;d_EB= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">dEB_types</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="p">)</span><span class="c">#names for legend</span>
+			<span class="c">###redundant!!!-&gt;</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">plot_overlay</span><span class="p">[</span><span class="n">w</span><span class="p">][</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;d_EB= </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">dEB_types</span><span class="p">[</span><span class="n">d</span><span class="p">])</span> <span class="p">)</span><span class="c">#x-,y-list</span>
+
+
+		<span class="k">print</span> <span class="s">&quot;done&quot;</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Container-Classes &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="up" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
+    <link rel="next" title="diaGrabber.source.methods" href="methods.html" />
+    <link rel="prev" title="diaGrabber.source._dimension" href="dimension.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="diaGrabber.source.methods"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="diaGrabber.source._dimension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API:</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="container-classes">
+<h1>Container-Classes<a class="headerlink" href="#container-classes" title="Permalink to this headline">¶</a></h1>
+<p>These container-classes collect, sort and show the installed <tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods</span></tt> in the defined
+<a class="reference internal" href="dimension.html#diaGrabber.source._dimension.basisDimension" title="diaGrabber.source._dimension.basisDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.basisDimension</span></tt></a> and <a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a>.</p>
+<div class="section" id="aliascontainer">
+<h2>aliasContainer<a class="headerlink" href="#aliascontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.methods._container._aliasContainer">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.methods._container.</tt><tt class="descname">_aliasContainer</tt><big>(</big><em>parent</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_aliasContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._aliasContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The container-class of <a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension.alias" title="diaGrabber.source._dimension.mergeDimension.alias"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension.alias()</span></tt></a>.</p>
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._aliasContainer.append">
+<tt class="descname">append</tt><big>(</big><em>mergeDimensionInstance</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_aliasContainer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._aliasContainer.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new alias-condition to the container.
+need a instance of <a class="reference internal" href="dimension.html#diaGrabber.source._dimension.mergeDimension" title="diaGrabber.source._dimension.mergeDimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.mergeDimension</span></tt></a> for this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._aliasContainer.set">
+<tt class="descname">set</tt><big>(</big><em>mergeDimensionInstance</em>, <em>index=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_aliasContainer.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._aliasContainer.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>add or change the alias-contition on a known position in the alias-container</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="calccontainer">
+<h2>calcContainer<a class="headerlink" href="#calccontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.methods._container._calcContainer">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.methods._container.</tt><tt class="descname">_calcContainer</tt><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_calcContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._calcContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The container-class for all methods in <a class="reference internal" href="methods.html#module-diaGrabber.source.methods.calc" title="diaGrabber.source.methods.calc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods.calc</span></tt></a>.</p>
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._calcContainer.append">
+<tt class="descname">append</tt><big>(</big><em>calcMethodInstance</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_calcContainer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._calcContainer.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a new calc-procedure to the container, need a instance of <a class="reference internal" href="methods.html#module-diaGrabber.source.methods.calc" title="diaGrabber.source.methods.calc"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods.calc</span></tt></a> for this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._calcContainer.available">
+<tt class="descname">available</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_calcContainer.available"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._calcContainer.available" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all available classes in methods.calc</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._calcContainer.get">
+<tt class="descname">get</tt><big>(</big><em>index=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_calcContainer.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._calcContainer.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all calc-instances of one (at a given index) stored in the container</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._calcContainer.set">
+<tt class="descname">set</tt><big>(</big><em>calcMethodInstance</em>, <em>index=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_calcContainer.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._calcContainer.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>ad or change the calc-instance at a given index</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="excludecontainer">
+<h2>excludeContainer<a class="headerlink" href="#excludecontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.methods._container._excludeContainer">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.methods._container.</tt><tt class="descname">_excludeContainer</tt><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_excludeContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._excludeContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign one or more excludeMethod-classes of from <tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.exclude</span></tt>
+Using this option you can exclude values from a dimension because of its development
+when readed out.</p>
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._excludeContainer.append">
+<tt class="descname">append</tt><big>(</big><em>excludeMethodInstance</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_excludeContainer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._excludeContainer.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a new exclude-condition to the container. need a instance of <a class="reference internal" href="methods.html#module-diaGrabber.source.methods.exclude" title="diaGrabber.source.methods.exclude"><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source.methods.exclude</span></tt></a> for this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._excludeContainer.available">
+<tt class="descname">available</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_excludeContainer.available"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._excludeContainer.available" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all available classes in methods.exlude</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._excludeContainer.get">
+<tt class="descname">get</tt><big>(</big><em>index=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_excludeContainer.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._excludeContainer.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all or one (at a given index) exclude-condition of the container</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._excludeContainer.set">
+<tt class="descname">set</tt><big>(</big><em>excludeMethodInstance</em>, <em>index=None</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_excludeContainer.set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._excludeContainer.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>add or change an exclude-instance in the container</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="transformcontainer">
+<h2>transformContainer<a class="headerlink" href="#transformcontainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="diaGrabber.source.methods._container._transformContainer">
+<em class="property">class </em><tt class="descclassname">diaGrabber.source.methods._container.</tt><tt class="descname">_transformContainer</tt><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_transformContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._transformContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign one or more transformMethod-classes of from <tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.methods.transform</span></tt>
+using this option you can trnsform all basis-values after readout with the command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">target</span><span class="o">.</span><span class="n">transformDim</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._transformContainer.append">
+<tt class="descname">append</tt><big>(</big><em>transformMethodInstance</em>, <em>adhoc=False</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_transformContainer.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._transformContainer.append" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>adhoc</em>: transform each value right in the readout
+else the talues can be transformed via <a class="reference internal" href="_matrix.html#diaGrabber.target._matrixMethods.matrixMethods.transformDim" title="diaGrabber.target._matrixMethods.matrixMethods.transformDim"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.target._matrixMethods.matrixMethods.transformDim()</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._transformContainer.available">
+<tt class="descname">available</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_transformContainer.available"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._transformContainer.available" title="Permalink to this definition">¶</a></dt>
+<dd><p>return all available classes in methods.transform</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="diaGrabber.source.methods._container._transformContainer.get">
+<tt class="descname">get</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/methods/_container.html#_transformContainer.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source.methods._container._transformContainer.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Container-Classes</a><ul>
+<li><a class="reference internal" href="#aliascontainer">aliasContainer</a></li>
+<li><a class="reference internal" href="#calccontainer">calcContainer</a></li>
+<li><a class="reference internal" href="#excludecontainer">excludeContainer</a></li>
+<li><a class="reference internal" href="#transformcontainer">transformContainer</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dimension.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="methods.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">diaGrabber.source.methods</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/container.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methods.html" title="diaGrabber.source.methods"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dimension.html" title="diaGrabber.source._dimension"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

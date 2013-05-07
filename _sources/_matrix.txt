@@ -1,0 +1,22 @@
+****************************************
+Baseclasses for Targets
+****************************************
+
+.. inheritance-diagram:: diaGrabber.target._matrix.matrixBase diaGrabber.target.coarseMatrix.coarseMatrix diaGrabber.target.fineMatrix.fineMatrix diaGrabber.target._matrixMethods.matrixMethods
+
+Baseclass for all matrices
+==============================================
+.. autoclass:: diaGrabber.target._matrix.matrixBase
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+
+Methods to process filled matrices
+========================================================
+.. autoclass:: diaGrabber.target._matrixMethods.matrixMethods
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
+

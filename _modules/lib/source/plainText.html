@@ -1,0 +1,195 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>lib.source.plainText &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="lib.source" href="../source.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lib.html" >lib</a> &raquo;</li>
+          <li><a href="../source.html" accesskey="U">lib.source</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for lib.source.plainText</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 *-*</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span> <span class="nn">linecache</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">lib</span> <span class="kn">import</span> <span class="n">_utils</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_dimension</span>
+<span class="kn">from</span> <span class="nn">_source</span> <span class="kn">import</span> <span class="n">_source</span>
+
+
+<div class="viewcode-block" id="plainText"><a class="viewcode-back" href="../../../source.html#lib.source.plainText.plainText">[docs]</a><span class="k">class</span> <span class="nc">plainText</span><span class="p">(</span><span class="n">_source</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">dim_seperator</span><span class="p">,</span> <span class="n">data_type</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">plainText</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">data_type</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">=</span> <span class="n">folder</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dat_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dim_seperator</span> <span class="o">=</span> <span class="n">dim_seperator</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">readout_every_n_line</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">dimension</span> <span class="o">=</span> <span class="n">_dimension</span><span class="o">.</span><span class="n">dimension</span>
+		
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dat_file</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
+		<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span><span class="c">#found no readable file called self._output_file</span>
+			<span class="k">print</span> <span class="s">&quot;ERROR: doest your output_file exist?&quot;</span>
+			<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+	
+	<span class="k">def</span> <span class="nf">_prepareReadOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrixClass</span><span class="p">):</span>
+		<span class="c">#matrixClass.nDim</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_prepareStandard</span><span class="p">(</span><span class="n">matrixClass</span><span class="p">)</span>
+		
+		<span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">sum_bar</span> <span class="o">=</span> <span class="mi">100</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">showBar_counter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readout_every_n_line</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sum_bar</span><span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">showBar_counter</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">showBar_counter</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">bar_step</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">bar_step_delta</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_bar</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span><span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_step_delta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">bar_step_delta</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">sum_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_step_delta</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">readOut_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">readout_every_n_line</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">len_readOut_range</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readOut_range</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">step_in_readOut_range</span> <span class="o">=</span> <span class="mi">0</span>
+	
+	<span class="k">def</span> <span class="nf">_readOut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">readout_one_line</span><span class="p">,</span> <span class="n">end_readOut</span><span class="p">):</span>
+		<span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_in_readOut_range</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_readOut_range</span><span class="p">:</span>
+			<span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readOut_range</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">step_in_readOut_range</span><span class="p">]</span>
+			
+			
+		<span class="c">#for i in readOut_range:</span>
+			<span class="n">line</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dat_file</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+			<span class="n">file_dim</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_seperator</span><span class="p">)</span>
+			
+			<span class="bp">self</span><span class="o">.</span><span class="n">_assignValues</span><span class="p">(</span><span class="n">file_dim</span><span class="p">)</span>
+			
+						
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">showBar_counter</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">bar_step</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_step_delta</span>
+				<span class="n">_utils</span><span class="o">.</span><span class="n">statusBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_step</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">sum_bar</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">+=</span> <span class="mi">1</span>
+			
+			<span class="bp">self</span><span class="o">.</span><span class="n">step_in_readOut_range</span> <span class="o">+=</span> <span class="mi">1</span>
+			<span class="k">if</span> <span class="n">readout_one_line</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+			<span class="k">if</span> <span class="n">end_readOut</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+
+		<span class="k">return</span> <span class="bp">True</span> <span class="c"># means i&#39;m done with readout</span>
+
+
+	
+
+	
+	
+	<span class="k">def</span> <span class="nf">_getMinMax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dims</span><span class="p">):</span>
+		<span class="n">min_max</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">len_dims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_dims</span><span class="p">):</span>
+			<span class="n">min_max</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span><span class="bp">None</span><span class="p">])</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">len_dat_file</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">readout_every_n_line</span><span class="p">):</span>
+			<span class="n">line</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dat_file</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+			<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_dims</span><span class="p">):</span>
+				<span class="n">value</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim_seperator</span><span class="p">)[</span><span class="n">dims</span><span class="p">[</span><span class="n">d</span><span class="p">]])</span>
+				<span class="k">if</span> <span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span><span class="c">#max</span>
+					<span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+				<span class="k">if</span> <span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="c">#min</span>
+					<span class="n">min_max</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+		<span class="k">return</span> <span class="n">min_max</span>
+	
+	
+	</div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/logo.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../lib.html" >lib</a> &raquo;</li>
+          <li><a href="../source.html" >lib.source</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The diaGrabber-API &mdash; diaGrabber 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
+    <link rel="next" title="diaGrabber.source" href="source.html" />
+    <link rel="prev" title="The Graphical user interface" href="gui.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="source.html" title="diaGrabber.source"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="The Graphical user interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-diagrabber-api">
+<span id="api"></span><h1>The diaGrabber-API<a class="headerlink" href="#the-diagrabber-api" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source.html"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source.html#baseclass-for-all-sources">Baseclass for all sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source.html#module-diaGrabber.source.plainText">plainText</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source.html#module-diaGrabber.source.stream">stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source.html#module-diaGrabber.source.libreOfficeCalc">libreOfficeCalc</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dimension.html"><tt class="docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dimension.html#baseclass-for-all-dimensions">Baseclass for all dimensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dimension.html#basisdimension">basisDimension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dimension.html#mergedimension">mergeDimension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container.html">Container-Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="container.html#aliascontainer">aliasContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container.html#calccontainer">calcContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container.html#excludecontainer">excludeContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container.html#transformcontainer">transformContainer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="methods.html"><tt class="docutils literal"><span class="pre">diaGrabber.source.methods</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#module-diaGrabber.source.methods.calc">calc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#module-diaGrabber.source.methods.merge">merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#module-diaGrabber.source.methods.exclude">exclude</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#module-diaGrabber.source.methods.transform">transform</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="target.html"><tt class="docutils literal"><span class="pre">diaGrabber.target</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="target.html#matrix">Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html"><tt class="docutils literal"><span class="pre">diaGrabber.plot</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plot.html#module-diaGrabber.plot.Gui">Gui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html#module-diaGrabber.plot._preferenceDock">preferenceDock</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="gui.html"
+                        title="previous chapter">The Graphical user interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="source.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">diaGrabber.source</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/diaGrabberAPI.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="source.html" title="diaGrabber.source"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gui.html" title="The Graphical user interface"
+             >previous</a> |</li>
+        <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Karl Bedrich.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

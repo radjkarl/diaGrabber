@@ -1,0 +1,15 @@
+**************************************
+Proprietary Modules of **diaGrabber**
+**************************************
+
+
+
+FEPmatrixMethods
+==================================
+
+.. autoclass:: FEPdiaGrabber.target._FEPmatrixMethods.FEPmatrixMethods
+   :members:
+   :undoc-members:
+   :inherited-members:
+
+
