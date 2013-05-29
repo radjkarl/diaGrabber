@@ -60,7 +60,7 @@
   <div class="section" id="diagrabber-source">
 <h1><tt class="xref py py-mod docutils literal"><span class="pre">diaGrabber.source</span></tt><a class="headerlink" href="#diagrabber-source" title="Permalink to this headline">¶</a></h1>
 <p class="graphviz">
-<img src="_images/inheritance-636cf9848e310c2d0ba05640aa549281b4077999.png" alt="Inheritance diagram of diaGrabber.source.plainText.plainText, diaGrabber.source.stream.stream, diaGrabber.source.libreOfficeCalc.libreOfficeCalc, diaGrabber.source._source.source" usemap="#inheritance768c943b0c" class="inheritance"/>
+<img src="_images/inheritance-a21a0e2f1dd35392ef4d4b739dd962a49815533d.png" alt="Inheritance diagram of diaGrabber.source.plainText.plainText, diaGrabber.source.stream.stream, diaGrabber.source.libreOfficeCalc.libreOfficeCalc, diaGrabber.source._source.source" usemap="#inheritance768c943b0c" class="inheritance"/>
 <map id="inheritance768c943b0c" name="inheritance768c943b0c">
 <area shape="rect" id="node1" href="#diaGrabber.source.libreOfficeCalc.libreOfficeCalc" title="diaGrabber.source.libreOfficeCalc.libreOfficeCalc" alt="" coords="295,5,620,33"/>
 <area shape="rect" id="node2" href="#diaGrabber.source._source.source" title="diaGrabber.source._source.source" alt="" coords="5,55,245,83"/>
@@ -206,6 +206,13 @@ to the source</p>
 <td>max. size(byte) loaded into RAM
 insert &#8216;0&#8217; to read the whole file</td>
 </tr>
+<tr class="row-odd"><td><em>silentReadout</em></td>
+<td>bool</td>
+<td>False</td>
+<td>set True if you dont want to see
+a statusBar or similar while
+readOut</td>
+</tr>
 </tbody>
 </table>
 </dd></dl>
@@ -290,10 +297,10 @@ when the stream finishes</td>
 <p><strong>Optional kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="8%" />
-<col width="4%" />
-<col width="4%" />
-<col width="84%" />
+<col width="18%" />
+<col width="10%" />
+<col width="9%" />
+<col width="63%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Keyword</th>
@@ -316,12 +323,22 @@ the stream</td>
 your file you can spare time by
 readout only every n line of it.
 Most likely the stream generates
-faster new output than diaGrabber can process, In this case this value has to be greater than 1, Type <strong>&#8216;calc&#8217;</strong> to let diaGrabber decide this value corresponding to the development of the amount of unprocessed output.</td>
+faster new output than
+diaGrabber can process, In this
+case this value has to be
+greater than 1, Type <strong>&#8216;calc&#8217;</strong>
+to let diaGrabber decide this
+value corresponding to the
+development of the amount of
+unprocessed output.</td>
 </tr>
 <tr class="row-even"><td><em>showCalcNLine</em></td>
 <td>bool</td>
 <td>False</td>
-<td>if <em>readoutEveryNLine</em> == &#8216;calc&#8217; Setting this value to True print out every new calculated value of <em>readoutEveryNLine</em></td>
+<td>if <em>readoutEveryNLine</em> == &#8216;calc&#8217;
+Setting this value to True print
+out every new calculated value
+of <em>readoutEveryNLine</em></td>
 </tr>
 <tr class="row-odd"><td><em>infoEveryNLine</em></td>
 <td>int</td>
@@ -332,12 +349,14 @@ a status.</td>
 <tr class="row-even"><td><em>dataType</em></td>
 <td>string</td>
 <td>&#8220;unknown&#8221;</td>
-<td>for all possible values are defined  see <a class="reference internal" href="#diaGrabber.source._source.source._evalDataType" title="diaGrabber.source._source.source._evalDataType"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._source.source._evalDataType()</span></tt></a></td>
+<td>for all possible values are
+defined see <a class="reference internal" href="#diaGrabber.source._source.source._evalDataType" title="diaGrabber.source._source.source._evalDataType"><tt class="xref py py-func docutils literal"><span class="pre">diaGrabber.source._source.source._evalDataType()</span></tt></a></td>
 </tr>
 <tr class="row-odd"><td><em>keyToEndProcess</em></td>
 <td>string</td>
 <td>&#8220;&#8221;</td>
-<td>This entry will finish the stream-output</td>
+<td>This entry will finish the
+stream-output</td>
 </tr>
 <tr class="row-even"><td><em>runInShell</em></td>
 <td>bool</td>
@@ -346,6 +365,13 @@ a status.</td>
 be called out of a shell.
 Set this value to True if the
 stream doesn&#8217;t start.</td>
+</tr>
+<tr class="row-odd"><td><em>silentReadout</em></td>
+<td>bool</td>
+<td>False</td>
+<td>set True if you dont want to see
+a statusBar or similar while
+readOut</td>
 </tr>
 </tbody>
 </table>
@@ -460,6 +486,13 @@ Replaces keyword &#8216;index&#8217; with &#8216;cellRange&#8217;:</p>
 <td>True</td>
 <td>Set to False to exit, when cells inthe cellRange of thedimensions are empty</td>
 </tr>
+<tr class="row-even"><td><em>silentReadout</em></td>
+<td>bool</td>
+<td>False</td>
+<td>set True if you dont want to see
+a statusBar or similar while
+readOut</td>
+</tr>
 </tbody>
 </table>
 </dd></dl>
@@ -494,7 +527,7 @@ Replaces keyword &#8216;index&#8217; with &#8216;cellRange&#8217;:</p>
                         title="previous chapter">The diaGrabber-API</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="dimension.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">diaGrabber.source._dimension</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/source.txt"

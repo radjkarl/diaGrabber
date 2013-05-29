@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="diaGrabber 0.1.1 documentation" href="index.html" />
-    <link rel="up" title="The diaGrabber-API:" href="diaGrabberAPI.html" />
+    <link rel="up" title="The diaGrabber-API" href="diaGrabberAPI.html" />
     <link rel="next" title="Container-Classes" href="container.html" />
     <link rel="prev" title="diaGrabber.source" href="source.html" /> 
   </head>
@@ -48,7 +48,7 @@
           <a href="source.html" title="diaGrabber.source"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
-          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API:</a> &raquo;</li> 
+          <li><a href="diaGrabberAPI.html" accesskey="U">The diaGrabber-API</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -71,7 +71,7 @@
 <h2>Baseclass for all dimensions<a class="headerlink" href="#baseclass-for-all-dimensions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="diaGrabber.source._dimension.dimension">
-<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">dimension</tt><a class="reference internal" href="_modules/diaGrabber/source/_dimension.html#dimension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source._dimension.dimension" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">dimension</tt><big>(</big><em>source</em><big>)</big><a class="reference internal" href="_modules/diaGrabber/source/_dimension.html#dimension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#diaGrabber.source._dimension.dimension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>The basis-class of merge- and basisDimension. Provides everything
 that is identically for both of them.</p>
@@ -150,7 +150,7 @@ to start + (delta*resolution)</td>
 <h2>basisDimension<a class="headerlink" href="#basisdimension" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="diaGrabber.source._dimension.basisDimension">
-<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">basisDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">basisDimension</tt><big>(</big><em>source</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.basisDimension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._dimension.dimension" title="diaGrabber.source._dimension.dimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.dimension</span></tt></a></p>
 <p>basisDimensions determine the shape and size of the target. Therefore its values are
 strictly bounded to a range of discrete points.</p>
@@ -161,10 +161,10 @@ strictly bounded to a range of discrete points.</p>
 <dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="27%" />
-<col width="16%" />
-<col width="10%" />
-<col width="46%" />
+<col width="24%" />
+<col width="14%" />
+<col width="20%" />
+<col width="42%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Keyword</th>
@@ -185,10 +185,32 @@ strictly bounded to a range of discrete points.</p>
 <td>the unit of the basisDimension</td>
 </tr>
 <tr class="row-even"><td><em>index</em></td>
-<td>int</td>
-<td>0</td>
+<td><p class="first">int</p>
+<p class="last">str</p>
+</td>
+<td><p class="first">0</p>
+<p>&#8220;folder&#8221;</p>
+<p>&#8220;counter&#8221;</p>
+<p class="last">&#8220;fixedCounter&#8221;</p>
+</td>
 <td>the position in the source-file
-&#8216;0&#8217; will be the first one</td>
+&#8216;0&#8217; will be the first one
+all sourcefiles are in <em>folders</em>
+each name of a folder represents
+a value of this basisDimension
+The folder is located between
+the source-folder (if given) and
+source-file.
+It is possible to use multible
+basisDimensions with
+index=&#8217;folder&#8217;. In this case the
+order of those dimensions
+represents the order in th
+filesystem.
+see <tt class="xref py py-meth docutils literal"><span class="pre">setCounter()</span></tt>
+(with update=True)
+see <tt class="xref py py-meth docutils literal"><span class="pre">setCounter()</span></tt>
+(with update=False)</td>
 </tr>
 <tr class="row-odd"><td><em>resolution</em></td>
 <td>int</td>
@@ -285,7 +307,7 @@ n is the value of &#8216;resolution&#8217;</td>
 <h2>mergeDimension<a class="headerlink" href="#mergedimension" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="diaGrabber.source._dimension.mergeDimension">
-<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">mergeDimension</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">diaGrabber.source._dimension.</tt><tt class="descname">mergeDimension</tt><big>(</big><em>source</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#diaGrabber.source._dimension.mergeDimension" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#diaGrabber.source._dimension.dimension" title="diaGrabber.source._dimension.dimension"><tt class="xref py py-class docutils literal"><span class="pre">diaGrabber.source._dimension.dimension</span></tt></a></p>
 <p>Values of mergeDimensions where directly written into the matrices of the target.
 That&#8217;s why it&#8217;s values were not bounded. If merge-values are store in postitions
@@ -315,10 +337,10 @@ values of &#8216;one&#8217; were also taken.</p>
 <dd><p><strong>Required kwargs</strong> (&#8220;keyword arguments&#8221;) are:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="27%" />
-<col width="16%" />
-<col width="10%" />
-<col width="46%" />
+<col width="24%" />
+<col width="15%" />
+<col width="19%" />
+<col width="42%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Keyword</th>
@@ -339,10 +361,19 @@ values of &#8216;one&#8217; were also taken.</p>
 <td>the unit of the basisDimension</td>
 </tr>
 <tr class="row-even"><td><em>index</em></td>
-<td>int</td>
-<td>0</td>
+<td><p class="first">int</p>
+<p class="last">str</p>
+</td>
+<td><p class="first">0</p>
+<p>&#8220;counter&#8221;</p>
+<p class="last">&#8220;fixedCounter&#8221;</p>
+</td>
 <td>the position in the source-file
-&#8216;0&#8217; will be the first one</td>
+&#8216;0&#8217; will be the first one
+see <tt class="xref py py-meth docutils literal"><span class="pre">setCounter()</span></tt>
+(with update=True)
+see <tt class="xref py py-meth docutils literal"><span class="pre">setCounter()</span></tt>
+(with update=False)</td>
 </tr>
 </tbody>
 </table>
@@ -448,7 +479,7 @@ possibilities</td>
           <a href="source.html" title="diaGrabber.source"
              >previous</a> |</li>
         <li><a href="index.html">diaGrabber 0.1.1 documentation</a> &raquo;</li>
-          <li><a href="diaGrabberAPI.html" >The diaGrabber-API:</a> &raquo;</li> 
+          <li><a href="diaGrabberAPI.html" >The diaGrabber-API</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

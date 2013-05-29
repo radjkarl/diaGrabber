@@ -87,7 +87,6 @@ Contents:
    examples.rst
    gui.rst
    diaGrabberAPI.rst
-   todo.rst
 
 
 
