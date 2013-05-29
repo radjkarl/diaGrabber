@@ -31,6 +31,7 @@ class libreOfficeCalc(_source.source):
 		self._readout_every_n_line = 1
 		self.data_type = "unknown"
 		self.ignore_empty_cells = True
+		self.silent_readout = False
 
 		#individual
 		self.setArgs(**kwargs)
@@ -45,10 +46,6 @@ class libreOfficeCalc(_source.source):
 		self.finished_building_empty_cell_list = False
 		self._index_counter = -1 #helps to indices the dimensions
 		self.coord_list = []
-		
-		#load ods-document
-		self.doc = ooolib.Calc()
-		self.doc.load(self.dat_file)
 
 
 	def setArgs(self, **kwargs):
@@ -71,6 +68,9 @@ class libreOfficeCalc(_source.source):
 		*readoutEveryNLine*    int       1                read every n line from the file
 		*dataType*             string    "unknown"        for all possible values are defined  see :func:`diaGrabber.source._source.source._evalDataType`
 		*ignoreEmptyCells*     bool      True             Set to False to exit, when cells inthe cellRange of thedimensions are empty
+		*silentReadout*        bool      False            set True if you dont want to see
+		                                                  a statusBar or similar while
+		                                                  readOut
 		====================   ========  ==========       ============================
 		'''
 		for key in kwargs:
@@ -86,12 +86,11 @@ class libreOfficeCalc(_source.source):
 				self.data_type = kwargs[key]
 			elif key == "ignoreEmptyCells":
 				self.ignore_empty_cells = bool(kwargs[key])
+			elif key == "silentReadout":
+				self.silent_readout  = bool(kwargs[key])
 			else:
 				raise KeyError("keyword '%s' not known" %key)
-		self._setDatFile()
 
-	#def setReadoutEveryNLine(self, readout_every_n_line):
-	#	self._setReadoutEveryNLine(readout_every_n_line)
 
 	def _setReadoutEveryNLine(self,readout_every_n_line):
 		'''
@@ -104,6 +103,7 @@ class libreOfficeCalc(_source.source):
 			raise ValueError("Negative Values aren't supported at the moment")
 		else:
 			self._readout_every_n_line = int(readout_every_n_line)
+
 
 	def basisDimension(self, **kwargs):
 		'''
@@ -122,7 +122,7 @@ class libreOfficeCalc(_source.source):
 		except KeyError:
 			raise KeyError("required keyword 'cellRange' is missing for basisDimension")
 		
-		new_dimension  = _dimension.basisDimension(**kwargs)
+		new_dimension  = _dimension.basisDimension(self, **kwargs)
 		self._embeddBasisDim(new_dimension)
 		self._extendCellRangeToDimension(cell_range, new_dimension)
 		self.coord_list.append([0,0])
@@ -145,7 +145,7 @@ class libreOfficeCalc(_source.source):
 		except KeyError:
 			raise KeyError("required keyword 'cellRange' is missing for basisDimension")
 			
-		new_dimension  = _dimension.mergeDimension(**kwargs)
+		new_dimension  = _dimension.mergeDimension(self, **kwargs)
 		self._embeddMergeDim(new_dimension)
 		self._extendCellRangeToDimension(cell_range, new_dimension)
 		self.coord_list.append([0,0])
@@ -206,7 +206,16 @@ class libreOfficeCalc(_source.source):
 
 	def _prepareReadOut(self):
 		self._prepareStandard()
-		self._resetReadOut()
+		#self._resetReadOut()
+		for dim in self._basis_dim:
+			dim.X_step = dim.X_start
+			dim.Y_step = dim.Y_start
+		for dim in self._merge_dim:
+			dim.X_step = dim.X_start
+			dim.Y_step = dim.Y_start
+		#load ods-document
+		self.doc = ooolib.Calc()
+		self.doc.load(self.dat_file)
 		
 		if type(self.sheet_name_or_number) == int:
 			self.doc.set_sheet_index(self.sheet_name_or_number - 1)
@@ -241,14 +250,9 @@ class libreOfficeCalc(_source.source):
 		pass
 
 
-	def _resetReadOut(self):
-		for dim in self._basis_dim:
-			dim.X_step = dim.X_start
-			dim.Y_step = dim.Y_start
-		for dim in self._merge_dim:
-			dim.X_step = dim.X_start
-			dim.Y_step = dim.Y_start
-		self.done_readout = False
+	def _resetReadout(self):
+		self._resetStandard()
+
 
 
 	def _updateCoordinates(self):

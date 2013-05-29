@@ -9,7 +9,7 @@
 ###################
 
 # at first some business as usual: we import everything that we need from diaGrabber
-from FEPdiaGrabber import source, target, plot
+from diaGrabber import source, target, plot
 from diaGrabber.source.methods import merge, calc, exclude, transform
 
 # our file is located in ressources/, each dimension is seperated with a space

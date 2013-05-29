@@ -55,7 +55,7 @@ class matrixMethods(object):
 		for key in kwargs:
 			if key == "mergeName":
 				if kwargs[key] not in self.mergeNames:
-					raise KeyError("ERROR: mergeName %s not known" %m)
+					raise KeyError("ERROR: mergeName %s not known" %kwargs[key])
 				mergeDim =  self.mergeNames.index(kwargs[key])
 			elif key == "value":
 				if type(kwargs[key]) == str:
@@ -163,6 +163,7 @@ class matrixMethods(object):
 		#individual
 		for key in kwargs:
 			if key == "mergeName":
+				mergeNames = []
 				if type(kwargs[key]) != list and type(kwargs[key]) != tuple:
 					kwargs[key] = [ kwargs[key] ]
 				for m in kwargs[key]:

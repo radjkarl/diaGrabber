@@ -1,7 +1,8 @@
 # -*- coding: utf-8 *-*
+#own
 from diaGrabber import  _utils
 from diaGrabber.plot._preferenceDock import preferenceDock
-
+#foreign
 import sys
 import numpy as np
 import bottleneck as bn
@@ -134,6 +135,7 @@ class Gui(object):
 			self.app.exec_()
 
 		self.plot_method_executed = False #reset
+
 
 	def setArgs(self, **kwargs):
 		'''
@@ -268,8 +270,11 @@ class Gui(object):
 			self.interactive = False
 			self.plot()#do the plotting stuff without showing user
 
+##private
+################
+
+
 	def _save(self):
-		############merge noch mit rein############
 		for n,d in enumerate(self.display_list):
 			is_merge_in_view = False
 			for i_merge in self.merge_to_save:
@@ -289,7 +294,7 @@ class Gui(object):
 						exporter.parameters()[p] = self.img_parameters[p]
 					except (Exception):
 						print "KeyError: save-type '%s' doesn't support parameter '%s'  ...continue without it" %(self.img_type, p)
-				
+
 				merge_names = ""
 				for i in d.show_merge:
 					merge_names += "_%s" %self._merge_dim[i].name
@@ -297,9 +302,11 @@ class Gui(object):
 				exporter.export(self.img_name + merge_names +"." + self.img_type)
 		self.save_img = False #reset
 
+
 	def _updateDisplays(self):
 		for d in self.display_list:
 			d.update()
+
 
 	def _quitApp(self,signum=None, frame=None):
 		if self.interactive:
@@ -309,6 +316,7 @@ class Gui(object):
 		self.interactive = False
 		self.app.closeAllWindows()
 		self.app.quit()
+
 
 	def _addToArea(self, display):
 		args = {}
@@ -325,6 +333,7 @@ class Gui(object):
 				args["relativeTo"] = self.display_list[-2].dock
 		self.area.addDock(display, **args)
 
+
 	def _createNewDisplay(self):
 		max_index = 0
 		for i in self.display_list:
@@ -338,6 +347,7 @@ class Gui(object):
 		self._addToArea(new_display.create())
 		new_display.update()
 		return new_display
+
 
 	def _createDisplays(self):
 		self.display_list = []
@@ -355,19 +365,13 @@ class Gui(object):
 
 
 	def _removeDisplay(self, index_name):
-		#####besser umsetzten - so viel zu umständlich - workarround dann schicken
 		index = self.display_names.index(index_name)
 		dock = self.display_list[index].dock
-		area = self.area.addTempArea()
-		area.win.resize(dock.size())
-		area.moveDock(dock, 'top', None)
-		self.area.removeTempArea(area)
+		#remove dock
+		dock.setParent(None)
+		dock.label.setParent(None)
 		self.display_list.pop(index)
 		self.display_names.pop(index)
-		#self.area.floatDock(dock)
-		#self.area.
-		#self.area.addTempArea().win.resize(dock.size())
-		#display_container.apoptose()
 
 
 	def _setFPS(self, fps):
@@ -414,11 +418,14 @@ class Gui(object):
 		pg.setConfigOption('foreground', self.label_color)
 
 
+
 class _forkedDock(pgDock.Dock):
 	'''adding function: setWidget to normal Dock-class'''
 
+
 	def __init__(self, name, area=None, size=(10, 10), widget=None, hideTitle=False, autoOrientation=True):
 		super(_forkedDock, self).__init__(name, area, size, widget, hideTitle, autoOrientation)
+
 
 	def setWidget(self, widget, index=0, row=None, col=0, rowspan=1, colspan=1):
 		"""
@@ -438,6 +445,7 @@ class _forkedDock(pgDock.Dock):
 		self.raiseOverlay()
 
 
+
 class _Display(object):
 	'''
 	This class contains all attributes and methods that belongs to a displays widget.
@@ -445,8 +453,7 @@ class _Display(object):
 
 	def __init__(self, index, show_merge, show_basis, plotC):
 		self.index = index
-		#print show_merge,show_basis,888
-		self.show_merge = show_merge#als klassen - nicht indices
+		self.show_merge = show_merge
 		self.show_basis = show_basis
 		self.plotC = plotC
 		self._basis_dim = self.plotC._basis_dim
@@ -494,6 +501,7 @@ class _Display(object):
 		self.yAxis = pg.AxisItem("left")
 		self.xAxis = pg.AxisItem("bottom")
 
+		self.poi_show_only_merge = False
 
 	def create(self):
 		'''
@@ -513,6 +521,12 @@ class _Display(object):
 			self.view.setAspectLocked(False)
 			#by default images have an inverted y-axis in pyqtgraph
 			self.view.invertY(False)
+
+		#for crosshair and shown points-of-interest
+		self.poiMarker = pg.ScatterPlotItem()
+		self.view.addItem(self.poiMarker)
+		self.poiTextList = []
+
 		self._setTitle()
 		self._setAxisLabels()
 		self.dock.setWidget(self.plot)
@@ -539,6 +553,7 @@ class _Display(object):
 			self.title += "{%s}" %i
 		self.view.setTitle(title=self.title )
 
+
 	def _createCurves1D(self):
 		#create all 1d-curves and ink in range of the colorlist
 		self.plot.clear()
@@ -553,6 +568,7 @@ class _Display(object):
 				pen=self.colorList[n%len(
 					self.colorList)], symbol='+',
 					name=self._merge_dim[i].name))
+
 
 	def _setAxisLabels(self):
 		if len(self.show_basis) == 1:
@@ -636,7 +652,8 @@ class _Display(object):
 				else:
 					if self.enableAutoRangeX:
 						self.plot.enableAutoRange('x', True)
-						#self.plot.setXRange(self._basis_dim[self.show_basis[0]]._include_range[0],
+						#self.plot.setXRange(
+							#self._basis_dim[self.show_basis[0]]._include_range[0],
 							#self._basis_dim[self.show_basis[0]]._include_range[1])
 					if self.enableAutoRangeY:
 						self.plot.enableAutoRange('y', True)
@@ -728,6 +745,7 @@ class _Display(object):
 				for i in self.plot_overlay[m][5]:
 					self.plotOverlay_text.addItem(None, i)
 
+
 	def removePlotOverlay(self):
 		#for i in (self.plotOverlay_points,
 		#		self.plotOverlay_brokenLines,self.plotOverlay_lines):
@@ -750,9 +768,10 @@ class _Display(object):
 		# we simply recreate the plot:
 		self.create()
 
+
 	def _setCrosshair(self):
 		#draw text for crosshair
-		self.crosshair = pg.TextItem(text='', color=(0,0,0), html=None, anchor=(0, 0), border=None, fill='w', angle=0)
+		self.crosshair = pg.TextItem(text='', color=(0,0,0), html=None, anchor=(0, 1), border=None, fill=pg.mkBrush(255, 255, 255, 80), angle=0)
 		#draw lines
 		self.vLine = pg.InfiniteLine(angle=90, movable=False)
 		self.hLine = pg.InfiniteLine(angle=0, movable=False)
@@ -764,41 +783,63 @@ class _Display(object):
 		def mouseMoved(evt):
 			if self.view.sceneBoundingRect().contains(evt.x(),evt.y()):
 				mousePoint = self.view.vb.mapSceneToView(evt)
-				indexX = mousePoint.x()
-				indexY = mousePoint.y()
+				self.indexX = mousePoint.x()
+				self.indexY = mousePoint.y()
 				#set text of crosshair
 				if len(self.show_basis) == 1:
-					self.crosshair.setText("   %s=%0.3f,   %s=%0.3f"
-						%("x",indexX, "y", indexY), color=(0,0,0))
+					if self.poi_show_only_merge:
+						self.poiText = "%0.3g" %self.indexY
+					else:
+						self.poiText = "x=%0.3g\ny=%0.3g\n" %(self.indexX, self.indexY)
 				elif len(self.show_basis) == 2:
 					if self.transpose_axes:
 						posX = _utils.nearestPosition(
-							self.basisMatrix[self.show_basis[0]],indexY)
+							self.basisMatrix[self.show_basis[1]],self.indexX)
 						posY = _utils.nearestPosition(
-							self.basisMatrix[self.show_basis[1]],indexX)
+							self.basisMatrix[self.show_basis[0]],self.indexY)
 					else:
 						posX = _utils.nearestPosition(
-							self.basisMatrix[self.show_basis[0]],indexX)
+							self.basisMatrix[self.show_basis[0]],self.indexX)
 						posY = _utils.nearestPosition(
-							self.basisMatrix[self.show_basis[1]],indexY)
+							self.basisMatrix[self.show_basis[1]],self.indexY)
 							
-					#better use the 'image' from imageView - because this is 2D
-					#even if the orig. data is nD
 					z_value = self.plot.image[posX][posY]
-					self.crosshair.setText("   %s=%0.3f,   %s=%0.3f,   %s=%0.3f"
-						%("x",indexX, "y", indexY, "z", z_value),color=(0,0,0) ) #(mousePoint.x(), data[index], data2[index]))
+					if self.poi_show_only_merge:
+						self.poiText = "%0.3g" %z_value
+					else:
+						self.poiText = "x=%0.3g\ny=%0.3g\nz=%0.3g" %(
+							self.indexX, self.indexY, z_value)
 				else:
-					self.crosshair.setText("nD not implemented jet",color=(0,0,0))
+					self.poiText ="nD not implemented jet"
+
+				self.crosshair.setText(self.poiText,color=(0,0,0) )
 				#move text to corner
-				self.crosshair.setPos(self.view.vb.viewRange()[0][0],
-					self.view.vb.viewRange()[1][1])
+				self.crosshair.setPos(self.indexX,self.indexY)
 				#move crosshair-lines to mousepos.
-				self.vLine.setPos(indexX)
-				self.hLine.setPos(indexY)
+				self.vLine.setPos(self.indexX)
+				self.hLine.setPos(self.indexY)
+		##connent mouse-signals to new methods
 		self.view.vb.scene().sigMouseMoved.connect(mouseMoved)
+		self.view.vb.scene().sigMouseClicked.connect(self._setPOI)
 
 
 	def _unsetCrosshair(self):
 		self.view.removeItem(self.crosshair)
 		self.view.removeItem(self.vLine)
 		self.view.removeItem(self.hLine)
+		self.view.vb.scene().sigMouseClicked.disconnect(self._setPOI)
+
+
+	def _setPOI(self, evt):
+		self.poiMarker.addPoints(x=[self.indexX],y=[self.indexY],symbol="+",size=10)
+		textPOI = pg.TextItem(text=self.poiText, color=(0,0,0), html=None,
+			anchor=(0,1),border=None, fill=pg.mkBrush(255, 255, 255, 80), angle=0)
+		textPOI.setPos(self.indexX,self.indexY)
+		self.poiTextList.append(textPOI)
+		self.view.addItem(textPOI)
+
+
+	def _cleanPOI(self):
+		for t in self.poiTextList:
+			self.view.removeItem(t)
+		self.poiMarker.clear()

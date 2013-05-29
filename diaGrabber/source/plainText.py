@@ -31,15 +31,14 @@ class plainText(_source.source):
 		self._readout_every_n_line = 1
 		self.folder = ""
 		self.buffer = int(10e6)
+		self.silent_readout = False
+
 
 		#individual
 		self.setArgs(**kwargs)
 		_utils.checkRequiredArgs({"file":self.file_name,
 				"dimSeperator":self.dim_seperator})
-		
-		##consequences
-		if not path.isfile(self.dat_file):
-			sys.exit("ERROR: does your output_file exist?")
+
 		#init baseClass
 		super(plainText,self).__init__(self.data_type)
 		#count lines
@@ -71,6 +70,9 @@ class plainText(_source.source):
 		*folder*               string    ""                 the name of the folder of the file
 		*buffer*               int       10e6               max. size(byte) loaded into RAM
 		                                                    insert '0' to read the whole file
+		*silentReadout*        bool      False              set True if you dont want to see
+		                                                    a statusBar or similar while
+		                                                    readOut
 		===================    ========  ================   ============================
 		'''
 		#individual
@@ -95,9 +97,11 @@ class plainText(_source.source):
 				self.buffer = int(kwargs[key])
 				if self.buffer <= 0:
 					raise ValueError("buffer has to be >=1")
+			elif key == "silentReadout":
+				self.silent_readout  = bool(kwargs[key])
 			else:
 				raise ValueError("keyword '%s' not known" %key)
-		self._setDatFile()
+
 
 	def basisDimension(self, **kwargs):
 		'''
@@ -105,9 +109,10 @@ class plainText(_source.source):
 		:class:`diaGrabber.source._dimension.basisDimension`
 		to the source
 		'''	
-		new_dimension  = _dimension.basisDimension(**kwargs)
+		new_dimension  = _dimension.basisDimension(self, **kwargs)
 		self._embeddBasisDim(new_dimension)
 		return new_dimension
+
 
 	def mergeDimension(self, **kwargs):
 		'''
@@ -115,17 +120,19 @@ class plainText(_source.source):
 		:class:`diaGrabber.source._dimension.mergeDimension`
 		to the source
 		'''	
-		new_dimension  = _dimension.mergeDimension(**kwargs)
+		new_dimension  = _dimension.mergeDimension(self, **kwargs)
 		self._embeddMergeDim(new_dimension)
 		return new_dimension
 
 #######PRIVATE############
+
 	def _setReadoutEveryNLine(self,readout_every_n_line):
 		if readout_every_n_line < 1:
 			raise ValueError("plainText with attribute 'buffer' doesn't support negative readoutNLine-Values")
 		else:
 			self._readout_every_n_line = readout_every_n_line
 		self._initPrintStatus()
+
 
 	def _countFileLines(self):
 		print "...counting lines in file %s" %self.file_name
@@ -138,60 +145,70 @@ class plainText(_source.source):
 		thefile.close()
 		print "--> %s lines" %self.len_dat_file
 
+
 	def _prepareReadOut(self):
-		if not self.len_dat_file:
-			self._countFileLines()
+		self.n_line = 0
 		self._initPrintStatus()
 		self._prepareStandard()
+		if not path.isfile(self.dat_file):
+			sys.exit("ERROR: does your output_file exist?")
+		#counting files is only necassary when showing a statusbar
+		if not self.len_dat_file and not self.silent_readout:
+			self._countFileLines()
 		self.file = open(self.dat_file, 'r')
 		self._getNextPiece()
 		if len(self.file_piece) < self._readout_every_n_line:
 			sys.exit("ERROR: buffer to small [len(file_piece):%s < readoutEveryNLine:%s]" %(
 				len(self.file_piece), self._readout_every_n_line) )
-		self.len_dat_file_minus_n = self.len_dat_file - (self._readout_every_n_line-1)
+		if not self.silent_readout:
+			self.len_dat_file_minus_n = self.len_dat_file - (self._readout_every_n_line-1)
+
 
 	def _initPrintStatus(self):
-		self.n = 0
-		self.sum_bar = 100
-		self.showBar_counter = self.len_dat_file / (abs(self._readout_every_n_line) * self.sum_bar)
-		if self.showBar_counter == 0:
-			self.showBar_counter = 1
+		if not self.silent_readout:
+			self.n = 0
+			self.sum_bar = 100
+			self.showBar_counter = self.len_dat_file / (abs(self._readout_every_n_line) * self.sum_bar)
+			if self.showBar_counter == 0:
+				self.showBar_counter = 1
+
 
 	def _getNextPiece(self):
 		'''read the next peace from the dat_file'''
 		self.file_piece = self.file.readlines(self.buffer)
 		self.len_file_piece = len(self.file_piece)
+		if self.len_file_piece == 0:
+			self.done_readout = True
+			if not self.silent_readout:
+				self.n = self.showBar_counter #to print last status
+				self.n_line = self.len_dat_file #to print 100%
 		self.get_next_piece = False
 		self.n_line_in_peace = 0
+
 
 	def _getValueLine(self):
 		if self.get_next_piece:
 			self._getNextPiece()
-		if self.n_line < self.len_dat_file_minus_n:
-			if self.n_line_in_peace < self.len_file_piece:
-				self.value_line = self.file_piece[self.n_line_in_peace][:-1].split(
-					self.dim_seperator)
-				#self.value_line = line.split(self.dim_seperator)
-				self.n_line += self._readout_every_n_line
-				self.n_line_in_peace += self._readout_every_n_line
-			else:
-				self.get_next_piece = True
-				self.n_line += (self.n_line_in_peace  - self.len_file_piece)
+		if self.n_line_in_peace < self.len_file_piece:
+			self.value_line = self.file_piece[self.n_line_in_peace][:-1].split(
+				self.dim_seperator)
+			self.n_line += self._readout_every_n_line
+			self.n_line_in_peace += self._readout_every_n_line
 		else:
-			self.done_readout = True
-			self.n = self.showBar_counter #to print last status
-			self.n_line = self.len_dat_file #to print 100%
+			self.get_next_piece = True
+			self.n_line += (self.n_line_in_peace  - self.len_file_piece)
+			if not self.done_readout:
+				self._getValueLine()
+
 
 	def _printStatus(self):
-		if self.n == self.showBar_counter:
-			_utils.statusBar(self.n_line+1,self.len_dat_file)
-			self.n = 0
-		self.n+= 1
+		if not self.silent_readout:
+			if self.n == self.showBar_counter:
+				_utils.statusBar(self.n_line+1,self.len_dat_file)
+				self.n = 0
+			self.n+= 1
 
-	def _resetReadOut(self):
-		self.n_line = 0
+
+	def _resetReadout(self):
+		self._resetStandard()
 		self._initPrintStatus()
-		self.done_readout = False
-
-	def _endReadOut(self):
-		pass

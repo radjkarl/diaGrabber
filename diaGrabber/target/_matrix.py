@@ -44,7 +44,6 @@ class matrixBase(matrixMethods):
 	'''
 
 	def __init__(self, sourceClassList):
-
 		###SOURCECLASS-HANDLING
 		self.sourceClassList = sourceClassList
 			#if only one list is given or lists are given in tuple: formal as list
@@ -66,7 +65,6 @@ class matrixBase(matrixMethods):
 		self.basisNames = []
 		for i in self._basis_dim:
 			self.basisNames.append(i.name)
-
 		self._setPlotOverlay()
 
 
@@ -82,7 +80,9 @@ class matrixBase(matrixMethods):
 			print sourceClass.file_name
 			sourceClass._prepareReadOut()
 		self._fill(False, False)
+		self._resetReadout()
 		print "done"
+
 
 	def fillInteractive(self, plotInstance, **kwargs):
 		'''
@@ -105,6 +105,9 @@ class matrixBase(matrixMethods):
 			print "   " + sourceClass.file_name
 			sourceClass._prepareReadOut()
 		plotInstance.plot(**kwargs)
+		print "done"
+		self._resetReadout()
+
 
 
 	def save(self, **kwargs):
@@ -215,7 +218,9 @@ class matrixBase(matrixMethods):
 				self._basis_dim[i]._includeRange(
 					[min(self.basisMatrix[i]),max(self.basisMatrix[i])])
 
+
 #####PRIVATE######
+
 	def _fitBasisDims(self):
 		self._basis_dim = self.sourceClassList[0]._basis_dim
 		self.nBasis = len(self._basis_dim)
@@ -281,6 +286,7 @@ class matrixBase(matrixMethods):
 				for sourceClass in self.sourceClassList:
 					sourceClass._basis_dim[n]._includeRange([min_range,max_range])
 
+
 	def _combineMergeDims(self):
 		# assign indicex of mergeDimensions to those of the mergeMatrices
 		self.merge_to_matrix = []
@@ -311,10 +317,7 @@ class matrixBase(matrixMethods):
 
 					self.merge_to_matrix[-1].append(i )
 		self.nMerge = len(self._merge_dim)
-		#self.recent_merge_set = []
-		#for i in range(self.nMerge):#init now - override in readout
-				#means:[do_replace, new_value, intensity]
-		#	self.recent_merge_set.append([True,0.0,0.0])
+
 
 	def _setPlotOverlay(self):
 		self.plot_overlay = []
@@ -328,9 +331,9 @@ class matrixBase(matrixMethods):
 				#(text) = list[ tuple(x,y), string(text)
 				#(legend) = list[str(...),... ]
 
+
 	def _prepareFill(self):
 		self._setPlotOverlay()
-
 		#build basisMatrix, mergeMatrices, densityMatrices
 		self._buildMatrices()
 
@@ -350,11 +353,14 @@ class matrixBase(matrixMethods):
 				#restore the original value
 				sourceClass._setReadoutEveryNLine(original_readout_value[n])
 
+
 	def _getReadoutEveryNLine(self):
-		'''because every source-file has a identically value for it we can take the first one'''
+		'''
+		because every source-file has a identically
+		value for it we can take the first one
+		'''
 		return self.sourceClassList[0]._readout_every_n_line
 
-		
 
 	def _buildMatrices(self):
 		'''
@@ -399,43 +405,41 @@ class matrixBase(matrixMethods):
 				done_readout = True
 
 				for s_i, sourceClass in enumerate(self.sourceClassList):
+					#print sourceClass.done_readout, sourceClass._last_file
 					if not sourceClass.done_readout:
 						sourceClass._getValueLine()
 						in_range = sourceClass._getBasisMergeValues()
 						if in_range:
 							self._assign(sourceClass, self.merge_to_matrix[s_i])
-
-				#for sourceClass in self.sourceClassList:
+						done_readout = False
+					elif not sourceClass._last_file:
+						sourceClass._prepareReadOut()
 						done_readout = False
 					sourceClass._printStatus()
-
 				if done_readout:
 					break
 				if readout_one_line:
 					return False #i'm not done with readout
-
 			#except StopIteration:
 			#	break
 			except KeyboardInterrupt:
-				#for sourceClass in self.sourceClassList:
-				#	sourceClass._endReadOut()
+				for sourceClass in self.sourceClassList:
+					sourceClass._endReadOut()
 				break
 		print ""
-
-		self._resetReadout()
-
 		return True # i'm done with readout
+
 
 	def _resetReadout(self):
 		for sourceClass in self.sourceClassList:
-			sourceClass._resetReadOut()
+			sourceClass._resetReadout()
+
 
 	def _assign(self, sourceClass, merge_to_matrix):
 		'''
 		Assign all self.merge_values to the self.mergeMatrix
 		Get the position/intensity of a value
 		'''
-
 		self._getPositionsIntensities(sourceClass)
 
 		for position, intensity in self.positionsIntensities:
@@ -448,15 +452,6 @@ class matrixBase(matrixMethods):
 						merge._recent_value,#sourceClass.merge_values[n],
 						self.mergeMatrix[merge_to_matrix[n]][tPostion],
 						self.densityMatrix[merge_to_matrix[n]][tPostion],intensity)
-				#else:
-				#	do_replace = False
-				#replace an old value in the matrix with the recent one?
-				#self.recent_merge_set[n][0] = do_replace
-				
-				#if do_replace:
-				#	self.recent_merge_set[n][1] = replace_value
-				#	self.recent_merge_set[n][2] = intensity
-
 			#for every alias-connection in every merge_dim
 			for n,merge in enumerate(sourceClass._merge_dim):
 				for aliasMerge in merge._alias._list:
@@ -464,19 +459,15 @@ class matrixBase(matrixMethods):
 					# if all mergeDims in the _alias-list are 'do_replace=True'
 					if not aliasMerge._in_range:
 						merge._in_range = False
-					#sourceClass._merge_dim
-					#if not self.recent_merge_set[i][0]:
-					#	self.recent_merge_set[n][0] = False
-	
 			# finally: write new values in an extra cycle is necassary for
 			# the alias-comparisons
-			for n,merge in enumerate(sourceClass._merge_dim):#enumerate(self.recent_merge_set):
+			for n,merge in enumerate(sourceClass._merge_dim):
 				if merge._in_range:
-				#if self.recent_merge_set[n][0]:#do_replace:
 					#replace_value
-					self.mergeMatrix[merge_to_matrix[n]][tPostion] = merge.replace_value#self.recent_merge_set[n][1]
+					self.mergeMatrix[merge_to_matrix[n]][tPostion] = merge.replace_value
 					#intensity
-					self.densityMatrix[merge_to_matrix[n]][tPostion] += intensity#self.recent_merge_set[n][2]
+					self.densityMatrix[merge_to_matrix[n]][tPostion] += intensity
+
 
 	def _checkMinMax(self):
 		'''
@@ -491,10 +482,8 @@ class matrixBase(matrixMethods):
 					dims.append(sourceClass._basis_dim[i])#.index)
 					dim_names.append(sourceClass._basis_dim[i].name)
 			if len(dims) > 0:
-				print "-> in source %s" %sourceClass.dat_file
+				print "-> in source %s" %sourceClass.file_name
 				print "...getting range for dims %s" %dim_names
-				sourceClass._prepareReadOut()
 				min_max = sourceClass._getMinMax(dims)
 				for n in range(len(dims)):
 					dims[n]._includeRange(min_max[n])
-

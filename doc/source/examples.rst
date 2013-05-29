@@ -21,6 +21,12 @@ compare different sources
 =============================
 .. literalinclude:: ../../examples/3d_ods_comparison.py
 
+
+reading source-files from multiple folders
+============================================
+.. literalinclude:: ../../examples/3d_plainText_usingFolders.py
+
+
 reading from large files
 =============================
 .. literalinclude:: ../../examples/3d_plainText.py

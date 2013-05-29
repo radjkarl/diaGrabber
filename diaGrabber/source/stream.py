@@ -43,6 +43,8 @@ class stream(_source.source):
 		self._infoEveryNLines = 1000
 		self.start_via = ""
 		self._print_readoutEverNLine = False
+		self.silent_readout = False
+
 
 		#individual
 		self.setArgs(**kwargs)
@@ -55,6 +57,7 @@ class stream(_source.source):
 		super(stream,self).__init__(self.data_type)
 
 		#helpers
+		self.engine = None
 		self._calc_readoutEverNLine = False
 		self._old_stream_len = 0
 
@@ -78,28 +81,44 @@ class stream(_source.source):
 
 		**Optional kwargs** ("keyword arguments") are:
 
-		====================   ===========  ==========       =======
+		====================   ===========  ==========       ================================
 		Keyword	               Type         Default          Description
-		====================   ===========  ==========       =======
+		====================   ===========  ==========       ================================
 		*folder*               string       ""               Name of the parent folder of
 		                                                     the stream
 		*readoutEveryNLine*    string/int   1                if you don't need every line of
 		                                                     your file you can spare time by
 		                                                     readout only every n line of it.
 		                                                     Most likely the stream generates
-		                                                     faster new output than diaGrabber can process, In this case this value has to be greater than 1, Type **'calc'** to let diaGrabber decide this value corresponding to the development of the amount of unprocessed output.
+		                                                     faster new output than
+		                                                     diaGrabber can process, In this
+		                                                     case this value has to be
+		                                                     greater than 1, Type **'calc'**
+		                                                     to let diaGrabber decide this
+		                                                     value corresponding to the
+		                                                     development of the amount of
+		                                                     unprocessed output.
 		
-		*showCalcNLine*        bool         False            if *readoutEveryNLine* == 'calc' Setting this value to True print out every new calculated value of *readoutEveryNLine*
+		*showCalcNLine*        bool         False            if *readoutEveryNLine* == 'calc'
+		                                                     Setting this value to True print
+		                                                     out every new calculated value
+		                                                     of *readoutEveryNLine*
 		
 		*infoEveryNLine*       int          1000             Prints every n reaout-lines
 		                                                     a status.
-		*dataType*             string       "unknown"        for all possible values are defined  see :py:func:`diaGrabber.source._source.source._evalDataType`
-		*keyToEndProcess*      string       ""               This entry will finish the stream-output
+		*dataType*             string       "unknown"        for all possible values are
+		                                                     defined see :py:func:`diaGrabber.source._source.source._evalDataType`
+
+		*keyToEndProcess*      string       ""               This entry will finish the
+		                                                     stream-output
 		*runInShell*           bool         False            Decide whether a process has to
 		                                                     be called out of a shell.
 		                                                     Set this value to True if the
 		                                                     stream doesn't start.
-		====================   ===========  ==========       =======
+		*silentReadout*        bool         False            set True if you dont want to see
+		                                                     a statusBar or similar while
+		                                                     readOut
+		====================   ===========  ==========       ================================
 		'''
 		
 #		*startEntry*           string       ""               Use this key if the stream
@@ -128,11 +147,12 @@ class stream(_source.source):
 				self.key_to_end_process = str(kwargs[key])
 			elif key == "runInShell":
 				self.run_in_shell = bool(kwargs[key])
+			elif key == "silentReadout":
+				self.silent_readout  = bool(kwargs[key])
 			#elif key == "startEntry":
 			#	self.start_via = str(kwargs[key])
 			else:
 				raise KeyError("keyword '%s' not known" %key)
-		self._setDatFile()
 
 	def basisDimension(self, **kwargs):
 		'''
@@ -140,7 +160,7 @@ class stream(_source.source):
 		:class:`diaGrabber.source._dimension.basisDimension`
 		to the source
 		'''	
-		new_dimension  = _dimension.basisDimension(**kwargs)
+		new_dimension  = _dimension.basisDimension(self, **kwargs)
 		self._embeddBasisDim(new_dimension)
 		return new_dimension
 
@@ -150,7 +170,7 @@ class stream(_source.source):
 		:class:`diaGrabber.source._dimension.mergeDimension`
 		to the source
 		'''	
-		new_dimension  = _dimension.mergeDimension(**kwargs)
+		new_dimension  = _dimension.mergeDimension(self, **kwargs)
 		self._embeddMergeDim(new_dimension)
 		return new_dimension
 
@@ -294,17 +314,18 @@ class stream(_source.source):
 			self._readout_every_n_line = 1
 
 
-
 	def _printStatus(self):
-		if self.step_n_lines == self._infoEveryNLines:
-			print "readout %s lines" %self.read_n_lines
-			self.step_n_lines = 0
-			if self._print_readoutEverNLine:
-				print "readout every %s line" %self._readout_every_n_line
+		if not self.silent_readout:
+			if self.step_n_lines == self._infoEveryNLines:
+				print "readout %s lines" %self.read_n_lines
+				self.step_n_lines = 0
+				if self._print_readoutEverNLine:
+					print "readout every %s line" %self._readout_every_n_line
 
-	def _resetReadOut(self):
+
+	def _resetReadout(self):
+		self._resetStandard()
 		# if process still running
-		if self.engine.poll():
+		if self.engine and self.engine.poll():
 			self._endReadout()
-		self.done_readout = False
 

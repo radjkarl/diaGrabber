@@ -4,10 +4,11 @@ The classes in this module were not controlled or called by the user itself.
 Only :class:`diaGrabber.plot.Gui.Gui` controll calls it.
 Nethertheless most methods are described and viewable in the API.
 '''
+#own
 from diaGrabber import _utils
 import sys
 from copy import deepcopy
-
+#foreign
 import pyqtgraph.parametertree.parameterTypes as pTypes
 from pyqtgraph.parametertree import Parameter, ParameterTree, ParameterItem, registerParameterType
 import pyqtgraph.dockarea as pgDock
@@ -18,6 +19,7 @@ from pyqtgraph import LineSegmentROI, AxisItem, PlotDataItem
 
 class preferenceDock(object):
 	'''main-class for the whole preference-dock-system'''
+
 	def __init__(self, Gui):
 		self.Gui = Gui
 		self.exist = False
@@ -48,6 +50,7 @@ class preferenceDock(object):
 		#autosave
 		self.main.saveWidgetLayout()
 
+
 	def createNewDisplay(self):
 		'''
 		* ask Gui to create a new display
@@ -60,10 +63,12 @@ class preferenceDock(object):
 		#autosave
 		self.main.saveWidgetLayout()
 
+
 	def addPrefTab(self,display):
 		'''add a tab owned by its display'''
 		display.prefTab = preferenceTab(display, self)
 		self.tab.addTab(display.prefTab, str(display.index))
+
 
 	def removeTab(self, tab):
 		'''remove a pref.Tab from the preferenceDock, save widget-layout'''
@@ -71,10 +76,12 @@ class preferenceDock(object):
 		#autosave
 		self.main.saveWidgetLayout()
 
+
 	def addToArea(self):
 		'''append parameterTree-instance to dockarea'''
 		self.Gui.area.addDock(self.pref_dock, 'left')
 		self.pref_dock.setStretch(x=self.size)
+
 
 
 class mainTab(ParameterTree):
@@ -82,10 +89,8 @@ class mainTab(ParameterTree):
 	def __init__(self, prefDock):
 		self.Gui = prefDock.Gui
 		super(mainTab, self).__init__()
-
 		## Create tree of Parameter objects
 		self.p= Parameter.create(name='params', type='group')
-
 		#add parameters
 		self.pAddWidget = self.p.addChild(
 			{'name': 'Add widget', 'type': 'action'})
@@ -113,6 +118,7 @@ class mainTab(ParameterTree):
 
 		self.setParameters(self.p, showTop=False)
 
+
 	def saveWidgetLayout(self):
 		'''
 		save the state of the widgetlayout to 'self.stateWidgetLayout'
@@ -127,6 +133,7 @@ class mainTab(ParameterTree):
 			saveWidgetFile.write(str(self.stateWidgetLayout))
 			saveWidgetFile.close()
 
+
 	def restoreWidgetLayout(self):
 		'''
 		Restore widget-layout from 'self.stateWidgetLayout' or
@@ -138,10 +145,12 @@ class mainTab(ParameterTree):
 		self.Gui.area.restoreState(self.stateWidgetLayout)
 
 
+
 class preferenceTab(ParameterTree):
 	'''
 	the preference tab that belongs to each Display
 	'''
+
 	def __init__(self,display, prefDock):
 		self.Gui = prefDock.Gui
 		self.prefDock = prefDock
@@ -176,6 +185,7 @@ class preferenceTab(ParameterTree):
 		self.statePreferences = self.p.saveState()
 		self.showTabOnClick()
 
+
 	def printChange(self, param, changes):
 		'''If anything changes in the tree, print a message'''
 		print("tree changes:")
@@ -190,10 +200,12 @@ class preferenceTab(ParameterTree):
 			print('  data:	  %s'% str(data))
 			print('  ----------')
 
+
 	def remove(self):
 		'''remove a display and it's appendant preferenceTab'''
 		self.Gui._removeDisplay(self.display.index)
 		self.prefDock.removeTab(self)
+
 
 	def showTabOnClick(self):
 		'''
@@ -208,6 +220,7 @@ class preferenceTab(ParameterTree):
 			self.prefDock.tab.setCurrentWidget(self)
 			ViewBox.mouseClickEvent(self.display.view.vb, ev)
 		self.display.view.mouseClickEvent = newMouseClickEvent
+
 
 
 class saveRestorePrefs(pTypes.GroupParameter):
@@ -228,9 +241,11 @@ class saveRestorePrefs(pTypes.GroupParameter):
 		self.param('Save').sigActivated.connect(self.savePreferences)
 		self.param('Restore').sigActivated.connect(self.restorePreferences)
 
+
 	def savePreferences(self):
 		self.prefTab.statePreferences = self.prefTab.p.saveState()
-		
+
+
 	def restorePreferences(self, sgn,state = None,add_missing_remove_extra=None):
 		if state == None:
 			state = self.prefTab.statePreferences
@@ -242,7 +257,9 @@ class saveRestorePrefs(pTypes.GroupParameter):
 		self.prefTab.p.restoreState(state, addChildren=add, removeChildren=rem)
 
 
+
 class plotBasisDims(pTypes.GroupParameter):
+
 	def __init__(self,prefTab, display, **opts):#
 		self.display = display
 		self.prefTab = prefTab
@@ -261,6 +278,7 @@ class plotBasisDims(pTypes.GroupParameter):
 				self.addConcentrateOpt(n,b)
 			self.param(b.name).sigValueChanged.connect(self.changePlotStatus)
 
+
 	def addPlotRange(self,n,b):
 		self.display._changeTitleOpt(b)
 		#add parameters
@@ -277,10 +295,12 @@ class plotBasisDims(pTypes.GroupParameter):
 		self.param(b.name,'Plot-Range','step').sigValueChanged.connect(
 			self.changePlotRangeStep)
 
+
 	def addConcentrateOpt(self,n,b):
 		self.concBasisDict[b.name] = self.basis_opt[n].addChild(
 			ConcentrateOpt(n,self.display,b, self.concBasisDict,
 			name='Concentrate-Basis') )
+
 
 	def changePlotRangeFrom(self):
 		for n,b in enumerate(self.display._basis_dim):
@@ -293,6 +313,7 @@ class plotBasisDims(pTypes.GroupParameter):
 				pass
 		self.display.update()
 
+
 	def changePlotRangeTo(self):
 		for n,b in enumerate(self.display._basis_dim):
 			try:
@@ -304,6 +325,7 @@ class plotBasisDims(pTypes.GroupParameter):
 				pass
 		self.display.update()
 
+
 	def changePlotRangeStep(self):
 		for n,b in enumerate(self.display._basis_dim):
 			try:
@@ -314,6 +336,7 @@ class plotBasisDims(pTypes.GroupParameter):
 			except Exception:#basis-dim isnt active
 				pass
 		self.display.update()
+
 
 	def changePlotStatus(self):
 		for n,b in enumerate(self.display._basis_dim):
@@ -334,6 +357,8 @@ class plotBasisDims(pTypes.GroupParameter):
 						self.display.show_basis.append(n)
 						self.display.show_basis.sort()#show_basis has to be sorted
 						self.display.basis_dim_plot_range[n] = slice(None,None,None)
+						#set all paratemers of the view-option to default
+						self.prefTab.pViewOptions.setToDefault()
 						self.display.create()
 						self.prefTab.showTabOnClick()
 					self.display.concentrate_basis_dim[n] = "mean"
@@ -352,13 +377,16 @@ class plotBasisDims(pTypes.GroupParameter):
 						#self.display.nBasis -= 1
 						if len(self.display.show_basis) == 0: #no basis to show
 							self.param(b.name).setValue(True)
-							break#do not create concentrato opts if reset to active basis
+							break #do not create concentrato opts if reset to active basis
+						#set all paratemers of the view-option to default
+						self.prefTab.pViewOptions.setToDefault()
 						self.display.create()
 						self.prefTab.showTabOnClick()
 					self.display.concentrate_basis_dim[n] = "mean"
 					self.addConcentrateOpt(n,b)
 		self.display.scale_plot = True
 		self.display.update()
+
 
 
 class ConcentrateOpt(pTypes.GroupParameter):
@@ -394,6 +422,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		#init default
 		#self.changeMean()
 
+
 	def setPAsTime(self):
 		'''
 		the parameter 'as time' is only visible if 2 basisDimensions are active
@@ -407,6 +436,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 				self.pAsTime = self.addChild(
 					{'name': 'as time', 'type': 'bool', 'value': False})
 				self.pAsTime.sigValueChanged.connect(self.changeAsTime)
+
 
 	def changeAsTime(self):
 		if self.pAsTime.value() == True:
@@ -425,6 +455,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 			self.display.basis_dim_plot_range[self.n] = slice(None,None,None)
 			self.display.concentrate_basis_dim[self.n] = "time"
 			self.display._changeTitleOpt(self.basis, "time")
+			self.display.show_basis.append(self.n)
 		else:
 			self.display._changeTitleOpt(self.basis)
 			if self.pMean.value() == False:
@@ -432,6 +463,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		#update plot
 		self.scale_plot=True
 		self.display.update()
+
 
 	def changeSum(self):
 		if self.pSum.value() == True:
@@ -454,6 +486,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		self.scale_plot=True
 		self.display.update()
 
+
 	def changeMean(self):
 		if self.pMean.value() == True:
 			#set other options to false/default
@@ -474,6 +507,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		#update plot
 		self.scale_plot=True
 		self.display.update()
+
 
 	def changeMin(self):
 		if self.pMin.value() == True:
@@ -496,6 +530,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		self.scale_plot=True
 		self.display.update()
 
+
 	def changeMax(self):
 		if self.pMax.value() == True:
 			#set other options to false/default
@@ -516,6 +551,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		#update plot
 		self.scale_plot=True
 		self.display.update()
+
 
 	def changePlotRangeToPosition(self):
 		if not self.pAtPosition.valueIsDefault():
@@ -542,6 +578,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		#update plot
 		self.display.scale_plot = True
 		self.display.update()
+
 
 
 class sliceImage(pTypes.GroupParameter):
@@ -581,6 +618,7 @@ class sliceImage(pTypes.GroupParameter):
 		self.which_display.sigValueChanged.connect(self.changeWhichDisplay)
 		self.which_basis.sigValueChanged.connect(self.changeWhichBasis)
 
+
 	def getAvDisplays(self):
 		'''get the name of all other displays than the own one'''
 		av_displays= ["-"]
@@ -589,6 +627,7 @@ class sliceImage(pTypes.GroupParameter):
 			if str(self.display.index) != self.prefTab.prefDock.tab.tabText(i):
 				av_displays.append(self.prefTab.prefDock.tab.tabText(i) )
 		return av_displays
+
 
 	def changeActivate(self):
 		if self.activate.value():
@@ -625,6 +664,7 @@ class sliceImage(pTypes.GroupParameter):
 				self.recentSliceBasis.parent().show()
 			except Exception: #no last parameter exist
 				pass
+
 
 	def changeWhichDisplay(self):
 		#if a display was chosen
@@ -672,6 +712,7 @@ class sliceImage(pTypes.GroupParameter):
 				self.which_basis.setLimits(show_basis)
 				self.which_basis.show()
 
+
 	def getShowBasis(self):
 		'''get the name of all inactive/concentrated basisDimensions'''
 		show_basis = ["-"]
@@ -681,6 +722,7 @@ class sliceImage(pTypes.GroupParameter):
 				show_basis.append(b.name)
 				self.basis_name_index[b.name]= i
 		return show_basis
+
 
 	def changeWhichBasis(self):
 		#if basis-dim was chosen
@@ -762,6 +804,7 @@ class sliceImage(pTypes.GroupParameter):
 			updateROIline()
 
 
+
 class plotMergeDims(pTypes.GroupParameter):
 	def __init__(self, prefTab, display, **opts):
 		self.display = display
@@ -783,6 +826,7 @@ class plotMergeDims(pTypes.GroupParameter):
 			self.asDensity[-1].sigValueChanged.connect(self.changeAsDensity)
 
 		self.changePlotMerge()
+
 
 	def changePlotMerge(self):
 		for n,m in  enumerate(self.mergeToPlot):
@@ -816,6 +860,7 @@ class plotMergeDims(pTypes.GroupParameter):
 			self.display._setTitle()
 		self.display.update()
 
+
 	def changeAsDensity(self):
 		for n,m in  enumerate(self.display._merge_dim):
 			try:
@@ -832,11 +877,13 @@ class plotMergeDims(pTypes.GroupParameter):
 		self.display.update()
 
 
+
 class addContentOf(pTypes.GroupParameter):
 	'''whith the class plotMergeDims it's possible to plot merges together
 	over the same basis. in case a display needs other merges with a different
 	base it can be added trough this class.
 	'''
+
 	def __init__(self, prefTab, display, **opts):
 		self.display = display
 		self.prefTab = prefTab
@@ -856,6 +903,7 @@ class addContentOf(pTypes.GroupParameter):
 		self.p2dPlotList.sigValueChanged.connect(self.change2dPlotList)
 		self.Content2d = []
 
+
 	def get2dPlotDisplays(self):
 		'''get a name of all displays having only one basis
 		exclude displays with imageplots to prevent a staple of images
@@ -870,6 +918,7 @@ class addContentOf(pTypes.GroupParameter):
 			av_displays.append("no 2D-Plots found")
 		return av_displays
 
+
 	def change2dPlots(self):
 		if self.p2dPlots.value():
 			av_displays = self.get2dPlotDisplays()
@@ -880,6 +929,7 @@ class addContentOf(pTypes.GroupParameter):
 			self.p2dPlotList.hide()
 			for c in self.Content2d:
 				self.display.view.removeItem(c)
+
 
 	def change2dPlotList(self):
 		if self.p2dPlotList.value() != self.p2dPlotList.defaultValue():
@@ -898,8 +948,10 @@ class addContentOf(pTypes.GroupParameter):
 				self.display.view.removeItem(c)
 
 
+
 class viewOptions(pTypes.GroupParameter):
 	'''this class includes all otions manipulating the view of the display'''
+
 	def __init__(self, prefTab, display, **opts):
 		self.display = display
 		self.prefTab = prefTab
@@ -911,6 +963,11 @@ class viewOptions(pTypes.GroupParameter):
 			{'name': "lockAspect", 'type': 'bool', 'value':False})
 		self.crosshair = self.addChild(
 			{'name': "Crosshair", 'type': 'bool', 'value':False})
+		self.poiShowOnlyMerge = self.crosshair.addChild(
+			{'name': "show only merge", 'type': 'bool',
+				'value':self.display.poi_show_only_merge, 'visible':False})
+		self.poiClean = self.crosshair.addChild(
+			{'name': "clean clicked points", 'type': 'bool', 'value':self.display.poi_show_only_merge, 'visible':False})
 		self.plotOverlay = self.addChild(
 			{'name': "PlotOverlay", 'type': 'bool', 'value':False})
 		self.transposeAxes = self.addChild(
@@ -926,18 +983,43 @@ class viewOptions(pTypes.GroupParameter):
 		self.autoRangeX.sigValueChanged.connect(self.changeAutoRangeX)
 		self.autoRangeY.sigValueChanged.connect(self.changeAutoRangeY)
 		self.crosshair.sigValueChanged.connect(self.changeCrosshair)
+		self.poiShowOnlyMerge.sigValueChanged.connect(self.changePoiShowOnlyMerge)
+		self.poiClean.sigValueChanged.connect(self.changePoiClean)
+
+
+	def setToDefault(self):
+		for i in self.childs:
+			i.setToDefault()
+		#for i in self.crosshair:
+		#	i.setToDefault()
+
 
 	def changeCrosshair(self):
 		if self.crosshair.value():
+			self.poiShowOnlyMerge.show()
+			self.poiClean.show()
 			self.display._setCrosshair()
 		else:
+			self.poiShowOnlyMerge.hide()
+			self.poiClean.hide()
 			self.display._unsetCrosshair()
+
+
+	def changePoiShowOnlyMerge(self):
+		self.display.poi_show_only_merge = self.poiShowOnlyMerge.value()
+
+
+	def changePoiClean(self):
+		self.display._cleanPOI()
+		self.poiClean.setValue(False, blockSignal=self.changePoiClean)
+
 
 	def changeTransposeAxes(self):
 		self.display.transpose_axes = self.transposeAxes.value()
 		self.display.scale_plot = True
 		self.display._setAxisLabels()
 		self.display.update()
+
 
 	def changePlotOverlay(self):
 		if self.plotOverlay.value():
@@ -946,6 +1028,7 @@ class viewOptions(pTypes.GroupParameter):
 			self.display.removePlotOverlay()
 		self.display.update()
 
+
 	def changeAutoRangeX(self):
 		if self.autoRangeX.value():
 			self.display.enableAutoRangeX = True
@@ -953,12 +1036,14 @@ class viewOptions(pTypes.GroupParameter):
 			self.display.enableAutoRangeX = False
 		self.display.update()
 
+
 	def changeAutoRangeY(self):
 		if self.autoRangeY.value():
 			self.display.enableAutoRangeY = True
 		else:
 			self.display.enableAutoRangeY = False
 		self.display.update()
+
 
 	def changeLockAspect(self):
 		if self.lockAspect.value():
@@ -969,12 +1054,14 @@ class viewOptions(pTypes.GroupParameter):
 		self.display.update()
 
 
+
 class readoutPlotRates(pTypes.GroupParameter):
 	'''
 	in case of an interactive plotted readout of the sources
 	this class provides the parameters to change the plotrate (frames per second)
 	and the readoutrate (lines per second)
 	'''
+
 	def __init__(self,Gui,**opts):#
 		self.Gui = Gui
 		opts['type'] = 'bool'
@@ -1000,8 +1087,10 @@ class readoutPlotRates(pTypes.GroupParameter):
 		self.readoutEveryNLine.sigValueChanged.connect(self.changeReadoutEveryNLine)
 		self.changeLimitReadoutRate()
 
+
 	def changeReadoutEveryNLine(self):
 		self.Gui.matrixClass._setReadoutEveryNLine(self.readoutEveryNLine.value())
+
 
 	def changeLimitReadoutRate(self):
 		self.Gui.limitReadoutRate = self.paramLimitLPS.value()
@@ -1011,8 +1100,10 @@ class readoutPlotRates(pTypes.GroupParameter):
 			self.paramLPS.hide()
 		self.changeLPS()
 
+
 	def changeFPS(self):
 		self.Gui._setFPS(self.paramFPS.value())
+
 
 	def changeLPS(self):
 		self.Gui._setLPS(self.paramLPS.value())

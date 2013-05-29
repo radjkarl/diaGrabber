@@ -1,5 +1,5 @@
 # -*- coding: utf-8 *-*
-import sys
+import sys, os
 import numpy as np
 
 import methods.merge as mergeMethods
@@ -15,9 +15,9 @@ class dimension(object):
 	The basis-class of merge- and basisDimension. Provides everything
 	that is identically for both of them.
 	'''
-	def __init__(self):
+	def __init__(self, source):
 
-
+		self.source = source
 		#helpers
 		self._plotOnlyRecentPosition = False#only needed for basis-dim
 		self._calc_is_value = False
@@ -105,6 +105,7 @@ class dimension(object):
 	def _cleanStandard(self):
 		self._calc._clean()
 
+
 	def _transformDim(self):
 		for n,i in enumerate(self._transform._list):
 			if self._transform.adhoc[n]:
@@ -141,8 +142,8 @@ class basisDimension(dimension):
 	
 	see :py:func:`setArgs` fo all possible arguments.
 	"""
-	def __init__(self, **kwargs):
-		super(basisDimension,self).__init__()
+	def __init__(self, source, **kwargs):
+		super(basisDimension,self).__init__(source)
 
 		#standard
 		self.name = None
@@ -150,9 +151,9 @@ class basisDimension(dimension):
 		self.resolution = None
 		self.unit = None
 		self.prefix = ""
-		
+
 		self._includeAll()
-		
+
 		#helpers
 		self._take_all_values = True
 		self._include_chronic = False
@@ -160,6 +161,8 @@ class basisDimension(dimension):
 		self._recent_position = 0 #will be updated by target-class
 		self._plot_range = slice(None,None,None)
 		self._update_sort_range = True
+		self._is_folder = False
+		self._str_folder_values = None
 
 		#indivídual
 		self.setArgs(**kwargs)
@@ -168,25 +171,43 @@ class basisDimension(dimension):
 			"index":self.index,
 			"resolution":self.resolution,
 			"unit":self.unit})
-		
+
+		if self._is_folder:
+			self._getFolderValues()
 
 
 	def setArgs(self, **kwargs):
 		'''
 		**Required kwargs** ("keyword arguments") are:
 
-		==================     ===========  =======          ============================
+		==================     ===========  ===============  ============================
 		Keyword	               Type         Example          Description
-		==================     ===========  =======          ============================
+		==================     ===========  ===============  ============================
 		*name*                 str          "one"            the name of the basisDimension
 		*unit*                 str          "m/s"            the unit of the basisDimension
 		*index*                int          0                the position in the source-file
 		                                                     '0' will be the first one
+		                       str          "folder"         all sourcefiles are in *folders*
+		                                                     each name of a folder represents
+		                                                     a value of this basisDimension
+		                                                     The folder is located between
+		                                                     the source-folder (if given) and
+		                                                     source-file.
+		                                                     It is possible to use multible
+		                                                     basisDimensions with
+		                                                     index='folder'. In this case the
+		                                                     order of those dimensions
+		                                                     represents the order in th
+		                                                     filesystem.
+		                                    "counter"        see :py:meth:`setCounter`
+		                                                     (with update=True)
+		                                    "fixedCounter"   see :py:meth:`setCounter`
+		                                                     (with update=False)
 		*resolution*           int          50               the number of different
 		                                                     positions stored in the range
 		                                                     of all values of the
 		                                                     basisDimension
-		==================     ===========  =======          ============================
+		==================     ===========  ===============  ============================
 
 		**Optional kwargs** ("keyword arguments") are:
 
@@ -235,6 +256,9 @@ class basisDimension(dimension):
 					elif kwargs[key] == "fixedCounter":
 						self.setCounter(update=False)
 						self.index = 0
+					elif kwargs[key] == "folder":
+						self._is_folder = True
+						self.index = 0
 					else:
 						sys.exit("ERROR: index has to be an iteger or 'runningCounter' or 'fixedCounter'")
 				else:
@@ -246,7 +270,7 @@ class basisDimension(dimension):
 			else:
 				raise KeyError("keyword '%s' not known" %key)
 
-		#after main loof to ensure that unit is set
+		#after main loop to ensure that unit is set
 		if prefix != None:
 			self._evalPrefix(prefix)
 
@@ -263,15 +287,11 @@ class basisDimension(dimension):
 					sys.exit("ERROR include invalide")
 
 
-
 	def setPlotOnlyRecentPosition(self, TrueOrFalse):
 		'''Set this if you only want to plot the last readout basis-value.'''
 		self._plotOnlyRecentPosition = bool(TrueOrFalse)
 
 
-		
-
-	
 	def setPlotRange(self, start=None, stop=None, step=None):
 		'''Define the visible range of the plotted values.
 		
@@ -301,11 +321,45 @@ class basisDimension(dimension):
 			self._recent_value = self._start_value
 		self._cleanStandard()
 
+
 	def _includeAll(self):
 		'''Include all values and sort in a range from min to max values
 		dissolved by the resolution
 		!!!: not all sources can define the min and max values '''
 		self._take_all_values = True
+
+
+	def _getFolderValues(self):
+		self._str_folder_values = os.listdir(self.source.folder)
+		i = 0
+		while i < len(self._str_folder_values):
+			#clean from every entry in main-folder that is not a folder itself
+			if not os.path.isdir(self.source.folder + self._str_folder_values[i]):
+				self._str_folder_values.pop(i)
+				i -= 1
+			i += 1
+		if len(self._str_folder_values) == 0:
+			sys.exit("ERROR: no folders in for basisDimension %s in folder %s"
+				%self.name, self.source.folder)
+
+
+	def _updateFolder(self, folder_structure):
+		if self._is_folder:
+			folder_name = self._str_folder_values[self.index]
+			self._update(self.source.evalStr(folder_name))
+			if self.index == len(self._str_folder_values)-1:
+				last_file = True
+			else:
+				last_file = False
+				self.index += 1
+			return 	folder_structure + folder_name + "/", last_file
+		return folder_structure, True
+
+
+	def _reset(self):
+		if self._is_folder:
+			self.index = 0
+
 
 	def _includeRange(self,range_list, transformRange=False):
 		'''include only values from x to y'''
@@ -314,10 +368,10 @@ class basisDimension(dimension):
 		else:
 			sys.exit("ERROR: include hast to be a list of len==2")
 		self._take_all_values = False
+
 		if transformRange:
 			print "set range for %s(%s%s) to %s" %(
 				self.name, self.prefix, self.unit, self._include_range)
-
 			for n,i in enumerate(self._transform._list):
 				#transform sort_range
 				if self._transform.adhoc[n]:
@@ -336,8 +390,10 @@ class basisDimension(dimension):
 			print "WARNING: boundaries of range are equal!"
 		self._initSortRange()
 
+
 	def _getIncludeRange(self):
 		return self._include_range
+
 
 	def _includeChronic(self):
 		'''Only take the last [dimension.resolution]-values
@@ -349,6 +405,7 @@ class basisDimension(dimension):
 		self._chronic_step = 0
 		self._initSortRange()
 
+
 	def _updateChronic(self):
 		'''updates the sort-range for a chronic-dimension'''
 		self._chronic_step += 1
@@ -358,23 +415,26 @@ class basisDimension(dimension):
 			self._sort_range[self._chronic_step] = self._recent_value
 	
 			if self._is_counter:
-				#the smallest/biggest value in the chronic is the value infront of the recent one
+				#the smallest/biggest value in the chronic is the value
+				#infront of the recent one
 				#this is correct because a counter increases/decreases monotone
 				try:
 					self._include_range[0] = self._sort_range[self._chronic_step+1]
-				# except the revent value ist the last value in range - than its the first one
+				# except the revent value ist the last value in range
+				#- than its the first one
 				except IndexError:
 					self._include_range[0] = self._sort_range[0]
 				self._include_range[1] = self._recent_value
-				
 			else:
 				self._include_range[0] = min(self._sort_range)
 				self._include_range[1] = max(self._sort_range)
+
 
 	def _initSortRange(self):
 		'''builds the (first) sort-range as a numpy.linspace(from,to,step)'''
 		self._sort_range = np.linspace(self._include_range[0],self._include_range[1],
 			self.resolution)
+
 
 	def _update(self, source_value):
 		'''main update-procedure which runs ever time a new value is readout from the source.'''
@@ -418,9 +478,9 @@ class mergeDimension(dimension):
 	
 	see :py:func:`setArgs` fo all possible arguments.
 	"""
-	def __init__(self,**kwargs):
+	def __init__(self, source, **kwargs):
 
-		super(mergeDimension,self).__init__()
+		super(mergeDimension,self).__init__(source)
 
 		#standard
 		self.name = None
@@ -448,14 +508,18 @@ class mergeDimension(dimension):
 		'''
 		**Required kwargs** ("keyword arguments") are:
 
-		==================     ===========  =======          ============================
+		==================     ===========  ==============   ============================
 		Keyword	               Type         Example          Description
-		==================     ===========  =======          ============================
+		==================     ===========  ==============   ============================
 		*name*                 str          "one"            the name of the basisDimension
 		*unit*                 str          "m/s"            the unit of the basisDimension
 		*index*                int          0                the position in the source-file
 		                                                     '0' will be the first one
-		==================     ===========  =======          ============================
+		                       str          "counter"        see :py:meth:`setCounter`
+		                                                     (with update=True)
+		                                    "fixedCounter"   see :py:meth:`setCounter`
+		                                                     (with update=False)
+		==================     ===========  ==============   ============================
 
 		**Optional kwargs** ("keyword arguments") are:
 
