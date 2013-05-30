@@ -422,10 +422,8 @@ class Gui(object):
 class _forkedDock(pgDock.Dock):
 	'''adding function: setWidget to normal Dock-class'''
 
-
 	def __init__(self, name, area=None, size=(10, 10), widget=None, hideTitle=False, autoOrientation=True):
 		super(_forkedDock, self).__init__(name, area, size, widget, hideTitle, autoOrientation)
-
 
 	def setWidget(self, widget, index=0, row=None, col=0, rowspan=1, colspan=1):
 		"""
@@ -486,6 +484,7 @@ class _Display(object):
 		self.show_merge_as_density = []
 		
 		for n in range(len(self._basis_dim)):
+			# do not override basis._plot_range -> create new basis_dim_plot_range
 			self.basis_dim_plot_range.append(self._basis_dim[n]._plot_range)
 			self.concentrate_basis_dim.append("mean")#default option
 
@@ -637,15 +636,7 @@ class _Display(object):
 					break # dont needto continue iterating because only one dim can be 'time'
 
 			if len(self.show_basis) == 1:
-				basis_extract = self.basisMatrix[self.show_basis[0]][self._basis_dim[self.show_basis[0]]._plot_range]
-
-				#if self.plot_basis_as_merge[self.show_basis[0]]:
-					##change auto-scale-axes-names
-					#x="y"
-					#y="x"
-				#else:
-					#x='x'
-					#y='y'
+				basis_extract = self.basisMatrix[self.show_basis[0]][self.basis_dim_plot_range[self.show_basis[0]]]
 
 				if self.scale_plot == True:
 					self.plot.enableAutoRange('xy', True)
@@ -788,10 +779,10 @@ class _Display(object):
 				#set text of crosshair
 				if len(self.show_basis) == 1:
 					if self.poi_show_only_merge:
-						self.poiText = "%0.3g" %self.indexY
+						self.poiText = "%0.7g" %self.indexY
 					else:
-						self.poiText = "x=%0.3g\ny=%0.3g\n" %(self.indexX, self.indexY)
-				elif len(self.show_basis) == 2:
+						self.poiText = "x=%0.7g\ny=%0.7g\n" %(self.indexX, self.indexY)
+				elif len(self.show_basis) >= 2:
 					if self.transpose_axes:
 						posX = _utils.nearestPosition(
 							self.basisMatrix[self.show_basis[1]],self.indexX)
@@ -803,14 +794,12 @@ class _Display(object):
 						posY = _utils.nearestPosition(
 							self.basisMatrix[self.show_basis[1]],self.indexY)
 							
-					z_value = self.plot.image[posX][posY]
+					z_value = self.plot.imageItem.image[posX][posY]
 					if self.poi_show_only_merge:
-						self.poiText = "%0.3g" %z_value
+						self.poiText = "%0.7g" %z_value
 					else:
-						self.poiText = "x=%0.3g\ny=%0.3g\nz=%0.3g" %(
+						self.poiText = "x=%0.7g\ny=%0.7g\nz=%0.7g" %(
 							self.indexX, self.indexY, z_value)
-				else:
-					self.poiText ="nD not implemented jet"
 
 				self.crosshair.setText(self.poiText,color=(0,0,0) )
 				#move text to corner

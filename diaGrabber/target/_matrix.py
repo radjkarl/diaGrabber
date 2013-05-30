@@ -131,14 +131,16 @@ class matrixBase(matrixMethods):
 		Keyword	               Type      Default          Description
 		==================     ========  =======          ============================
 		*folder*               string    ""               Name of the folder to save in
-		*ftype*                string    "bin"            "bin": output is saved in computer-readable binary-form, "txt": output is saved in a human-readable-form
 		==================     ========  =======          ============================
 		'''
+##	*ftype*                string    "bin"            "bin": output is saved in computer-readable binary-form, "txt": output is saved in a human-readable-form
+
+
 		#standard
 		file_name = None
 
 		folder_name = ""
-		save_type = "bin"
+		#save_type = "bin"
 
 		#individual
 		for key in kwargs:
@@ -146,71 +148,75 @@ class matrixBase(matrixMethods):
 				file_name = str(kwargs[key])
 			elif key == "folder":
 				folder_name = str(kwargs[key])
-			elif key == "ftype":
-				if kwargs[key] == "bin":
-					save_type = "bin"
-				elif kwargs[key] == "txt":
-					save_type = "txt"
-				else:
-					raise KeyError("ERROR: target.save 'type' must be 'bin' or 'txt'")
+			#elif key == "ftype":
+				#if kwargs[key] == "bin":
+					#save_type = "bin"
+				#elif kwargs[key] == "txt":
+					#save_type = "txt"
+				#else:
+					#raise KeyError("ERROR: target.save 'type' must be 'bin' or 'txt'")
 			else:
 				raise KeyError("keyword '%s' not known" %key)
 		_utils.checkRequiredArgs({
 				"name":file_name})
 
 		print "saving matrix ..."
-		file_name = _utils.prepareFileSystem(file_name, folder_name)
-		if save_type == "bin":
-			for i in range(self.nMerge):
-				f = "%s_%s_merge" %(file_name, self._merge_dim[i].name)
-				numpy.save(f, self.mergeMatrix[i])
-				print "created binary-file %s" %f
-				f = "%s_%s_density" %(file_name, self._merge_dim[i].name)
-				numpy.save(f, self.densityMatrix[i])
-				print "created binary-file %s" %f
-			f = "%s_basis" %(file_name)
-			numpy.save(f, self.basisMatrix)
-			print "created binary-file %s" %f
-		else:
-			for i in range(self.nMerge):
-				f = "%s_%s_merge" %(file_name, self._merge_dim[i].name)
-				numpy.savetxt(f, self.mergeMatrix[i], fmt = "%10.5f")
-				print "created txt-file %s" %f
-				f = "%s_%s_density" %(file_name, self._merge_dim[i].name)
-				numpy.savetxt(f, self.densityMatrix[i], fmt = "%10.5f")
-				print "created txt-file %s" %f
-			f = "%s_basis" %(file_name)
-			numpy.savetxt(f, numpy.array(self.basisMatrix), fmt = "%10.5f")
-			print "created txt-file %s" %f
+		file_name = _utils.prepareFileSystem(file_name, folder_name)#combining file and folder
+		file_name = _utils.prepareFileSystem("",file_name)#creating file-folder
+		#print file_name
+		#if save_type == "bin":
+		for i in range(self.nMerge):
+			f = "%s%s_merge" %(file_name, self._merge_dim[i].name)
+			numpy.save(f, self.mergeMatrix[i])
+			numpy.savetxt(f, self.mergeMatrix[i], fmt = "%10.5f")
+			print "created %s" %f
+			f = "%s%s_density" %(file_name, self._merge_dim[i].name)
+			numpy.save(f, self.densityMatrix[i])
+			numpy.savetxt(f, self.densityMatrix[i], fmt = "%10.5f")
+			print "created %s" %f
+		f = "%sbasis" %(file_name)
+		numpy.save(f, self.basisMatrix)
+		numpy.savetxt(f, numpy.array(self.basisMatrix), fmt = "%10.5f")
+		print "created %s" %f
+		#else:
+			#for i in range(self.nMerge):
+				#f = "%s_%s_merge" %(file_name, self._merge_dim[i].name)
+				#numpy.savetxt(f, self.mergeMatrix[i], fmt = "%10.5f")
+				#print "created txt-file %s" %f
+				#f = "%s_%s_density" %(file_name, self._merge_dim[i].name)
+				#numpy.savetxt(f, self.densityMatrix[i], fmt = "%10.5f")
+				#print "created txt-file %s" %f
+			#f = "%s_basis" %(file_name)
+			#numpy.savetxt(f, numpy.array(self.basisMatrix), fmt = "%10.5f")
+			#print "created txt-file %s" %f
 
 
-	def load(self, name, folder = "", ftype = "bin"):
+	def load(self, name, folder = ""):
 		'''
 		Load previous saved matrices.
-		Only ftype='bin' is supported at the moment.
 		'''
 		print "loading matrix"
 		file_name = _utils.prepareFileSystem(name, folder)
-
-		if ftype == "bin":
-			self.mergeMatrix = []
-			self.basisMatrix = []
-			self.densityMatrix = []
-			for i in range(self.nMerge):
-				##MERGE
-				f = "%s_%s_merge.npy" %(file_name, self._merge_dim[i].name)
-				self.mergeMatrix.append(numpy.load(f))
-				print "loaded binary-file %s" %f
-				##DENSITY
-				f = "%s_%s_density.npy" %(file_name, self._merge_dim[i].name)
-				self.densityMatrix.append(numpy.load(f))
-				print "loaded binary-file %s" %f
-			#BASIS
-			f = f = "%s_basis.npy" %(file_name)
-			self.basisMatrix = numpy.load(f)
+		file_name = _utils.prepareFileSystem("",file_name)#creating file-folder
+		#if ftype == "bin":
+		self.mergeMatrix = []
+		self.basisMatrix = []
+		self.densityMatrix = []
+		for i in range(self.nMerge):
+			##MERGE
+			f = "%s%s_merge.npy" %(file_name, self._merge_dim[i].name)
+			self.mergeMatrix.append(numpy.load(f))
 			print "loaded binary-file %s" %f
-		else:
-			exit("ERROR: only ftype=bin implemented at the moment")
+			##DENSITY
+			f = "%s%s_density.npy" %(file_name, self._merge_dim[i].name)
+			self.densityMatrix.append(numpy.load(f))
+			print "loaded binary-file %s" %f
+		#BASIS
+		f = f = "%sbasis.npy" %(file_name)
+		self.basisMatrix = numpy.load(f)
+		print "loaded binary-file %s" %f
+		#else:
+			#exit("ERROR: only ftype=bin implemented at the moment")
 
 		for i in range(len(self._basis_dim)):
 			if self._basis_dim[i]._take_all_values:

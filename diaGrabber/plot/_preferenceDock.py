@@ -62,6 +62,7 @@ class preferenceDock(object):
 		self.addToArea()
 		#autosave
 		self.main.saveWidgetLayout()
+		return display
 
 
 	def addPrefTab(self,display):
@@ -347,6 +348,7 @@ class plotBasisDims(pTypes.GroupParameter):
 				pa.setValue(True, blockSignal=self.changePlotStatus)
 			else:
 				#remove all children
+				print
 				self.basis_opt[n].clearChildren()
 				#max 2 basis-dim to view
 				if ((pa.value() and pa.defaultValue()) or
@@ -569,7 +571,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 			#set plot range
 			self.display.basis_dim_plot_range[self.n] = position
 			self.display.concentrate_basis_dim[self.n] = "pos"
-			self.display._changeTitleOpt(self.basis, "%.3f" % value)
+			self.display._changeTitleOpt(self.basis, "%.3g" % value)
 		else:#position is default "-1"
 			self.pValue.setToDefault()
 			self.display._changeTitleOpt(self.basis)
@@ -592,16 +594,13 @@ class sliceImage(pTypes.GroupParameter):
 		self.activate = self.addChild(
 			{'name': 'activate', 'type': 'bool',
 			'value': False, 'tip': "activate to slice an image - this only works for 2+ active basisDimensions"})
-		self.err_add_display = self.addChild(
-			{'name': 'Error1:', 'type': 'str','value': "Add another widget!",
-			'readonly': True, 'visible': False})
 		self.errorMsg = self.addChild(
 			{'name': 'Error2', 'type': 'str',
 			'value': "Need at least two active basisDimensions", 'visible': False})
-		av_displays = self.getAvDisplays()
-		self.which_display = self.addChild(
-			{'name': 'slice to display','type': 'list', 'values': av_displays,
-			'value': av_displays[0], 'visible': False})
+		#av_displays = self.getAvDisplays()
+		#self.which_display = self.addChild(
+		#	{'name': 'slice to display','type': 'list', 'values': av_displays,
+		#	'value': av_displays[0], 'visible': False})
 		self.pSlave = self.addChild(
 			{'name': 'SLAVE OF Widget', 'type': 'str','value': str(self.display.index),
 				'readonly': True, 'visible': False })
@@ -615,18 +614,18 @@ class sliceImage(pTypes.GroupParameter):
 			'value': show_basis[0], 'visible': False})
 		#signals
 		self.activate.sigValueChanged.connect(self.changeActivate)
-		self.which_display.sigValueChanged.connect(self.changeWhichDisplay)
+		#self.which_display.sigValueChanged.connect(self.changeWhichDisplay)
 		self.which_basis.sigValueChanged.connect(self.changeWhichBasis)
 
 
-	def getAvDisplays(self):
-		'''get the name of all other displays than the own one'''
-		av_displays= ["-"]
-		for i in range(1,self.prefTab.prefDock.tab.count()):
-			#exclude own display-pref-tab
-			if str(self.display.index) != self.prefTab.prefDock.tab.tabText(i):
-				av_displays.append(self.prefTab.prefDock.tab.tabText(i) )
-		return av_displays
+	#def getAvDisplays(self):
+		#'''get the name of all other displays than the own one'''
+		#av_displays= ["-"]
+		#for i in range(1,self.prefTab.prefDock.tab.count()):
+			##exclude own display-pref-tab
+			#if str(self.display.index) != self.prefTab.prefDock.tab.tabText(i):
+				#av_displays.append(self.prefTab.prefDock.tab.tabText(i) )
+		#return av_displays
 
 
 	def changeActivate(self):
@@ -635,26 +634,53 @@ class sliceImage(pTypes.GroupParameter):
 				self.errorMsg.show()
 			else:
 				self.errorMsg.hide()
-				av_displays = self.getAvDisplays()
-				if len(av_displays) == 1:
-					self.err_add_display.show()
-				else:
-					self.err_add_display.hide()
-					self.which_display.setLimits( self.getAvDisplays() )
-					self.which_display.setToDefault()
-					self.which_display.show()
+				#av_displays = self.getAvDisplays()
+				#if len(av_displays) == 1:
+					#add a new display
+				self.slave_display = self.prefTab.prefDock.createNewDisplay()
+
+				#transfer the parameter-state from active (master)preference tab to
+				# preference tab of the chosen display (slave)
+				masterState = self.prefTab.p.saveState()
+				slaveState = self.slave_display.prefTab.p.saveState()
+				slaveState = _utils.adaptMasterStaticsToSlaveDict(
+					masterState,slaveState)
+				self.slave_display.prefTab.save_restore.restorePreferences(
+					True, slaveState, True)
+				#save last preferences (to restore, when slave_display
+				#is not a slave of self.display)
+				self.slave_display.prefTab.save_restore.savePreferences()
+				self.slave_display.prefTab.slice_image.pSlave.show()
+				#hide the remove-button - a slave-display can only be removed by its master
+				self.slave_display.prefTab.pRemoveWidget.hide()
+				#hide activate-button - slave can only be unslaved via master
+				self.slave_display.prefTab.slice_image.activate.hide()
+				#hide all options which a slave mustn't handle
+				for c in  self.slave_display.prefTab.plot_basis_dims.children():
+					self.slave_display.prefTab.p.param(
+						self.slave_display.prefTab.plot_basis_dims.name(),c.name()).hide()
+				for c in  self.slave_display.prefTab.plot_merge_dims.children():
+					self.slave_display.prefTab.p.param(
+						self.slave_display.prefTab.plot_merge_dims.name(),c.name()).hide()
+				for c in  self.slave_display.prefTab.save_restore.children():
+					self.slave_display.prefTab.p.param(
+						self.slave_display.prefTab.save_restore.name(),c.name()).hide()
+				#generate a which-basis list containing all concentrated basis-dims
+				show_basis = self.getShowBasis()
+				self.which_basis.show()
+
 		else:
 			self.errorMsg.hide()
-			self.err_add_display.hide()
-			self.which_display.hide()
+			self.slave_display.prefTab.remove()
+			#self.which_display.hide()
 			#am i the master-display?
-			if self.pSlave.opts.get('enabled', False):
-				#deslaving slave-display
-				try:
-					self.slave_display.prefTab.save_restore.restorePreferences(True)
-					self.slave_display.prefTab.slice_image.pSlave.hide()
-				except AttributeError:
-					pass # ther is not slave-display
+			#if self.pSlave.opts.get('enabled', False):
+				##deslaving slave-display
+				#try:
+					#self.slave_display.prefTab.save_restore.restorePreferences(True)
+					#self.slave_display.prefTab.slice_image.pSlave.hide()
+				#except AttributeError:
+					#pass # ther is not slave-display
 			try:
 				self.display.plot.removeItem(self.display.plot.lineRoi)
 			except AttributeError:
@@ -666,51 +692,51 @@ class sliceImage(pTypes.GroupParameter):
 				pass
 
 
-	def changeWhichDisplay(self):
-		#if a display was chosen
-		if self.which_display.value() != self.which_display.defaultValue():
-			#get tab-index from tab-text
-			self.slave_display = None
-			for i in range(self.prefTab.prefDock.tab.count()):
-				if self.prefTab.prefDock.tab.tabText(i) == str(self.which_display.value()):
-					self.slave_display = self.prefTab.prefDock.tab.widget(i).display
-					break
-			if self.slave_display == None:
-				sys.exit("ERRORsearchcode 23675367")
-			#transfer the parameter-state from active (master)preference tab to
-			# preference tab of the chosen display (slave)
-			masterState = self.prefTab.p.saveState()
-			slaveState = self.slave_display.prefTab.p.saveState()
-			slaveState = _utils.adaptMasterStaticsToSlaveDict(
-				masterState,slaveState)
-			self.slave_display.prefTab.save_restore.restorePreferences(
-				True, slaveState, True)
-			#save last preferences (to restore, when slave_display
-			#is not a slave of self.display)
-			self.slave_display.prefTab.save_restore.savePreferences()
-			self.slave_display.prefTab.slice_image.pSlave.show()
-			#hide activate-button - slave can only be unslaved via master
-			self.slave_display.prefTab.slice_image.activate.hide()
-			#hide all options which a slave mustn't handle
-			for c in  self.slave_display.prefTab.plot_basis_dims.children():
-				self.slave_display.prefTab.p.param(
-					self.slave_display.prefTab.plot_basis_dims.name(),c.name()).hide()
-			for c in  self.slave_display.prefTab.plot_merge_dims.children():
-				self.slave_display.prefTab.p.param(
-					self.slave_display.prefTab.plot_merge_dims.name(),c.name()).hide()
-			for c in  self.slave_display.prefTab.save_restore.children():
-				self.slave_display.prefTab.p.param(
-					self.slave_display.prefTab.save_restore.name(),c.name()).hide()
-			#generate a which-basis list containing all concentrated basis-dims
-			show_basis = self.getShowBasis()
-			if len(show_basis) == 1:
-				self.err_which_basis.show()
-				self.which_basis.hide()
-			else:
-				self.err_which_basis.hide()
-				self.which_basis.setToDefault()
-				self.which_basis.setLimits(show_basis)
-				self.which_basis.show()
+	#def changeWhichDisplay(self):
+		##if a display was chosen
+		#if self.which_display.value() != self.which_display.defaultValue():
+			##get tab-index from tab-text
+			#self.slave_display = None
+			#for i in range(self.prefTab.prefDock.tab.count()):
+				#if self.prefTab.prefDock.tab.tabText(i) == str(self.which_display.value()):
+					#self.slave_display = self.prefTab.prefDock.tab.widget(i).display
+					#break
+			#if self.slave_display == None:
+				#sys.exit("ERRORsearchcode 23675367")
+			##transfer the parameter-state from active (master)preference tab to
+			## preference tab of the chosen display (slave)
+			#masterState = self.prefTab.p.saveState()
+			#slaveState = self.slave_display.prefTab.p.saveState()
+			#slaveState = _utils.adaptMasterStaticsToSlaveDict(
+				#masterState,slaveState)
+			#self.slave_display.prefTab.save_restore.restorePreferences(
+				#True, slaveState, True)
+			##save last preferences (to restore, when slave_display
+			##is not a slave of self.display)
+			#self.slave_display.prefTab.save_restore.savePreferences()
+			#self.slave_display.prefTab.slice_image.pSlave.show()
+			##hide activate-button - slave can only be unslaved via master
+			#self.slave_display.prefTab.slice_image.activate.hide()
+			##hide all options which a slave mustn't handle
+			#for c in  self.slave_display.prefTab.plot_basis_dims.children():
+				#self.slave_display.prefTab.p.param(
+					#self.slave_display.prefTab.plot_basis_dims.name(),c.name()).hide()
+			#for c in  self.slave_display.prefTab.plot_merge_dims.children():
+				#self.slave_display.prefTab.p.param(
+					#self.slave_display.prefTab.plot_merge_dims.name(),c.name()).hide()
+			#for c in  self.slave_display.prefTab.save_restore.children():
+				#self.slave_display.prefTab.p.param(
+					#self.slave_display.prefTab.save_restore.name(),c.name()).hide()
+			##generate a which-basis list containing all concentrated basis-dims
+			#show_basis = self.getShowBasis()
+			#if len(show_basis) == 1:
+				#self.err_which_basis.show()
+				#self.which_basis.hide()
+			#else:
+				#self.err_which_basis.hide()
+				#self.which_basis.setToDefault()
+				#self.which_basis.setLimits(show_basis)
+				#self.which_basis.show()
 
 
 	def getShowBasis(self):

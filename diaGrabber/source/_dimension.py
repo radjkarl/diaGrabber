@@ -282,7 +282,7 @@ class basisDimension(dimension):
 				elif kwargs[key] == "chronic":
 					self._includeChronic()
 				elif type(kwargs[key]) == list:
-					self._includeRange(kwargs[key], True)
+					self._includeRange(kwargs[key], self.prefix!="")
 				else:
 					sys.exit("ERROR include invalide")
 
@@ -368,7 +368,6 @@ class basisDimension(dimension):
 		else:
 			sys.exit("ERROR: include hast to be a list of len==2")
 		self._take_all_values = False
-
 		if transformRange:
 			print "set range for %s(%s%s) to %s" %(
 				self.name, self.prefix, self.unit, self._include_range)

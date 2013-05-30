@@ -205,10 +205,12 @@ class source(object):
 		self._prepareReadOut()
 		while True:#for every source-file
 			while True:#for every line in file
-				self._getValueLine()
-				self._printStatus()
 				if self.done_readout:
 					break
+				self._getValueLine()
+				self._printStatus()
+				#if self.done_readout:
+				#	break
 				for n,basis in enumerate(basis_dims):
 					try:
 						if basis._is_folder:

@@ -151,18 +151,21 @@ class plainText(_source.source):
 		self._initPrintStatus()
 		self._prepareStandard()
 		if not path.isfile(self.dat_file):
-			sys.exit("ERROR: does your output_file exist?")
+			print "WARING: no source-file at %s" %self.dat_file
+			self.done_readout = True
+		else:
 		#counting files is only necassary when showing a statusbar
-		if not self.len_dat_file and not self.silent_readout:
-			self._countFileLines()
-		self.file = open(self.dat_file, 'r')
-		self._getNextPiece()
-		if len(self.file_piece) < self._readout_every_n_line:
-			sys.exit("ERROR: buffer to small [len(file_piece):%s < readoutEveryNLine:%s]" %(
-				len(self.file_piece), self._readout_every_n_line) )
-		if not self.silent_readout:
-			self.len_dat_file_minus_n = self.len_dat_file - (self._readout_every_n_line-1)
-
+			if not self.len_dat_file and not self.silent_readout:
+				self._countFileLines()
+			self.file = open(self.dat_file, 'r')
+			self._getNextPiece()
+			if len(self.file_piece) < self._readout_every_n_line:
+				sys.exit("ERROR: buffer to small [len(file_piece):%s < readoutEveryNLine:%s]" %(
+					len(self.file_piece), self._readout_every_n_line) )
+			if not self.silent_readout:
+				self.len_dat_file_minus_n = (self.len_dat_file
+				- (self._readout_every_n_line-1))
+	
 
 	def _initPrintStatus(self):
 		if not self.silent_readout:
