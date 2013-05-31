@@ -501,6 +501,8 @@ class _Display(object):
 		self.xAxis = pg.AxisItem("bottom")
 
 		self.poi_show_only_merge = False
+		self.poi_show_pos = False
+		self.titleStyle = {}
 
 	def create(self):
 		'''
@@ -550,7 +552,7 @@ class _Display(object):
 				self._merge_dim[self.show_merge[0]].use_unit)
 		for i in self.title_opt:
 			self.title += "{%s}" %i
-		self.view.setTitle(title=self.title )
+		self.view.setTitle(title=self.title)
 
 
 	def _createCurves1D(self):
@@ -762,7 +764,11 @@ class _Display(object):
 
 	def _setCrosshair(self):
 		#draw text for crosshair
-		self.crosshair = pg.TextItem(text='', color=(0,0,0), html=None, anchor=(0, 1), border=None, fill=pg.mkBrush(255, 255, 255, 80), angle=0)
+		self.anchorX, self.anchorY = 0, 1
+		self.crosshair = pg.TextItem(
+			text='', color=(0,0,0), html=None, anchor=(
+				self.anchorX, self.anchorY), border=None, fill=pg.mkBrush(
+					255, 255, 255, 80), angle=0)
 		#draw lines
 		self.vLine = pg.InfiniteLine(angle=90, movable=False)
 		self.hLine = pg.InfiniteLine(angle=0, movable=False)
@@ -778,10 +784,26 @@ class _Display(object):
 				self.indexY = mousePoint.y()
 				#set text of crosshair
 				if len(self.show_basis) == 1:
+					if self.poi_show_pos:
+						if self.transpose_axes:
+							posY = _utils.nearestPosition(
+								self.basisMatrix[self.show_merge[0]],self.indexY)
+						else:
+							posX = _utils.nearestPosition(
+								self.basisMatrix[self.show_basis[0]],self.indexX)
 					if self.poi_show_only_merge:
-						self.poiText = "%0.7g" %self.indexY
+						self.poiText = "%0.5g" %self.indexY
 					else:
-						self.poiText = "x=%0.7g\ny=%0.7g\n" %(self.indexX, self.indexY)
+						if self.poi_show_pos:
+							if self.transpose_axes:
+								self.poiText = "x=%0.5g\ny=%0.5g (%s)\n" %(
+									self.indexX, self.indexY, posY)
+							else:
+								self.poiText = "x=%0.5g (%s)\ny=%0.5g\n" %(
+									self.indexX,posX, self.indexY)
+						else:
+							self.poiText = "x=%0.5g\ny=%0.5g\n" %(
+								self.indexX, self.indexY)
 				elif len(self.show_basis) >= 2:
 					if self.transpose_axes:
 						posX = _utils.nearestPosition(
@@ -796,13 +818,33 @@ class _Display(object):
 							
 					z_value = self.plot.imageItem.image[posX][posY]
 					if self.poi_show_only_merge:
-						self.poiText = "%0.7g" %z_value
+							self.poiText = "%0.5g" %z_value
 					else:
-						self.poiText = "x=%0.7g\ny=%0.7g\nz=%0.7g" %(
-							self.indexX, self.indexY, z_value)
+						if self.poi_show_pos:
+							if self.transpose_axes:
+								posXn = posX
+								posX = posY
+								posY = posXn
+							self.poiText = "x=%0.5g (%s)\ny=%0.5g (%s)\nz=%0.5g" %(
+								self.indexX, posX, self.indexY, posY, z_value)
+						else:
+							self.poiText = "x=%0.5g\ny=%0.5g\nz=%0.5g" %(
+								self.indexX, self.indexY, z_value)
 
 				self.crosshair.setText(self.poiText,color=(0,0,0) )
-				#move text to corner
+				# set anchor of crosshair
+				if evt.y() - 30 > self.crosshair.boundingRect().height():
+					self.anchorY = 1#at upper corner
+				else:
+					self.anchorY = 0
+				if (evt.x() + self.crosshair.boundingRect().width() >
+					self.view.sceneBoundingRect().width()):
+					self.anchorX = 1 #at right corner
+				else:
+					self.anchorX = 0
+				#set relative position of crosshair
+				self.crosshair.anchor = pg.Point((self.anchorX,self.anchorY))
+				#set absolute position of crosshair
 				self.crosshair.setPos(self.indexX,self.indexY)
 				#move crosshair-lines to mousepos.
 				self.vLine.setPos(self.indexX)
@@ -822,7 +864,7 @@ class _Display(object):
 	def _setPOI(self, evt):
 		self.poiMarker.addPoints(x=[self.indexX],y=[self.indexY],symbol="+",size=10)
 		textPOI = pg.TextItem(text=self.poiText, color=(0,0,0), html=None,
-			anchor=(0,1),border=None, fill=pg.mkBrush(255, 255, 255, 80), angle=0)
+			anchor=(self.anchorX,self.anchorY),border=None, fill=pg.mkBrush(255, 255, 255, 80), angle=0)
 		textPOI.setPos(self.indexX,self.indexY)
 		self.poiTextList.append(textPOI)
 		self.view.addItem(textPOI)
@@ -832,3 +874,17 @@ class _Display(object):
 		for t in self.poiTextList:
 			self.view.removeItem(t)
 		self.poiMarker.clear()
+
+
+	def _setAxisFontSize(self,ptSize):
+		self.xAxis.labelStyle['font-size'] = '%spt' %ptSize
+		self.xAxis.setLabel(self.xAxis.labelText, self.xAxis.labelUnits,
+			**self.xAxis.labelStyle)
+		self.yAxis.labelStyle['font-size'] = '%spt' %ptSize
+		self.yAxis.setLabel(self.yAxis.labelText, self.yAxis.labelUnits,
+			**self.yAxis.labelStyle)
+
+
+	def _setTitleFontSize(self,ptSize):
+		self.view.titleLabel.opts['size'] = '%spt' %ptSize
+		self.view.titleLabel.setText(self.title)

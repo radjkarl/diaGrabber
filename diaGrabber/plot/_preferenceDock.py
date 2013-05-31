@@ -992,6 +992,9 @@ class viewOptions(pTypes.GroupParameter):
 		self.poiShowOnlyMerge = self.crosshair.addChild(
 			{'name': "show only merge", 'type': 'bool',
 				'value':self.display.poi_show_only_merge, 'visible':False})
+		self.poiShowPos = self.crosshair.addChild(
+			{'name': "show position", 'type': 'bool',
+				'value':self.display.poi_show_pos, 'visible':False})
 		self.poiClean = self.crosshair.addChild(
 			{'name': "clean clicked points", 'type': 'bool', 'value':self.display.poi_show_only_merge, 'visible':False})
 		self.plotOverlay = self.addChild(
@@ -1002,6 +1005,10 @@ class viewOptions(pTypes.GroupParameter):
 			{'name': 'autoRange X', 'type': 'bool', 'value': False})
 		self.autoRangeY = self.addChild(
 			{'name': 'autoRange Y', 'type': 'bool', 'value': False})
+		self.axisFontSize = self.addChild(
+			{'name': 'Fontsize (Axis)', 'type': 'int', 'value': 11, 'limits': (5, 20)})
+		self.titleFontSize = self.addChild(
+			{'name': 'Titlesize (Axis)', 'type': 'int', 'value': 11, 'limits': (5, 20)})
 		#signals
 		self.plotOverlay.sigValueChanged.connect(self.changePlotOverlay)
 		self.transposeAxes.sigValueChanged.connect(self.changeTransposeAxes)
@@ -1010,29 +1017,36 @@ class viewOptions(pTypes.GroupParameter):
 		self.autoRangeY.sigValueChanged.connect(self.changeAutoRangeY)
 		self.crosshair.sigValueChanged.connect(self.changeCrosshair)
 		self.poiShowOnlyMerge.sigValueChanged.connect(self.changePoiShowOnlyMerge)
+		self.poiShowPos.sigValueChanged.connect(self.changePoiShowPos)
 		self.poiClean.sigValueChanged.connect(self.changePoiClean)
+		self.axisFontSize.sigValueChanged.connect(self.changeAxisFontSize)
+		self.titleFontSize.sigValueChanged.connect(self.changeTitleFontSize)
 
 
 	def setToDefault(self):
 		for i in self.childs:
 			i.setToDefault()
-		#for i in self.crosshair:
-		#	i.setToDefault()
 
 
 	def changeCrosshair(self):
 		if self.crosshair.value():
 			self.poiShowOnlyMerge.show()
 			self.poiClean.show()
+			self.poiShowPos.show()
 			self.display._setCrosshair()
 		else:
 			self.poiShowOnlyMerge.hide()
 			self.poiClean.hide()
+			self.poiShowPos.hide()
 			self.display._unsetCrosshair()
 
 
 	def changePoiShowOnlyMerge(self):
 		self.display.poi_show_only_merge = self.poiShowOnlyMerge.value()
+
+
+	def changePoiShowPos(self):
+		self.display.poi_show_pos = self.poiShowPos.value()
 
 
 	def changePoiClean(self):
@@ -1078,6 +1092,14 @@ class viewOptions(pTypes.GroupParameter):
 			self.display.view.setAspectLocked(False)
 		self.display.scale_plot = True
 		self.display.update()
+
+
+	def changeAxisFontSize(self):
+		self.display._setAxisFontSize(self.axisFontSize.value())
+
+
+	def changeTitleFontSize(self):
+		self.display._setTitleFontSize(self.titleFontSize.value())
 
 
 
