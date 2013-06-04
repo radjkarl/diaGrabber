@@ -503,6 +503,9 @@ class _Display(object):
 		self.poi_show_only_merge = False
 		self.poi_show_pos = False
 		self.titleStyle = {}
+		
+		self.foreignCurves = []#for added plotitems of other displays
+
 
 	def create(self):
 		'''
@@ -543,6 +546,32 @@ class _Display(object):
 		if newTitleOpt != None:
 			self.title_opt.append("%s=%s" %(basis.name, newTitleOpt) )
 		self._setTitle()
+
+
+	def _addForeignCurves(self, foreignDisplay):
+		#try:
+		for n,c in enumerate(foreignDisplay.curves):
+			i = foreignDisplay.show_merge[n]
+			self.foreignCurves.append(pg.PlotDataItem(
+				c.xData, c.yData,
+				pen=self.colorList[len(self.curves)+len(self.foreignCurves)%len(
+				self.colorList)], symbol='+',
+				name=foreignDisplay._merge_dim[i].name+", "+foreignDisplay.title))
+			self.view.addItem(self.foreignCurves[-1])
+		#except AttributeError: #chosen foreign display has not .curves (maybe an image?)
+		#	pass
+
+
+	def _removeForeignCurves(self, index=None):
+		if index == None:
+			index = range(len(self.foreignCurves))
+		index.sort()
+		index.reverse()
+		for c in index:
+			self.view.removeItem(self.foreignCurves[c])
+			self.plot.plotItem.legend.items.pop(len(self.curves)+c)
+			self.foreignCurves.pop(c)
+		self.plot.plotItem.legend.updateSize()
 
 
 	def _setTitle(self):
@@ -604,6 +633,14 @@ class _Display(object):
 					units = self._basis_dim[self.show_basis[0]].unit)
 				self.yAxis.setLabel(text=self._basis_dim[self.show_basis[1]].name,
 					units = self._basis_dim[self.show_basis[1]].unit)
+
+
+	def _setSymbol(self, symbol):
+		if len(self.show_basis) == 1: #2d-plot
+			if symbol == " ":
+				symbol = None
+			for c in self.view.curves:
+				c.setSymbol(symbol)
 
 
 	def update(self):

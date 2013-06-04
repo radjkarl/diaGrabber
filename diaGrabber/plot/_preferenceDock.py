@@ -13,8 +13,9 @@ import pyqtgraph.parametertree.parameterTypes as pTypes
 from pyqtgraph.parametertree import Parameter, ParameterTree, ParameterItem, registerParameterType
 import pyqtgraph.dockarea as pgDock
 from pyqtgraph.Qt import QtGui
-from pyqtgraph import ViewBox
-from pyqtgraph import LineSegmentROI, AxisItem, PlotDataItem
+#from pyqtgraph import ViewBox
+#from pyqtgraph import LineSegmentROI#, ScatterPlotItem
+import pyqtgraph as pg
 
 
 class preferenceDock(object):
@@ -172,6 +173,8 @@ class preferenceTab(ParameterTree):
 			addContentOf(self, self.display, name='add Content of...'))
 		self.pViewOptions = self.p.addChild(
 			viewOptions(self, self.display, name='View Options'))
+		self.pPlotOptions = self.p.addChild(
+			plotOptions(self, self.display, name='Plot Options'))
 		self.save_restore = self.p.addChild(
 			saveRestorePrefs(self, name='Save/Restore preferences'))
 
@@ -219,7 +222,7 @@ class preferenceTab(ParameterTree):
 			'''add to normal mouseClickEvent the feature
 			to show the corresponding prefTab when clicking on the display'''
 			self.prefDock.tab.setCurrentWidget(self)
-			ViewBox.mouseClickEvent(self.display.view.vb, ev)
+			pg.ViewBox.mouseClickEvent(self.display.view.vb, ev)
 		self.display.view.mouseClickEvent = newMouseClickEvent
 
 
@@ -422,7 +425,7 @@ class ConcentrateOpt(pTypes.GroupParameter):
 		self.pMin.sigValueChanged.connect(self.changeMin)
 		self.pMax.sigValueChanged.connect(self.changeMax)
 		#init default
-		#self.changeMean()
+		self.changeMean()
 
 
 	def setPAsTime(self):
@@ -767,7 +770,7 @@ class sliceImage(pTypes.GroupParameter):
 			except AttributeError:
 				pass # no line to remove
 			#new roi-line
-			self.display.plot.lineRoi = LineSegmentROI(
+			self.display.plot.lineRoi = pg.LineSegmentROI(
 				[[startX, startY], [stopX,stopY]], pen='r')
 			#add new roi-line to plot
 			self.display.plot.addItem(self.display.plot.lineRoi)
@@ -913,6 +916,7 @@ class addContentOf(pTypes.GroupParameter):
 	def __init__(self, prefTab, display, **opts):
 		self.display = display
 		self.prefTab = prefTab
+		self.remove_from_av_display = []
 		opts['type'] = 'bool'
 		opts['value'] = True
 		pTypes.GroupParameter.__init__(self, **opts)
@@ -920,14 +924,25 @@ class addContentOf(pTypes.GroupParameter):
 		self.p2dPlots = self.addChild(
 			{'name': "2d-Plots", 'type': 'bool', 'value':False})
 		av_displays = self.get2dPlotDisplays()
-		self.p2dPlotList = self.addChild(
+		self.pRefreshDisplayList = self.p2dPlots.addChild(
+			{'name': "refresh list", 'type': 'bool', 'value':False, 'visible':False})
+		self.p2dPlotList = self.p2dPlots.addChild(
 			{'name': 'from display...:',
 			'type': 'list', 'values': av_displays,
 			'value': av_displays[0], 'visible':False})
 		#signals
 		self.p2dPlots.sigValueChanged.connect(self.change2dPlots)
+		self.pRefreshDisplayList.sigValueChanged.connect(self.changeRefreshDisplayList)
 		self.p2dPlotList.sigValueChanged.connect(self.change2dPlotList)
-		self.Content2d = []
+
+
+	def changeRefreshDisplayList(self):
+		av_displays = self.get2dPlotDisplays()
+		for i in self.remove_from_av_display:
+			av_displays.pop(av_displays.index(i))
+		self.p2dPlotList.setLimits(av_displays)
+		self.p2dPlotList.setToDefault()
+		self.pRefreshDisplayList.setToDefault()
 
 
 	def get2dPlotDisplays(self):
@@ -938,7 +953,7 @@ class addContentOf(pTypes.GroupParameter):
 		for i in range(1,self.prefTab.prefDock.tab.count()):
 			#exclude own display-pref-tab
 			if ( str(self.display.index) != self.prefTab.prefDock.tab.tabText(i)
-					and len(self.prefTab.prefDock.tab.widget(i).display.show_basis) == 1 ):
+			and len(self.prefTab.prefDock.tab.widget(i).display.show_basis) == 1 ):	
 				av_displays.append(self.prefTab.prefDock.tab.tabText(i) )
 		if len(av_displays) == 1:
 			av_displays.append("no 2D-Plots found")
@@ -947,31 +962,26 @@ class addContentOf(pTypes.GroupParameter):
 
 	def change2dPlots(self):
 		if self.p2dPlots.value():
-			av_displays = self.get2dPlotDisplays()
-			self.p2dPlotList.setLimits(av_displays)
-			self.p2dPlotList.setToDefault()
+			self.changeRefreshDisplayList()
+			self.pRefreshDisplayList.show()
 			self.p2dPlotList.show()
 		else:
 			self.p2dPlotList.hide()
-			for c in self.Content2d:
-				self.display.view.removeItem(c)
+			self.pRefreshDisplayList.hide()
+			self.display._removeForeignCurves()
+			self.remove_from_av_display = []
 
 
 	def change2dPlotList(self):
-		if self.p2dPlotList.value() != self.p2dPlotList.defaultValue():
+		if not self.p2dPlotList.valueIsDefault():
 			for i in range(self.prefTab.prefDock.tab.count()):
 				if self.prefTab.prefDock.tab.tabText(i) == str(self.p2dPlotList.value()):
-					self.Content2d = []
-					for n,c in enumerate(
-							self.prefTab.prefDock.tab.widget(i).display.curves):
-						self.Content2d.append(PlotDataItem(c.xData, c.yData,
-							pen=self.display.colorList[n%len(
-							self.display.colorList)], symbol='+'))
-						self.display.view.addItem(self.Content2d[-1])
+					self.display._addForeignCurves(
+						self.prefTab.prefDock.tab.widget(i).display)
 					break
-		else:
-			for c in self.Content2d:
-				self.display.view.removeItem(c)
+			self.remove_from_av_display.append(str(self.p2dPlotList.value() ) )
+			self.changeRefreshDisplayList()
+
 
 
 
@@ -1100,6 +1110,37 @@ class viewOptions(pTypes.GroupParameter):
 
 	def changeTitleFontSize(self):
 		self.display._setTitleFontSize(self.titleFontSize.value())
+
+
+
+class plotOptions(pTypes.GroupParameter):
+	'''this class includes all otions manipulating the view of the display'''
+
+	def __init__(self, prefTab, display, **opts):
+		self.display = display
+		self.prefTab = prefTab
+		opts['type'] = 'bool'
+		opts['value'] = True
+		pTypes.GroupParameter.__init__(self, **opts)
+		#add parameters
+		symbols = [" ",'o', 's', 't', 'd', '+']#pg.ScatterPlotItem.Symbols.keys()
+		self.p2d = self.addChild(
+			{'name': "2D", 'type': 'str', 'value':""})
+		self.p2dSymbol = self.p2d.addChild(
+			{'name': "Symbol", 'type': 'list', 'values':symbols, 'value':symbols[0]})
+#'type': 'list', 'values': av_displays,
+#			'value': av_displays[0], 'visible':False})
+
+		#signals
+		self.p2dSymbol.sigValueChanged.connect(self.change2dSymbol)
+
+
+	def change2dSymbol(self):
+		self.display._setSymbol(self.p2dSymbol.value() )
+
+
+
+
 
 
 
